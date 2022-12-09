@@ -9,6 +9,14 @@ export default {
       type: String,
       required: true,
     }
+  },
+  data() {
+    return {
+      
+    }
+  },
+  methods: {
+    // Check if feature flag is enabled
   }
 }
 
