@@ -1,8 +1,12 @@
 <template>
-  <!-- Added feature wrapper -->
+    <div v-if="!!isFeatureFlagEnabled">
+      <slot />
+    </div>
 </template>
 
 <script>
+// Import the api
+
 export default {
   props: {
     featureKey: {
@@ -12,7 +16,7 @@ export default {
   },
   data() {
     return {
-      
+      isFeatureEnabled: false,
     }
   },
   methods: {
