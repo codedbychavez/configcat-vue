@@ -1707,7 +1707,7 @@ O.LocalOnly, O.LocalOverRemote, O.RemoteOverLocal;
 const Xe = {
   install: (i, t) => {
     let e = $e(t.apiKey);
-    i.config.globalProperties.$configCatClient = e;
+    i.config.globalProperties.configCatClient = e;
   }
 };
 export {
