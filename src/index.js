@@ -1,4 +1,4 @@
 import FeatureWrapper from './components/FeatureWrapper.vue'
-import plugin from './plugins/configcat-vue';
+import ConfigCatVuePlugin from './plugins/configcat-vue-plugin';
 
-export { FeatureWrapper, plugin }
+export { FeatureWrapper, ConfigCatVuePlugin }
