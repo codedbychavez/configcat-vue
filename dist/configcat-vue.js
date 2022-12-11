@@ -13,35 +13,35 @@ const he = (i, t) => {
   },
   data() {
     return {
-      isFeatureEnabled: !1
+      isFeatureFlagEnabled: !1
     };
   },
   mounted() {
     this.configCatClient.getValueAsync(this.featureKey, !1).then((i) => {
-      this.isFeatureEnabled = i;
+      this.isFeatureFlagEnabled = i;
     });
   }
 }, de = { key: 0 };
 function ve(i, t, e, n, a, r) {
-  return i.isFeatureFlagEnabled ? (le(), ue("div", de, [
+  return a.isFeatureFlagEnabled ? (le(), ue("div", de, [
     ce(i.$slots, "default")
   ])) : fe("", !0);
 }
 const qe = /* @__PURE__ */ he(ge, [["render", ve]]);
 var pe = function() {
   function i(t) {
-    this.SOURCE = "ConfigCat", this.level = N.Warn, t && (this.level = t);
+    this.SOURCE = "ConfigCat", this.level = _.Warn, t && (this.level = t);
   }
   return i.prototype.log = function(t) {
     this.info(t);
   }, i.prototype.debug = function(t) {
-    this.isLogLevelEnabled(N.Debug) && console.info(this.SOURCE + " - DEBUG - " + t);
+    this.isLogLevelEnabled(_.Debug) && console.info(this.SOURCE + " - DEBUG - " + t);
   }, i.prototype.info = function(t) {
-    this.isLogLevelEnabled(N.Info) && console.info(this.SOURCE + " - INFO - " + t);
+    this.isLogLevelEnabled(_.Info) && console.info(this.SOURCE + " - INFO - " + t);
   }, i.prototype.warn = function(t) {
-    this.isLogLevelEnabled(N.Warn) && console.warn(this.SOURCE + " - WARN - " + t);
+    this.isLogLevelEnabled(_.Warn) && console.warn(this.SOURCE + " - WARN - " + t);
   }, i.prototype.error = function(t) {
-    this.isLogLevelEnabled(N.Error) && console.error(this.SOURCE + " - ERROR - " + t);
+    this.isLogLevelEnabled(_.Error) && console.error(this.SOURCE + " - ERROR - " + t);
   }, i.prototype.isLogLevelEnabled = function(t) {
     return this.level >= t;
   }, i;
@@ -79,7 +79,7 @@ var pe = function() {
 var q = function() {
   function i(t, e, n, a) {
     var r;
-    if (this.configFileName = "config_v5", this.logger = new pe(N.Warn), this.requestTimeoutMs = 3e4, this.baseUrlOverriden = !1, this.proxy = "", !t)
+    if (this.configFileName = "config_v5", this.logger = new pe(_.Warn), this.requestTimeoutMs = 3e4, this.baseUrlOverriden = !1, this.proxy = "", !t)
       throw new Error("Invalid 'apiKey' value");
     switch (a || (a = new ye()), this.apiKey = t, this.clientVersion = e, this.dataGovernance = (r = n == null ? void 0 : n.dataGovernance) !== null && r !== void 0 ? r : F.Global, this.cache = a, this.dataGovernance) {
       case F.EuOnly:
@@ -130,7 +130,7 @@ var q = function() {
     return l;
   }
   return t;
-}(q), $ = function() {
+}(q), J = function() {
   function i(t, e, n) {
     this.Timestamp = t, this.ConfigJSON = JSON.parse(e), this.HttpETag = n;
   }
@@ -299,7 +299,7 @@ var q = function() {
     this.baseConfig.logger.debug("ConfigServiceBase.fetchLogic() - called.");
     var s = this.baseConfig.baseUrl;
     this.fetchLogicInternal(this.baseConfig, e, n, function(l) {
-      if (r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): result.status: " + (l == null ? void 0 : l.status)), !l || l.status != P.Fetched || $.compareEtags(e ?? "", l.eTag)) {
+      if (r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): result.status: " + (l == null ? void 0 : l.status)), !l || l.status != P.Fetched || J.compareEtags(e ?? "", l.eTag)) {
         r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): result.status != FetchStatus.Fetched or etags are the same. Returning null."), a(null);
         return;
       }
@@ -307,7 +307,7 @@ var q = function() {
         r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): no response body. Returning null."), a(null);
         return;
       }
-      var c = new $(new Date().getTime(), l.responseBody, l.eTag), o = c.ConfigJSON[X.Preferences];
+      var c = new J(new Date().getTime(), l.responseBody, l.eTag), o = c.ConfigJSON[X.Preferences];
       if (!o) {
         r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): preferences is empty. Returning newConfig."), a(c);
         return;
@@ -492,7 +492,7 @@ var q = function() {
             case 1:
               return r = o.sent(), [4, this.refreshLogicBaseAsync(r, e)];
             case 2:
-              return s = o.sent(), l = !r && s, c = r && s && !$.equals(r, s), this.autoPollConfig.logger.debug("AutoPollConfigService.refreshLogic() - weDontHaveCachedYetButHaveNew: ." + l + ". weHaveBothButTheyDiffers: " + c + "."), (l || c) && this.configChanged(), a(s), [2];
+              return s = o.sent(), l = !r && s, c = r && s && !J.equals(r, s), this.autoPollConfig.logger.debug("AutoPollConfigService.refreshLogic() - weDontHaveCachedYetButHaveNew: ." + l + ". weHaveBothButTheyDiffers: " + c + "."), (l || c) && this.configChanged(), a(s), [2];
           }
         });
       });
@@ -875,7 +875,7 @@ function H(i) {
 var ie = /^[0-9]+$/, k = function(i, t) {
   var e = ie.test(i), n = ie.test(t);
   return e && n && (i = +i, t = +t), i === t ? 0 : e && !n ? -1 : n && !e ? 1 : i < t ? -1 : 1;
-}, J = 256, B = Number.MAX_SAFE_INTEGER || 9007199254740991, D = [], d = [], g = {}, Re = 0, b = function(i, t) {
+}, $ = 256, B = Number.MAX_SAFE_INTEGER || 9007199254740991, D = [], d = [], g = {}, Re = 0, b = function(i, t) {
   var e = Re++;
   g[i] = e, d[e] = t, D[e] = new RegExp(t, void 0);
 };
@@ -905,8 +905,8 @@ var M = function() {
       t = t.version;
     } else if (typeof t != "string")
       throw new TypeError("Invalid Version: ".concat(t));
-    if (t.length > J)
-      throw new TypeError("version is longer than ".concat(J, " characters"));
+    if (t.length > $)
+      throw new TypeError("version is longer than ".concat($, " characters"));
     this.options = e, this.loose = !!e.loose, this.includePrerelease = !!e.includePrerelease;
     var n = t.trim().match(e.loose ? D[g.LOOSE] : D[g.FULL]);
     if (!n)
@@ -1012,13 +1012,13 @@ var M = function() {
     }
     return this.format(), this.raw = this.version, this;
   }, i;
-}(), Ne = function(i, t) {
+}(), _e = function(i, t) {
   if ((!t || typeof t != "object") && (t = {
     loose: !!t,
     includePrerelease: !1
   }), i instanceof M)
     return i;
-  if (typeof i != "string" || i.length > J)
+  if (typeof i != "string" || i.length > $)
     return null;
   var e = t.loose ? D[g.LOOSE] : D[g.FULL];
   if (!e.test(i))
@@ -1030,10 +1030,10 @@ var M = function() {
   }
 }, U = function(i, t, e) {
   return new M(i, e).compare(new M(t, e));
-}, _ = function(i) {
-  var t = Ne(i, !1);
+}, N = function(i) {
+  var t = _e(i, !1);
   return t ? t.version : null;
-}, _e = function(i, t) {
+}, Ne = function(i, t) {
   return U(i, t, !0) === 0;
 }, xe = function(i, t) {
   return U(i, t, !1) === 0;
@@ -1211,29 +1211,29 @@ var De = function() {
     }
     return !1;
   }, i.prototype.EvaluateSemver = function(t, e, n) {
-    if (this.logger.debug("RolloutEvaluator.EvaluateSemver() called."), _(t) == null || K(e))
+    if (this.logger.debug("RolloutEvaluator.EvaluateSemver() called."), N(t) == null || K(e))
       return !1;
     switch (e = e.trim(), n) {
       case 4:
         for (var a = e.split(","), r = !1, s = 0; s < a.length; s++)
           if (!(!a[s] || K(a[s]) || a[s].trim() === "")) {
-            if (_(a[s].trim()) == null)
+            if (N(a[s].trim()) == null)
               return !1;
-            r || (r = _e(t, a[s].trim()));
+            r || (r = Ne(t, a[s].trim()));
           }
         return r;
       case 5:
         return !e.split(",").some(function(l) {
-          return !l || K(l) || l.trim() === "" || (l = _(l.trim()), l == null) ? !1 : xe(t, l);
+          return !l || K(l) || l.trim() === "" || (l = N(l.trim()), l == null) ? !1 : xe(t, l);
         });
       case 6:
-        return _(e) == null ? !1 : Pe(t, e);
+        return N(e) == null ? !1 : Pe(t, e);
       case 7:
-        return _(e) == null ? !1 : Fe(t, e);
+        return N(e) == null ? !1 : Fe(t, e);
       case 8:
-        return _(e) == null ? !1 : Ue(t, e);
+        return N(e) == null ? !1 : Ue(t, e);
       case 9:
-        return _(e) == null ? !1 : ke(t, e);
+        return N(e) == null ? !1 : ke(t, e);
     }
     return !1;
   }, i.prototype.GetUserAttribute = function(t, e) {
@@ -1633,10 +1633,10 @@ We();
 function je(i, t, e) {
   return new Me(new se(i, t.sdkType, t.sdkVersion, e, t.cache), t);
 }
-var N;
+var _;
 (function(i) {
   i[i.Debug = 4] = "Debug", i[i.Info = 3] = "Info", i[i.Warn = 2] = "Warn", i[i.Error = 1] = "Error", i[i.Off = -1] = "Off";
-})(N || (N = {}));
+})(_ || (_ = {}));
 var P;
 (function(i) {
   i[i.Fetched = 0] = "Fetched", i[i.NotModified = 1] = "NotModified", i[i.Errored = 2] = "Errored";
@@ -1691,10 +1691,10 @@ var G = function() {
   }, i;
 }();
 const Ge = "6.0.1";
-function $e(i, t) {
-  return Je(i, t);
-}
 function Je(i, t) {
+  return $e(i, t);
+}
+function $e(i, t) {
   return je(i, {
     configFetcher: new He(),
     cache: new Ke(),
@@ -1706,7 +1706,7 @@ F.Global, F.EuOnly;
 O.LocalOnly, O.LocalOverRemote, O.RemoteOverLocal;
 const Xe = {
   install: (i, t) => {
-    let e = $e(t.apiKey);
+    let e = Je(t.apiKey);
     i.config.globalProperties.configCatClient = e;
   }
 };

@@ -14,13 +14,13 @@ export default {
   },
   data() {
     return {
-      isFeatureEnabled: false,
+      isFeatureFlagEnabled: false,
     };
   },
   mounted() {
     // Check if feature flag is enabled
     this.configCatClient.getValueAsync(this.featureKey, false).then((value) => {
-      this.isFeatureEnabled = value;
+      this.isFeatureFlagEnabled = value;
     });
   },
 };
