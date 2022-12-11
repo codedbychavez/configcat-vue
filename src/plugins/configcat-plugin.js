@@ -6,4 +6,4 @@ export default {
     let configCatClient = configcat.createClient(options.apiKey);
     app.config.globalProperties.$configCatClient = configCatClient;
   }
-}
+};
