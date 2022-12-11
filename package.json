@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "author": "Chavez Harris",
   "private": false,
-  "files": ["./dist"],
+  "files": ["dist/*.js"],
   "main": "./dist/configcat-vue.umd.cjs",
   "module": "./dist/configcat-vue.js",
   "exports": {
