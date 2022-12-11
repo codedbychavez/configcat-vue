@@ -1711,6 +1711,6 @@ const Xe = {
   }
 };
 export {
-  Xe as ConfigCatVuePlugin,
+  Xe as ConfigCatPlugin,
   qe as FeatureWrapper
 };
