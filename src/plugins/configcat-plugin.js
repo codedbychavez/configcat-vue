@@ -5,5 +5,5 @@ export default {
     // * May need other options for specifying logger etc.
     let configCatClient = configcat.createClient(options.apiKey);
     app.config.globalProperties.$configCatClient = configCatClient;
-  }
+  },
 };
