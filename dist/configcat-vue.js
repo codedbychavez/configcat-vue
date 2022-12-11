@@ -1706,7 +1706,7 @@ F.Global, F.EuOnly;
 O.LocalOnly, O.LocalOverRemote, O.RemoteOverLocal;
 const Xe = {
   install: (i, t) => {
-    let e = Je(t.apiKey);
+    let e = Je(t.sdkKey);
     i.config.globalProperties.configCatClient = e;
   }
 };
