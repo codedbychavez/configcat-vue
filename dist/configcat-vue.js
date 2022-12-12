@@ -1810,8 +1810,8 @@ const ut = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   }
 };
 export {
-  ct as ConfigCatPlugin,
   st as FeatureWrapper,
   lt as configCatCommon,
-  ut as configCatJS
+  ut as configCatJS,
+  ct as configCatPlugin
 };
