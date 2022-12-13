@@ -23,5 +23,8 @@ export default {
       this.isFeatureFlagEnabled = value;
     });
   },
+  unmounted() {
+    this.configCatClient.dispose();
+  }
 };
 </script>

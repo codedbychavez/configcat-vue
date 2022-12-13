@@ -20,6 +20,9 @@ const he = (i, t) => {
     this.configCatClient.getValueAsync(this.featureKey, !1).then((i) => {
       this.isFeatureFlagEnabled = i;
     });
+  },
+  unmounted() {
+    this.configCatClient.dispose();
   }
 }, de = { key: 0 };
 function ve(i, t, e, n, a, r) {
