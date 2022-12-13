@@ -9,6 +9,11 @@ const he = (i, t) => {
     featureKey: {
       type: String,
       required: !0
+    },
+    userObject: {
+      type: Object,
+      required: !1,
+      default: {}
     }
   },
   data() {
@@ -17,7 +22,7 @@ const he = (i, t) => {
     };
   },
   mounted() {
-    this.configCatClient.getValueAsync(this.featureKey, !1).then((i) => {
+    this.configCatClient.getValueAsync(this.featureKey, !1, this.userObject).then((i) => {
       this.isFeatureFlagEnabled = i;
     });
   },
@@ -30,7 +35,7 @@ function ve(i, t, e, n, a, r) {
     ce(i.$slots, "default")
   ])) : fe("", !0);
 }
-const qe = /* @__PURE__ */ he(ge, [["render", ve]]);
+const ze = /* @__PURE__ */ he(ge, [["render", ve]]);
 var pe = function() {
   function i(t) {
     this.SOURCE = "ConfigCat", this.level = _.Warn, t && (this.level = t);
@@ -57,7 +62,7 @@ var pe = function() {
   }, i.prototype.get = function(t) {
     return this.cache[t];
   }, i;
-}(), z = globalThis && globalThis.__extends || function() {
+}(), q = globalThis && globalThis.__extends || function() {
   var i = function(t, e) {
     return i = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(n, a) {
       n.__proto__ = a;
@@ -79,7 +84,7 @@ var pe = function() {
 (function(i) {
   i[i.Global = 0] = "Global", i[i.EuOnly = 1] = "EuOnly";
 })(F || (F = {}));
-var q = function() {
+var z = function() {
   function i(t, e, n, a) {
     var r;
     if (this.configFileName = "config_v5", this.logger = new pe(_.Warn), this.requestTimeoutMs = 3e4, this.baseUrlOverriden = !1, this.proxy = "", !t)
@@ -107,7 +112,7 @@ var q = function() {
     return "js_" + this.configFileName + "_" + this.apiKey;
   }, i;
 }(), se = function(i) {
-  z(t, i);
+  q(t, i);
   function t(e, n, a, r, s) {
     var l = i.call(this, e, n + "/a-" + a, r, s) || this;
     if (l.pollIntervalSeconds = 60, l.configChanged = function() {
@@ -118,14 +123,14 @@ var q = function() {
     return l;
   }
   return t;
-}(q), be = function(i) {
-  z(t, i);
+}(z), be = function(i) {
+  q(t, i);
   function t(e, n, a, r, s) {
     return i.call(this, e, n + "/m-" + a, r, s) || this;
   }
   return t;
-}(q), me = function(i) {
-  z(t, i);
+}(z), me = function(i) {
+  q(t, i);
   function t(e, n, a, r, s) {
     var l = i.call(this, e, n + "/l-" + a, r, s) || this;
     if (l.cacheTimeToLiveSeconds = 60, r && r.cacheTimeToLiveSeconds && (l.cacheTimeToLiveSeconds = r.cacheTimeToLiveSeconds), !l.cacheTimeToLiveSeconds || l.cacheTimeToLiveSeconds < 1)
@@ -133,7 +138,7 @@ var q = function() {
     return l;
   }
   return t;
-}(q), J = function() {
+}(z), J = function() {
   function i(t, e, n) {
     this.Timestamp = t, this.ConfigJSON = JSON.parse(e), this.HttpETag = n;
   }
@@ -369,7 +374,7 @@ var q = function() {
     }
     t.prototype = e === null ? Object.create(e) : (n.prototype = e.prototype, new n());
   };
-}(), W = globalThis && globalThis.__awaiter || function(i, t, e, n) {
+}(), j = globalThis && globalThis.__awaiter || function(i, t, e, n) {
   function a(r) {
     return r instanceof e ? r : new e(function(s) {
       s(r);
@@ -395,7 +400,7 @@ var q = function() {
     }
     o((n = n.apply(i, t || [])).next());
   });
-}, j = globalThis && globalThis.__generator || function(i, t) {
+}, W = globalThis && globalThis.__generator || function(i, t) {
   var e = { label: 0, sent: function() {
     if (r[0] & 1)
       throw r[1];
@@ -466,9 +471,9 @@ var q = function() {
     return a.disposed = !1, a.configChanged = n.configChanged, a.autoPollConfig = n, a.startRefreshWorker(n.pollIntervalSeconds * 1e3), a.maxInitWaitTimeStamp = new Date().getTime() + n.maxInitWaitTimeSeconds * 1e3, a;
   }
   return t.prototype.getConfig = function() {
-    return W(this, void 0, void 0, function() {
+    return j(this, void 0, void 0, function() {
       var e;
-      return j(this, function(n) {
+      return W(this, function(n) {
         switch (n.label) {
           case 0:
             return this.autoPollConfig.logger.debug("AutoPollConfigService.getConfig() called."), [4, this.tryReadFromCache(0)];
@@ -486,9 +491,9 @@ var q = function() {
   }, t.prototype.refreshLogic = function(e) {
     var n = this;
     return this.autoPollConfig.logger.debug("AutoPollConfigService.refreshLogic() - called."), new Promise(function(a) {
-      return W(n, void 0, void 0, function() {
+      return j(n, void 0, void 0, function() {
         var r, s, l, c;
-        return j(this, function(o) {
+        return W(this, function(o) {
           switch (o.label) {
             case 0:
               return [4, this.baseConfig.cache.get(this.baseConfig.getCacheKey())];
@@ -519,9 +524,9 @@ var q = function() {
       }, e);
     });
   }, t.prototype.tryReadFromCache = function(e) {
-    return W(this, void 0, void 0, function() {
+    return j(this, void 0, void 0, function() {
       var n, a, r;
-      return j(this, function(s) {
+      return W(this, function(s) {
         switch (s.label) {
           case 0:
             return this.autoPollConfig.logger.debug("AutoPollConfigService.tryReadFromCache() - called. Tries: " + e + "."), [4, this.baseConfig.cache.get(this.baseConfig.getCacheKey())];
@@ -1621,7 +1626,7 @@ var x = globalThis && globalThis.__assign || function() {
     });
   }, i;
 }();
-function We() {
+function je() {
   Object.fromEntries || (Object.fromEntries = function(i) {
     if (!i || !i[Symbol.iterator])
       throw new Error("Object.fromEntries() requires a single iterable argument");
@@ -1632,8 +1637,8 @@ function We() {
     return t;
   });
 }
-We();
-function je(i, t, e) {
+je();
+function We(i, t, e) {
   return new Me(new se(i, t.sdkType, t.sdkVersion, e, t.cache), t);
 }
 var _;
@@ -1698,7 +1703,7 @@ function Je(i, t) {
   return $e(i, t);
 }
 function $e(i, t) {
-  return je(i, {
+  return We(i, {
     configFetcher: new Ke(),
     cache: new He(),
     sdkType: "ConfigCat-JS",
@@ -1715,5 +1720,5 @@ const Xe = {
 };
 export {
   Xe as ConfigCatPlugin,
-  qe as FeatureWrapper
+  ze as FeatureWrapper
 };
