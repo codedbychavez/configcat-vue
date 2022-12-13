@@ -66,7 +66,7 @@ export default {
 </template>
 ```
 
-3. That's it! Need to know more? check out the **Advanced usage** section below.
+3. That's it! Need to know more? check out the [**Advanced usage**](https://github.com/codedbychavez/configcat-vue#advanced-usage) section below.
 
 ## Advanced usage
 
