@@ -6,7 +6,7 @@
 
 ## Installation
 
-1. Install the npm package
+1. Install the npm package:
 
 ```sh
 npm install configcat-vue
@@ -16,13 +16,13 @@ npm install configcat-vue
 
 In your `main.js` file:
 
-1. import the plugin
+1. Import the plugin
 
 ```js
 import { ConfigCatPlugin } from 'configcat-vue';
 ```
 
-2. Use the plugin
+2. Use the plugin:
 
 ```js
 app.use(ConfigCatPlugin, {
@@ -35,7 +35,7 @@ app.use(ConfigCatPlugin, {
 
 ## Using the FeatureWrapper component
 
-The **FeatureWrapper** component allows you to wrap features/components/HTML within your Vue3 app. This allows you to render the wrapped components when its feature flag is enabled/ switched on.
+The **FeatureWrapper** component allows you to wrap features, components, and HTML within your Vue3 app. When the feature flag is enabled, the wrapped components are rendered.
 
 1. In your `.vue` file import the **FeatureWrapper** component:
 
@@ -51,7 +51,7 @@ export default {
 </script>
 ```
 
-2. Use it in your template by passing your feature key to the **featureKey** prop:
+2. You can use it in your template by passing your feature key to the **featureKey** prop:
 
 ```js
 <template>
@@ -66,13 +66,13 @@ export default {
 </template>
 ```
 
-3. Thats it! Need to know more, check out the **Advanced usage** section below.
+3. That's it! Need to know more, check out the **Advanced usage** section below.
 
 ## Advanced usage
 
 ### Using the plugin with a logger
 
-As mentioned in the [ConfigCat Docs](https://configcat.com/docs/sdk-reference/js/#logging), you can also use the plugin with a logger.
+The plugin can also be used with a logger, as explained in the [ConfigCat Docs](https://configcat.com/docs/sdk-reference/js/#logging).
 
 1. Install the `configcat-js` npm package:
 
@@ -88,7 +88,7 @@ Then in `main.js`:
 import * as configcat from 'configcat-js';
 ```
 
-3. Create the logger
+3. Create the logger:
 
 ```js
 const logger = configcat.createConsoleLogger(3);
@@ -107,9 +107,9 @@ app.use(ConfigCatPlugin, {
 ```
 ### Using the FeatureWrapper with a user object
 
-As mentioned in the ConfigCat docs, the [**User Object**](https://configcat.com/docs/advanced/user-object/) can be used when you need to pass potential Targeting rules variables. It also allows you represent a user in your application.
+According to the documentation for ConfigCat, the [User Object](https://configcat.com/docs/advanced/user-object/) can be used to pass potential Targeting rules variables. In addition, it allows you to represent a user in your application.
 
-The User Object can be passed as prop to the **Feature Wrapper** component.
+A User Object can be passed as a prop to the **Feature Wrapper** component.
 
 1. Define the User Object as a **data** property
 
@@ -132,7 +132,7 @@ export default {
 </script>
 ```
 
-2. Pass it to **userObject** prop:
+2. Pass it to the **userObject** prop:
 
 ```js
 <template>
@@ -150,18 +150,15 @@ export default {
 ## References
 
 ### Logging
+
 - [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
 
 ### Polling modes
+
 - [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
 
-### User Object 
+### User Object
 
 - [https://configcat.com/docs/advanced/user-object](https://configcat.com/docs/advanced/user-object/)
 
 - [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
-
-
-
-
-
