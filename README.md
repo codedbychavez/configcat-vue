@@ -33,9 +33,44 @@ app.use(ConfigCatPlugin, {
 });
 ```
 
+## Using the FeatureWrapper component
+
+The **FeatureWrapper** component allows you to wrap features/components/HTML within your Vue3 app. This allows you to render the wrapped components when its feature flag is enabled/ switched on.
+
+1. In your `.vue` file import the **FeatureWrapper** component:
+
+```js
+<script>
+import { FeatureWrapper } from "configcat-vue";
+
+export default {
+  components: {
+    FeatureWrapper,
+  },
+};
+</script>
+```
+
+2. Use it in your template by passing your feature key to the **featureKey** prop:
+
+```js
+<template>
+  <div class="my-app">
+    <FeatureWrapper featureKey="featurekey">
+      <p>
+        This will show if the feature flag with <b>featurekey</b> is enabled in
+        ConfigCat
+      </p>
+    </FeatureWrapper>
+  </div>
+</template>
+```
+
+3. Thats it! Need to know more, check out the **Advanced usage** section below.
+
 ## Advanced usage
 
-### Using with a logger
+### Using the plugin with a logger
 
 As mentioned in the [ConfigCat Docs](https://configcat.com/docs/sdk-reference/js/#logging), you can also use the plugin with a logger.
 
@@ -70,8 +105,9 @@ app.use(ConfigCatPlugin, {
   }
 });
 ```
+### Using the FeatureWrapper with a user object
 
-## Using the FeatureWrapper component
+As mentioned in the
 
 
 
