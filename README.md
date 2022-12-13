@@ -107,7 +107,61 @@ app.use(ConfigCatPlugin, {
 ```
 ### Using the FeatureWrapper with a user object
 
-As mentioned in the
+As mentioned in the ConfigCat docs, the [**User Object**](https://configcat.com/docs/advanced/user-object/) can be used when you need to pass potential Targeting rules variables. It also allows you represent a user in your application.
+
+The User Object can be passed as prop to the **Feature Wrapper** component.
+
+1. Define the User Object as a **data** property
+
+```js
+<script>
+import { FeatureWrapper } from "configcat-vue";
+
+export default {
+  components: {
+    FeatureWrapper,
+  },
+  data() {
+    return {
+      userObject: { // Passing userObject as a prop to the FeatureWrapper is optional
+        identifier: 'john@example.com',
+      }
+    }
+  }
+};
+</script>
+```
+
+2. Pass it to **userObject** prop:
+
+```js
+<template>
+  <div class="my-app">
+    <FeatureWrapper featureKey="featurekey" :userObject="userObject">
+      <p>
+        This will show if the feature flag with <b>featurekey</b> is enabled in
+        ConfigCat
+      </p>
+    </FeatureWrapper>
+  </div>
+</template>
+```
+
+## References
+
+### Logging
+- [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
+
+### Polling modes
+- [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
+
+### User Object 
+
+- [https://configcat.com/docs/advanced/user-object](https://configcat.com/docs/advanced/user-object/)
+
+- [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
+
+
 
 
 
