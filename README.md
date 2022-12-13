@@ -105,7 +105,7 @@ app.use(ConfigCatPlugin, {
   }
 });
 ```
-### Using the FeatureWrapper with a user object
+### Using the FeatureWrapper with a User Object
 
 According to the documentation for ConfigCat, the [User Object](https://configcat.com/docs/advanced/user-object/) can be used to pass potential Targeting rules variables. In addition, it allows you to represent a user in your application.
 
