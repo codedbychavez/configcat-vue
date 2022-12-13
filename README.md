@@ -147,6 +147,10 @@ export default {
 </template>
 ```
 
+## Sample app
+
+**[https://github.com/codedbychavez/configcat-vue-sample](https://github.com/codedbychavez/configcat-vue-sample)**
+
 ## References
 
 ### Logging
