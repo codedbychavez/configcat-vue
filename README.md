@@ -1,6 +1,6 @@
 # configcat-vue
 
-[![npm - configcat-vue](https://img.shields.io/badge/dependency-configcat--vue-green?logo=npm&logoColor=white)](https://www.npmjs.com/package/configcat-vue)
+[![npm - configcat-vue](https://img.shields.io/badge/npm-configcat--vue-green?logo=npm&logoColor=white)](https://www.npmjs.com/package/configcat-vue)
 
 ## Pre-requisites
 
