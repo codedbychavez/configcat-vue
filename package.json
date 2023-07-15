@@ -1,12 +1,21 @@
 {
   "name": "configcat-vue",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "A simple and easy to use Vue3 plugin for using ConfigCat Feature Flags in your Vue.js Application",
-  "keywords": ["ConfigCat", "vue feature flags", "vuejs feature flags", "feature management", "feature flags", "configcat vue"],
+  "keywords": [
+    "ConfigCat",
+    "vue feature flags",
+    "vuejs feature flags",
+    "feature management",
+    "feature flags",
+    "configcat vue"
+  ],
   "author": "Chavez Harris",
   "private": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/configcat-vue.umd.cjs",
   "module": "./dist/configcat-vue.js",
   "exports": {
@@ -22,7 +31,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
-    "vite": "^4.0.0",
-    "configcat-js": "latest"
+    "configcat-js": "^8.0.2",
+    "vite": "^4.0.0"
   }
 }

@@ -1,11 +1,18 @@
 <template>
-  <div v-if="isFeatureFlagEnabled">
-    <slot />
+  <div>
+    <div v-if="isFeatureFlagEnabled">
+      <slot />
+    </div>
+    <div v-else>
+      <slot name="else" />
+    </div>
+
   </div>
 </template>
 
 <script>
 export default {
+  emits: ['flagValueChanged'],
   props: {
     featureKey: {
       type: String,
@@ -27,6 +34,12 @@ export default {
     this.configCatClient.getValueAsync(this.featureKey, false, this.userObject).then((value) => {
       this.isFeatureFlagEnabled = value;
     });
+    this.configCatClient.on('configChanged', (response) => {
+      // This will emit when the feature flag value is toggled in the Dashboard
+      const featureFlagValue = response.settings[this.featureKey].value;
+      this.isFeatureFlagEnabled = featureFlagValue;
+      this.$emit('flagValueChanged', featureFlagValue);
+    })
   },
   unmounted() {
     this.configCatClient.dispose();
