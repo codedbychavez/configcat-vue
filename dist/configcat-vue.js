@@ -1,10 +1,11 @@
-import { openBlock as le, createElementBlock as ue, renderSlot as ce, createCommentVNode as fe } from "vue";
-const he = (i, t) => {
-  const e = i.__vccOpts || i;
-  for (const [n, a] of t)
-    e[n] = a;
-  return e;
-}, ge = {
+import { openBlock as se, createElementBlock as ae, renderSlot as de } from "vue";
+const Be = (t, e) => {
+  const r = t.__vccOpts || t;
+  for (const [n, i] of e)
+    r[n] = i;
+  return r;
+}, Ge = {
+  emits: ["flagValueChanged"],
   props: {
     featureKey: {
       type: String,
@@ -22,979 +23,1238 @@ const he = (i, t) => {
     };
   },
   mounted() {
-    this.configCatClient.getValueAsync(this.featureKey, !1, this.userObject).then((i) => {
-      this.isFeatureFlagEnabled = i;
+    this.configCatClient.getValueAsync(this.featureKey, !1, this.userObject).then((t) => {
+      this.isFeatureFlagEnabled = t;
+    }), this.configCatClient.on("configChanged", (t) => {
+      const e = t.settings[this.featureKey].value;
+      this.isFeatureFlagEnabled = e, this.$emit("flagValueChanged", e);
     });
   },
   unmounted() {
     this.configCatClient.dispose();
   }
-}, de = { key: 0 };
-function ve(i, t, e, n, a, r) {
-  return a.isFeatureFlagEnabled ? (le(), ue("div", de, [
-    ce(i.$slots, "default")
-  ])) : fe("", !0);
+}, Je = { key: 0 }, $e = { key: 1 };
+function Ye(t, e, r, n, i, o) {
+  return se(), ae("div", null, [
+    i.isFeatureFlagEnabled ? (se(), ae("div", Je, [
+      de(t.$slots, "default")
+    ])) : (se(), ae("div", $e, [
+      de(t.$slots, "else")
+    ]))
+  ]);
 }
-const ze = /* @__PURE__ */ he(ge, [["render", ve]]);
-var pe = function() {
-  function i(t) {
-    this.SOURCE = "ConfigCat", this.level = _.Warn, t && (this.level = t);
+const Ut = /* @__PURE__ */ Be(Ge, [["render", Ye]]);
+var ue = function(t, e) {
+  return ue = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(r, n) {
+    r.__proto__ = n;
+  } || function(r, n) {
+    for (var i in n)
+      Object.prototype.hasOwnProperty.call(n, i) && (r[i] = n[i]);
+  }, ue(t, e);
+};
+function z(t, e) {
+  if (typeof e != "function" && e !== null)
+    throw new TypeError("Class extends value " + String(e) + " is not a constructor or null");
+  ue(t, e);
+  function r() {
+    this.constructor = t;
   }
-  return i.prototype.log = function(t) {
-    this.info(t);
-  }, i.prototype.debug = function(t) {
-    this.isLogLevelEnabled(_.Debug) && console.info(this.SOURCE + " - DEBUG - " + t);
-  }, i.prototype.info = function(t) {
-    this.isLogLevelEnabled(_.Info) && console.info(this.SOURCE + " - INFO - " + t);
-  }, i.prototype.warn = function(t) {
-    this.isLogLevelEnabled(_.Warn) && console.warn(this.SOURCE + " - WARN - " + t);
-  }, i.prototype.error = function(t) {
-    this.isLogLevelEnabled(_.Error) && console.error(this.SOURCE + " - ERROR - " + t);
-  }, i.prototype.isLogLevelEnabled = function(t) {
-    return this.level >= t;
-  }, i;
-}(), ye = function() {
-  function i() {
-    this.cache = {};
-  }
-  return i.prototype.set = function(t, e) {
-    this.cache[t] = e;
-  }, i.prototype.get = function(t) {
-    return this.cache[t];
-  }, i;
-}(), q = globalThis && globalThis.__extends || function() {
-  var i = function(t, e) {
-    return i = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(n, a) {
-      n.__proto__ = a;
-    } || function(n, a) {
-      for (var r in a)
-        Object.prototype.hasOwnProperty.call(a, r) && (n[r] = a[r]);
-    }, i(t, e);
-  };
-  return function(t, e) {
-    if (typeof e != "function" && e !== null)
-      throw new TypeError("Class extends value " + String(e) + " is not a constructor or null");
-    i(t, e);
-    function n() {
-      this.constructor = t;
+  t.prototype = e === null ? Object.create(e) : (r.prototype = e.prototype, new r());
+}
+var q = function() {
+  return q = Object.assign || function(e) {
+    for (var r, n = 1, i = arguments.length; n < i; n++) {
+      r = arguments[n];
+      for (var o in r)
+        Object.prototype.hasOwnProperty.call(r, o) && (e[o] = r[o]);
     }
-    t.prototype = e === null ? Object.create(e) : (n.prototype = e.prototype, new n());
-  };
-}(), F;
-(function(i) {
-  i[i.Global = 0] = "Global", i[i.EuOnly = 1] = "EuOnly";
-})(F || (F = {}));
-var z = function() {
-  function i(t, e, n, a) {
+    return e;
+  }, q.apply(this, arguments);
+};
+function S(t, e, r, n) {
+  function i(o) {
+    return o instanceof r ? o : new r(function(s) {
+      s(o);
+    });
+  }
+  return new (r || (r = Promise))(function(o, s) {
+    function a(l) {
+      try {
+        c(n.next(l));
+      } catch (g) {
+        s(g);
+      }
+    }
+    function u(l) {
+      try {
+        c(n.throw(l));
+      } catch (g) {
+        s(g);
+      }
+    }
+    function c(l) {
+      l.done ? o(l.value) : i(l.value).then(a, u);
+    }
+    c((n = n.apply(t, e || [])).next());
+  });
+}
+function O(t, e) {
+  var r = { label: 0, sent: function() {
+    if (o[0] & 1)
+      throw o[1];
+    return o[1];
+  }, trys: [], ops: [] }, n, i, o, s;
+  return s = { next: a(0), throw: a(1), return: a(2) }, typeof Symbol == "function" && (s[Symbol.iterator] = function() {
+    return this;
+  }), s;
+  function a(c) {
+    return function(l) {
+      return u([c, l]);
+    };
+  }
+  function u(c) {
+    if (n)
+      throw new TypeError("Generator is already executing.");
+    for (; s && (s = 0, c[0] && (r = 0)), r; )
+      try {
+        if (n = 1, i && (o = c[0] & 2 ? i.return : c[0] ? i.throw || ((o = i.return) && o.call(i), 0) : i.next) && !(o = o.call(i, c[1])).done)
+          return o;
+        switch (i = 0, o && (c = [c[0] & 2, o.value]), c[0]) {
+          case 0:
+          case 1:
+            o = c;
+            break;
+          case 4:
+            return r.label++, { value: c[1], done: !1 };
+          case 5:
+            r.label++, i = c[1], c = [0];
+            continue;
+          case 7:
+            c = r.ops.pop(), r.trys.pop();
+            continue;
+          default:
+            if (o = r.trys, !(o = o.length > 0 && o[o.length - 1]) && (c[0] === 6 || c[0] === 2)) {
+              r = 0;
+              continue;
+            }
+            if (c[0] === 3 && (!o || c[1] > o[0] && c[1] < o[3])) {
+              r.label = c[1];
+              break;
+            }
+            if (c[0] === 6 && r.label < o[1]) {
+              r.label = o[1], o = c;
+              break;
+            }
+            if (o && r.label < o[2]) {
+              r.label = o[2], r.ops.push(c);
+              break;
+            }
+            o[2] && r.ops.pop(), r.trys.pop();
+            continue;
+        }
+        c = e.call(t, r);
+      } catch (l) {
+        c = [6, l], i = 0;
+      } finally {
+        n = o = 0;
+      }
+    if (c[0] & 5)
+      throw c[1];
+    return { value: c[0] ? c[1] : void 0, done: !0 };
+  }
+}
+function Xe(t, e, r) {
+  if (r || arguments.length === 2)
+    for (var n = 0, i = e.length, o; n < i; n++)
+      (o || !(n in e)) && (o || (o = Array.prototype.slice.call(e, 0, n)), o[n] = e[n]);
+  return t.concat(o || Array.prototype.slice.call(e));
+}
+function A(t, e) {
+  return Object.defineProperty ? Object.defineProperty(t, "raw", { value: e }) : t.raw = e, t;
+}
+var K;
+(function(t) {
+  t[t.Fetched = 0] = "Fetched", t[t.NotModified = 1] = "NotModified", t[t.Errored = 2] = "Errored";
+})(K || (K = {}));
+var x = function() {
+  function t(e, r, n, i) {
+    this.status = e, this.config = r, this.errorMessage = n, this.errorException = i;
+  }
+  return t.success = function(e) {
+    return new t(K.Fetched, e);
+  }, t.notModified = function(e) {
+    return new t(K.NotModified, e);
+  }, t.error = function(e, r, n) {
+    return new t(K.Errored, e, r ?? "Unknown error.", n);
+  }, t;
+}(), ee = function(t) {
+  z(e, t);
+  function e(r) {
+    for (var n = [], i = 1; i < arguments.length; i++)
+      n[i - 1] = arguments[i];
+    var o = this, s;
+    switch (r) {
+      case "abort":
+        s = "Request was aborted.";
+        break;
+      case "timeout":
+        var a = n[0];
+        s = "Request timed out. Timeout value: ".concat(a, "ms");
+        break;
+      case "failure":
+        var u = n[0];
+        s = "Request failed due to a network or protocol error.", u && (s += " " + (u instanceof Error ? u.message : u + ""));
+        break;
+    }
+    return o = t.call(this, s) || this, o.cause = r, o instanceof e || (Object.setPrototypeOf || function(c, l) {
+      return c.__proto__ = l;
+    })(o, e.prototype), o.args = n, o;
+  }
+  return e;
+}(Error), P = function() {
+  function t(e, r, n, i) {
+    this.configJson = e, this.config = r, this.timestamp = n, this.httpETag = i;
+  }
+  return t.prototype.with = function(e) {
+    return new t(this.configJson, this.config, e, this.httpETag);
+  }, Object.defineProperty(t.prototype, "isEmpty", {
+    get: function() {
+      return !this.config;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), t.prototype.isExpired = function(e) {
+    return this === t.empty || this.timestamp + e < t.generateTimestamp();
+  }, t.generateTimestamp = function() {
+    return new Date().getTime();
+  }, t.serialize = function(e) {
+    var r, n;
+    return e.timestamp + `
+` + ((r = e.httpETag) !== null && r !== void 0 ? r : "") + `
+` + ((n = e.configJson) !== null && n !== void 0 ? n : "");
+  }, t.deserialize = function(e) {
+    for (var r = Array(2), n = 0, i = 0; i < r.length; i++) {
+      if (n = e.indexOf(`
+`, n), n < 0)
+        throw new Error("Number of values is fewer than expected.");
+      r[i] = n++;
+    }
+    var o = r[0], s = e.substring(0, o), a = parseInt(s);
+    if (isNaN(a))
+      throw new Error("Invalid fetch time: " + s);
+    n = o + 1, o = r[1], s = e.substring(n, o);
+    var u = s.length > 0 ? s : void 0;
+    n = o + 1, s = e.substring(n);
+    var c, l;
+    if (s.length > 0) {
+      try {
+        c = new le(JSON.parse(s));
+      } catch {
+        throw new Error("Invalid config JSON content: " + s);
+      }
+      l = s;
+    }
+    return new t(l, c, a, u);
+  }, t.serializationFormatVersion = "v2", t.empty = new t(void 0, void 0, 0, void 0), t;
+}(), le = function() {
+  function t(e) {
+    this.settings = e.f ? Object.fromEntries(Object.entries(e.f).map(function(r) {
+      var n = r[0], i = r[1];
+      return [n, new Qe(i)];
+    })) : {}, this.preferences = e.p ? new Ze(e.p) : void 0;
+  }
+  return t;
+}(), J;
+(function(t) {
+  t[t.No = 0] = "No", t[t.Should = 1] = "Should", t[t.Force = 2] = "Force";
+})(J || (J = {}));
+var Ze = function() {
+  function t(e) {
+    this.baseUrl = e.u, this.redirectMode = e.r;
+  }
+  return t;
+}(), ye;
+(function(t) {
+  t[t.Boolean = 0] = "Boolean", t[t.String = 1] = "String", t[t.Int = 2] = "Int", t[t.Double = 3] = "Double";
+})(ye || (ye = {}));
+var Qe = function() {
+  function t(e) {
+    var r, n, i, o;
+    this.value = e.v, this.type = e.t, this.percentageOptions = (n = (r = e.p) === null || r === void 0 ? void 0 : r.map(function(s) {
+      return new tt(s);
+    })) !== null && n !== void 0 ? n : [], this.targetingRules = (o = (i = e.r) === null || i === void 0 ? void 0 : i.map(function(s) {
+      return new et(s);
+    })) !== null && o !== void 0 ? o : [], this.variationId = e.i;
+  }
+  return t.fromValue = function(e) {
+    return new t({
+      t: -1,
+      v: e
+    });
+  }, t;
+}(), h;
+(function(t) {
+  t[t.In = 0] = "In", t[t.NotIn = 1] = "NotIn", t[t.Contains = 2] = "Contains", t[t.NotContains = 3] = "NotContains", t[t.SemVerIn = 4] = "SemVerIn", t[t.SemVerNotIn = 5] = "SemVerNotIn", t[t.SemVerLessThan = 6] = "SemVerLessThan", t[t.SemVerLessThanEqual = 7] = "SemVerLessThanEqual", t[t.SemVerGreaterThan = 8] = "SemVerGreaterThan", t[t.SemVerGreaterThanEqual = 9] = "SemVerGreaterThanEqual", t[t.NumberEqual = 10] = "NumberEqual", t[t.NumberNotEqual = 11] = "NumberNotEqual", t[t.NumberLessThan = 12] = "NumberLessThan", t[t.NumberLessThanEqual = 13] = "NumberLessThanEqual", t[t.NumberGreaterThan = 14] = "NumberGreaterThan", t[t.NumberGreaterThanEqual = 15] = "NumberGreaterThanEqual", t[t.SensitiveOneOf = 16] = "SensitiveOneOf", t[t.SensitiveNotOneOf = 17] = "SensitiveNotOneOf";
+})(h || (h = {}));
+var et = function() {
+  function t(e) {
+    this.order = e.o, this.comparisonAttribute = e.a, this.comparator = e.t, this.comparisonValue = e.c, this.value = e.v, this.variationId = e.i;
+  }
+  return t;
+}(), tt = function() {
+  function t(e) {
+    this.order = e.o, this.percentage = e.p, this.value = e.v, this.variationId = e.i;
+  }
+  return t;
+}(), ne = function() {
+  function t(e, r) {
+    this.errorMessage = e, this.errorException = r;
+  }
+  return Object.defineProperty(t.prototype, "isSuccess", {
+    get: function() {
+      return this.errorMessage === null;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), t.from = function(e) {
+    return e.status !== K.Errored ? t.success() : t.failure(e.errorMessage, e.errorException);
+  }, t.success = function() {
+    return new t(null);
+  }, t.failure = function(e, r) {
+    return new t(e, r);
+  }, t;
+}(), I;
+(function(t) {
+  t[t.Online = 0] = "Online", t[t.Offline = 1] = "Offline", t[t.Disposed = 2] = "Disposed";
+})(I || (I = {}));
+var ge = function() {
+  function t(e, r) {
+    this.configFetcher = e, this.options = r, this.pendingFetch = null, this.cacheKey = r.getCacheKey(), this.configFetcher = e, this.options = r, this.status = r.offline ? I.Offline : I.Online;
+  }
+  return t.prototype.dispose = function() {
+    this.status = I.Disposed;
+  }, Object.defineProperty(t.prototype, "disposed", {
+    get: function() {
+      return this.status === I.Disposed;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), t.prototype.refreshConfigAsync = function() {
+    return S(this, void 0, void 0, function() {
+      var e, r, n, i, o;
+      return O(this, function(s) {
+        switch (s.label) {
+          case 0:
+            return [4, this.options.cache.get(this.cacheKey)];
+          case 1:
+            return e = s.sent(), this.isOffline ? [3, 3] : [4, this.refreshConfigCoreAsync(e)];
+          case 2:
+            return r = s.sent(), n = r[0], i = r[1], [2, [ne.from(n), i]];
+          case 3:
+            return o = this.options.logger.configServiceCannotInitiateHttpCalls().toString(), [2, [ne.failure(o), e]];
+        }
+      });
+    });
+  }, t.prototype.refreshConfigCoreAsync = function(e) {
+    return S(this, void 0, void 0, function() {
+      var r, n;
+      return O(this, function(i) {
+        switch (i.label) {
+          case 0:
+            return [4, this.fetchAsync(e)];
+          case 1:
+            return r = i.sent(), n = r.status === K.Fetched, n || r.config.timestamp > e.timestamp && (!r.config.isEmpty || e.isEmpty) ? [4, this.options.cache.set(this.cacheKey, r.config)] : [3, 3];
+          case 2:
+            i.sent(), this.onConfigUpdated(r.config), n && (r.config.httpETag != e.httpETag || r.config.configJson != e.configJson) && this.onConfigChanged(r.config), e = r.config, i.label = 3;
+          case 3:
+            return [2, [r, e]];
+        }
+      });
+    });
+  }, t.prototype.onConfigUpdated = function(e) {
+  }, t.prototype.onConfigChanged = function(e) {
     var r;
-    if (this.configFileName = "config_v5", this.logger = new pe(_.Warn), this.requestTimeoutMs = 3e4, this.baseUrlOverriden = !1, this.proxy = "", !t)
+    this.options.logger.debug("config changed"), this.options.hooks.emit("configChanged", (r = e.config) !== null && r !== void 0 ? r : new le({}));
+  }, t.prototype.fetchAsync = function(e) {
+    var r = this, n;
+    return (n = this.pendingFetch) !== null && n !== void 0 ? n : this.pendingFetch = function() {
+      return S(r, void 0, void 0, function() {
+        return O(this, function(i) {
+          switch (i.label) {
+            case 0:
+              return i.trys.push([0, , 2, 3]), [4, this.fetchLogicAsync(e)];
+            case 1:
+              return [2, i.sent()];
+            case 2:
+              return this.pendingFetch = null, [7];
+            case 3:
+              return [2];
+          }
+        });
+      });
+    }();
+  }, t.prototype.fetchLogicAsync = function(e) {
+    var r;
+    return S(this, void 0, void 0, function() {
+      var n, i, o, s, a, u;
+      return O(this, function(c) {
+        switch (c.label) {
+          case 0:
+            n = this.options, n.logger.debug("ConfigServiceBase.fetchLogicAsync() - called."), c.label = 1;
+          case 1:
+            return c.trys.push([1, 3, , 4]), [4, this.fetchRequestAsync((r = e.httpETag) !== null && r !== void 0 ? r : null)];
+          case 2:
+            switch (o = c.sent(), s = o[0], a = o[1], s.statusCode) {
+              case 200:
+                return a ? (n.logger.debug("ConfigServiceBase.fetchLogicAsync(): fetch was successful. Returning new config."), [2, x.success(new P(s.body, a, P.generateTimestamp(), s.eTag))]) : (i = n.logger.fetchReceived200WithInvalidBody().toString(), n.logger.debug("ConfigServiceBase.fetchLogicAsync(): ".concat(s.statusCode, " ").concat(s.reasonPhrase, " was received but the HTTP response content was invalid. Returning null.")), [2, x.error(e, i)]);
+              case 304:
+                return e ? (n.logger.debug("ConfigServiceBase.fetchLogicAsync(): content was not modified. Returning last config with updated timestamp."), [2, x.notModified(e.with(P.generateTimestamp()))]) : (i = n.logger.fetchReceived304WhenLocalCacheIsEmpty(s.statusCode, s.reasonPhrase).toString(), n.logger.debug("ConfigServiceBase.fetchLogicAsync(): ".concat(s.statusCode, " ").concat(s.reasonPhrase, " was received when no config is cached locally. Returning null.")), [2, x.error(e, i)]);
+              case 403:
+              case 404:
+                return i = n.logger.fetchFailedDueToInvalidSdkKey().toString(), n.logger.debug("ConfigServiceBase.fetchLogicAsync(): fetch was unsuccessful. Returning last config (if any) with updated timestamp."), [2, x.error(e.with(P.generateTimestamp()), i)];
+              default:
+                return i = n.logger.fetchFailedDueToUnexpectedHttpResponse(s.statusCode, s.reasonPhrase).toString(), n.logger.debug("ConfigServiceBase.fetchLogicAsync(): fetch was unsuccessful. Returning null."), [2, x.error(e, i)];
+            }
+            return [3, 4];
+          case 3:
+            return u = c.sent(), i = (u instanceof ee && u.cause === "timeout" ? n.logger.fetchFailedDueToRequestTimeout(u.args[0], u) : n.logger.fetchFailedDueToUnexpectedError(u)).toString(), n.logger.debug("ConfigServiceBase.fetchLogicAsync(): fetch was unsuccessful. Returning null."), [2, x.error(e, i, u)];
+          case 4:
+            return [2];
+        }
+      });
+    });
+  }, t.prototype.fetchRequestAsync = function(e, r) {
+    return r === void 0 && (r = 2), S(this, void 0, void 0, function() {
+      var n, i, o, s, a, u, c;
+      return O(this, function(l) {
+        switch (l.label) {
+          case 0:
+            n = this.options, n.logger.debug("ConfigServiceBase.fetchRequestAsync() - called."), i = 0, l.label = 1;
+          case 1:
+            return n.logger.debug("ConfigServiceBase.fetchRequestAsync(): calling fetchLogic()".concat(i > 0 ? ", retry ".concat(i, "/").concat(r) : "")), [4, this.configFetcher.fetchLogic(n, e)];
+          case 2:
+            if (o = l.sent(), o.statusCode !== 200)
+              return [2, [o]];
+            if (!o.body)
+              return n.logger.debug("ConfigServiceBase.fetchRequestAsync(): no response body."), [2, [o]];
+            s = void 0;
+            try {
+              s = new le(JSON.parse(o.body));
+            } catch {
+              return n.logger.debug("ConfigServiceBase.fetchRequestAsync(): invalid response body."), [2, [o]];
+            }
+            if (a = s.preferences, !a)
+              return n.logger.debug("ConfigServiceBase.fetchRequestAsync(): preferences is empty."), [2, [o, s]];
+            if (u = a.baseUrl, !u || u === n.baseUrl)
+              return n.logger.debug("ConfigServiceBase.fetchRequestAsync(): baseUrl OK."), [2, [o, s]];
+            if (c = a.redirectMode, n.baseUrlOverriden && c !== J.Force)
+              return n.logger.debug("ConfigServiceBase.fetchRequestAsync(): options.baseUrlOverriden && redirect !== 2."), [2, [o, s]];
+            if (n.baseUrl = u, c === J.No)
+              return [2, [o, s]];
+            if (c === J.Should && n.logger.dataGovernanceIsOutOfSync(), i >= r)
+              return n.logger.fetchFailedDueToRedirectLoop(), [2, [o, s]];
+            l.label = 3;
+          case 3:
+            return i++, [3, 1];
+          case 4:
+            return [2];
+        }
+      });
+    });
+  }, Object.defineProperty(t.prototype, "isOfflineExactly", {
+    get: function() {
+      return this.status === I.Offline;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), Object.defineProperty(t.prototype, "isOffline", {
+    get: function() {
+      return this.status !== I.Online;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), t.prototype.setOnlineCore = function() {
+  }, t.prototype.setOnline = function() {
+    this.status === I.Offline ? (this.setOnlineCore(), this.status = I.Online, this.options.logger.configServiceStatusChanged(I[this.status])) : this.disposed && this.options.logger.configServiceMethodHasNoEffectDueToDisposedClient("setOnline");
+  }, t.prototype.setOfflineCore = function() {
+  }, t.prototype.setOffline = function() {
+    this.status === I.Online ? (this.setOfflineCore(), this.status = I.Offline, this.options.logger.configServiceStatusChanged(I[this.status])) : this.disposed && this.options.logger.configServiceMethodHasNoEffectDueToDisposedClient("setOffline");
+  }, t;
+}();
+function rt(t, e) {
+  var r, n = new Promise(function(i) {
+    return r = setTimeout(i, t);
+  });
+  return e == null || e(function() {
+    return clearTimeout(r);
+  }), n;
+}
+function $(t, e) {
+  return e === void 0 && (e = !1), t instanceof Error ? e && t.stack ? t.stack : t.toString() : t + "";
+}
+var nt = function(t) {
+  z(e, t);
+  function e(r, n) {
+    var i = t.call(this, r, n) || this;
+    return i.signalInitialization = function() {
+    }, i.pollIntervalMs = n.pollIntervalSeconds * 1e3, n.maxInitWaitTimeSeconds !== 0 ? (i.initialized = !1, i.initialization = new Promise(function(o) {
+      return i.signalInitialization = function() {
+        i.initialized = !0, o();
+      };
+    }), i.initialization.then(function() {
+      return !i.disposed && n.hooks.emit("clientReady");
+    }), n.maxInitWaitTimeSeconds > 0 && setTimeout(function() {
+      return i.signalInitialization();
+    }, n.maxInitWaitTimeSeconds * 1e3)) : (i.initialized = !0, i.initialization = Promise.resolve(), n.hooks.emit("clientReady")), n.offline || i.startRefreshWorker(), i;
+  }
+  return e.prototype.waitForInitializationAsync = function() {
+    return S(this, void 0, void 0, function() {
+      var r, n, i = this;
+      return O(this, function(o) {
+        switch (o.label) {
+          case 0:
+            return this.options.maxInitWaitTimeSeconds < 0 ? [4, this.initialization] : [3, 2];
+          case 1:
+            return o.sent(), [2, !0];
+          case 2:
+            return [4, Promise.race([
+              function() {
+                return S(i, void 0, void 0, function() {
+                  return O(this, function(s) {
+                    switch (s.label) {
+                      case 0:
+                        return [4, this.initialization];
+                      case 1:
+                        return s.sent(), [2, !0];
+                    }
+                  });
+                });
+              }(),
+              rt(this.options.maxInitWaitTimeSeconds * 1e3, function(s) {
+                return r = s;
+              })
+            ])];
+          case 3:
+            return n = o.sent(), r(), [2, !!n];
+        }
+      });
+    });
+  }, e.prototype.getConfig = function() {
+    return S(this, void 0, void 0, function() {
+      function r(i) {
+        i.debug("AutoPollConfigService.getConfig() - returning value from cache.");
+      }
+      var n;
+      return O(this, function(i) {
+        switch (i.label) {
+          case 0:
+            return this.options.logger.debug("AutoPollConfigService.getConfig() called."), !this.isOffline && !this.initialized ? [4, this.options.cache.get(this.cacheKey)] : [3, 3];
+          case 1:
+            return n = i.sent(), n.isExpired(this.pollIntervalMs) ? (this.options.logger.debug("AutoPollConfigService.getConfig() - cache is empty or expired, waiting for initialization."), [4, this.waitForInitializationAsync()]) : (r(this.options.logger), [2, n]);
+          case 2:
+            i.sent(), i.label = 3;
+          case 3:
+            return [4, this.options.cache.get(this.cacheKey)];
+          case 4:
+            return n = i.sent(), n.isExpired(this.pollIntervalMs) ? this.options.logger.debug("AutoPollConfigService.getConfig() - cache is empty or expired.") : r(this.options.logger), [2, n];
+        }
+      });
+    });
+  }, e.prototype.refreshConfigAsync = function() {
+    return this.options.logger.debug("AutoPollConfigService.refreshConfigAsync() called."), t.prototype.refreshConfigAsync.call(this);
+  }, e.prototype.dispose = function() {
+    this.options.logger.debug("AutoPollConfigService.dispose() called."), t.prototype.dispose.call(this), this.timerId && this.stopRefreshWorker();
+  }, e.prototype.onConfigUpdated = function(r) {
+    t.prototype.onConfigUpdated.call(this, r), this.signalInitialization();
+  }, e.prototype.setOnlineCore = function() {
+    this.startRefreshWorker();
+  }, e.prototype.setOfflineCore = function() {
+    this.stopRefreshWorker();
+  }, e.prototype.startRefreshWorker = function() {
+    return S(this, void 0, void 0, function() {
+      var r, n, i = this;
+      return O(this, function(o) {
+        switch (o.label) {
+          case 0:
+            return this.options.logger.debug("AutoPollConfigService.startRefreshWorker() called."), r = this.pollIntervalMs, [4, this.options.cache.get(this.cacheKey)];
+          case 1:
+            return n = o.sent(), n.isExpired(this.pollIntervalMs) ? this.isOfflineExactly ? [3, 3] : [4, this.refreshConfigCoreAsync(n)] : [3, 4];
+          case 2:
+            o.sent(), o.label = 3;
+          case 3:
+            return [3, 5];
+          case 4:
+            this.signalInitialization(), o.label = 5;
+          case 5:
+            return this.options.logger.debug("AutoPollConfigService.startRefreshWorker() - calling refreshWorkerLogic()'s setTimeout."), this.timerId = setTimeout(function(s) {
+              return i.refreshWorkerLogic(s);
+            }, r, r), [2];
+        }
+      });
+    });
+  }, e.prototype.stopRefreshWorker = function() {
+    this.options.logger.debug("AutoPollConfigService.stopRefreshWorker() - clearing setTimeout."), clearTimeout(this.timerId);
+  }, e.prototype.refreshWorkerLogic = function(r) {
+    return S(this, void 0, void 0, function() {
+      var n, i = this;
+      return O(this, function(o) {
+        switch (o.label) {
+          case 0:
+            return this.disposed ? (this.options.logger.debug("AutoPollConfigService.refreshWorkerLogic() - called on a disposed client."), [2]) : (this.options.logger.debug("AutoPollConfigService.refreshWorkerLogic() - called."), this.isOffline ? [3, 3] : [4, this.options.cache.get(this.cacheKey)]);
+          case 1:
+            return n = o.sent(), [4, this.refreshConfigCoreAsync(n)];
+          case 2:
+            o.sent(), o.label = 3;
+          case 3:
+            return this.options.logger.debug("AutoPollConfigService.refreshWorkerLogic() - calling refreshWorkerLogic()'s setTimeout."), this.timerId = setTimeout(function(s) {
+              return i.refreshWorkerLogic(s);
+            }, r, r), [2];
+        }
+      });
+    });
+  }, e;
+}(ge), it = function() {
+  function t() {
+    this.cachedConfig = P.empty;
+  }
+  return t.prototype.set = function(e, r) {
+    this.cachedConfig = r;
+  }, t.prototype.get = function(e) {
+    return this.cachedConfig;
+  }, t;
+}(), qe = function() {
+  function t(e, r) {
+    this.cache = e, this.logger = r, this.cachedConfig = P.empty;
+  }
+  return t.prototype.set = function(e, r) {
+    return S(this, void 0, void 0, function() {
+      var n;
+      return O(this, function(i) {
+        switch (i.label) {
+          case 0:
+            if (i.trys.push([0, 2, , 3]), !r.isEmpty)
+              this.cachedSerializedConfig = P.serialize(r), this.cachedConfig = r;
+            else
+              return this.cachedSerializedConfig = void 0, this.cachedConfig = r, [2];
+            return [4, this.cache.set(e, this.cachedSerializedConfig)];
+          case 1:
+            return i.sent(), [3, 3];
+          case 2:
+            return n = i.sent(), this.logger.configServiceCacheWriteError(n), [3, 3];
+          case 3:
+            return [2];
+        }
+      });
+    });
+  }, t.prototype.get = function(e) {
+    return S(this, void 0, void 0, function() {
+      var r, n;
+      return O(this, function(i) {
+        switch (i.label) {
+          case 0:
+            return i.trys.push([0, 2, , 3]), [4, this.cache.get(e)];
+          case 1:
+            return r = i.sent(), r == null || r === this.cachedSerializedConfig ? [2, this.cachedConfig] : (this.cachedConfig = P.deserialize(r), this.cachedSerializedConfig = r, [3, 3]);
+          case 2:
+            return n = i.sent(), this.logger.configServiceCacheReadError(n), [3, 3];
+          case 3:
+            return [2, this.cachedConfig];
+        }
+      });
+    });
+  }, t;
+}(), d;
+(function(t) {
+  t[t.Debug = 4] = "Debug", t[t.Info = 3] = "Info", t[t.Warn = 2] = "Warn", t[t.Error = 1] = "Error", t[t.Off = -1] = "Off";
+})(d || (d = {}));
+var C = function() {
+  function t(e, r, n) {
+    this.strings = e, this.argNames = r, this.argValues = n;
+  }
+  return t.from = function() {
+    for (var e = [], r = 0; r < arguments.length; r++)
+      e[r] = arguments[r];
+    return function(n) {
+      for (var i = [], o = 1; o < arguments.length; o++)
+        i[o - 1] = arguments[o];
+      return new t(n, e, i);
+    };
+  }, Object.defineProperty(t.prototype, "defaultFormattedMessage", {
+    get: function() {
+      var e = this.cachedDefaultFormattedMessage;
+      if (e === void 0) {
+        e = "";
+        for (var r = this, n = r.strings, i = r.argValues, o = 0; o < n.length - 1; o++)
+          e += n[o], e += i[o];
+        e += n[o], this.cachedDefaultFormattedMessage = e;
+      }
+      return e;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), t.prototype.toString = function() {
+    return this.defaultFormattedMessage;
+  }, t;
+}(), ot = function() {
+  function t(e, r) {
+    this.logger = e, this.hooks = r;
+  }
+  return Object.defineProperty(t.prototype, "level", {
+    get: function() {
+      var e;
+      return (e = this.logger.level) !== null && e !== void 0 ? e : d.Warn;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), t.prototype.isLogLevelEnabled = function(e) {
+    return this.level >= e;
+  }, t.prototype.log = function(e, r, n, i) {
+    var o;
+    return this.isLogLevelEnabled(e) && this.logger.log(e, r, n, i), e === d.Error && ((o = this.hooks) === null || o === void 0 || o.emit("clientError", n.toString(), i)), n;
+  }, t.prototype.debug = function(e) {
+    this.log(d.Debug, 0, e);
+  }, t.prototype.configJsonIsNotPresent = function(e) {
+    return this.log(d.Error, 1e3, C.from("DEFAULT_RETURN_VALUE")(me || (me = A(["Config JSON is not present. Returning ", "."], ["Config JSON is not present. Returning ", "."])), e));
+  }, t.prototype.configJsonIsNotPresentSingle = function(e, r, n) {
+    return this.log(d.Error, 1e3, C.from("KEY", "DEFAULT_PARAM_NAME", "DEFAULT_PARAM_VALUE")(Ee || (Ee = A(["Config JSON is not present when evaluating setting '", "'. Returning the `", "` parameter that you specified in your application: '", "'."], ["Config JSON is not present when evaluating setting '", "'. Returning the \\`", "\\` parameter that you specified in your application: '", "'."])), e, r, n));
+  }, t.prototype.settingEvaluationFailedDueToMissingKey = function(e, r, n, i) {
+    return this.log(d.Error, 1001, C.from("KEY", "DEFAULT_PARAM_NAME", "DEFAULT_PARAM_VALUE", "AVAILABLE_KEYS")(be || (be = A(["Failed to evaluate setting '", "' (the key was not found in config JSON). Returning the `", "` parameter that you specified in your application: '", "'. Available keys: [", "]."], ["Failed to evaluate setting '", "' (the key was not found in config JSON). Returning the \\`", "\\` parameter that you specified in your application: '", "'. Available keys: [", "]."])), e, r, n, i));
+  }, t.prototype.settingEvaluationError = function(e, r, n) {
+    return this.log(d.Error, 1002, C.from("METHOD_NAME", "DEFAULT_RETURN_VALUE")(Se || (Se = A(["Error occurred in the `", "` method. Returning ", "."], ["Error occurred in the \\`", "\\` method. Returning ", "."])), e, r), n);
+  }, t.prototype.settingEvaluationErrorSingle = function(e, r, n, i, o) {
+    return this.log(d.Error, 1002, C.from("METHOD_NAME", "KEY", "DEFAULT_PARAM_NAME", "DEFAULT_PARAM_VALUE")(Oe || (Oe = A(["Error occurred in the `", "` method while evaluating setting '", "'. Returning the `", "` parameter that you specified in your application: '", "'."], ["Error occurred in the \\`", "\\` method while evaluating setting '", "'. Returning the \\`", "\\` parameter that you specified in your application: '", "'."])), e, r, n, i), o);
+  }, t.prototype.forceRefreshError = function(e, r) {
+    return this.log(d.Error, 1003, C.from("METHOD_NAME")(Ae || (Ae = A(["Error occurred in the `", "` method."], ["Error occurred in the \\`", "\\` method."])), e), r);
+  }, t.prototype.fetchFailedDueToInvalidSdkKey = function() {
+    return this.log(d.Error, 1100, "Your SDK Key seems to be wrong. You can find the valid SDK Key at https://app.configcat.com/sdkkey");
+  }, t.prototype.fetchFailedDueToUnexpectedHttpResponse = function(e, r) {
+    return this.log(d.Error, 1101, C.from("STATUS_CODE", "REASON_PHRASE")(Ce || (Ce = A(["Unexpected HTTP response was received while trying to fetch config JSON: ", " ", ""], ["Unexpected HTTP response was received while trying to fetch config JSON: ", " ", ""])), e, r));
+  }, t.prototype.fetchFailedDueToRequestTimeout = function(e, r) {
+    return this.log(d.Error, 1102, C.from("TIMEOUT")(we || (we = A(["Request timed out while trying to fetch config JSON. Timeout value: ", "ms"], ["Request timed out while trying to fetch config JSON. Timeout value: ", "ms"])), e), r);
+  }, t.prototype.fetchFailedDueToUnexpectedError = function(e) {
+    return this.log(d.Error, 1103, "Unexpected error occurred while trying to fetch config JSON.", e);
+  }, t.prototype.fetchFailedDueToRedirectLoop = function() {
+    return this.log(d.Error, 1104, "Redirection loop encountered while trying to fetch config JSON. Please contact us at https://configcat.com/support/");
+  }, t.prototype.fetchReceived200WithInvalidBody = function() {
+    return this.log(d.Error, 1105, "Fetching config JSON was successful but the HTTP response content was invalid.");
+  }, t.prototype.fetchReceived304WhenLocalCacheIsEmpty = function(e, r) {
+    return this.log(d.Error, 1106, C.from("STATUS_CODE", "REASON_PHRASE")(Ie || (Ie = A(["Unexpected HTTP response was received when no config JSON is cached locally: ", " ", ""], ["Unexpected HTTP response was received when no config JSON is cached locally: ", " ", ""])), e, r));
+  }, t.prototype.settingForVariationIdIsNotPresent = function(e) {
+    return this.log(d.Error, 2011, C.from("VARIATION_ID")(Te || (Te = A(["Could not find the setting for the specified variation ID: '", "'."], ["Could not find the setting for the specified variation ID: '", "'."])), e));
+  }, t.prototype.configServiceCacheReadError = function(e) {
+    return this.log(d.Error, 2200, "Error occurred while reading the cache.", e);
+  }, t.prototype.configServiceCacheWriteError = function(e) {
+    return this.log(d.Error, 2201, "Error occurred while writing the cache.", e);
+  }, t.prototype.clientIsAlreadyCreated = function(e) {
+    return this.log(d.Warn, 3e3, C.from("SDK_KEY")(Ne || (Ne = A(["There is an existing client instance for the specified SDK Key. No new client instance will be created and the specified options are ignored. Returning the existing client instance. SDK Key: '", "'."], ["There is an existing client instance for the specified SDK Key. No new client instance will be created and the specified options are ignored. Returning the existing client instance. SDK Key: '", "'."])), e));
+  }, t.prototype.targetingIsNotPossible = function(e) {
+    return this.log(d.Warn, 3001, C.from("KEY")(Le || (Le = A(["Cannot evaluate targeting rules and % options for setting '", "' (User Object is missing). You should pass a User Object to the evaluation methods like `getValueAsync()` in order to make targeting work properly. Read more: https://configcat.com/docs/advanced/user-object/"], ["Cannot evaluate targeting rules and % options for setting '", "' (User Object is missing). You should pass a User Object to the evaluation methods like \\`getValueAsync()\\` in order to make targeting work properly. Read more: https://configcat.com/docs/advanced/user-object/"])), e));
+  }, t.prototype.dataGovernanceIsOutOfSync = function() {
+    return this.log(d.Warn, 3002, "The `dataGovernance` parameter specified at the client initialization is not in sync with the preferences on the ConfigCat Dashboard. Read more: https://configcat.com/docs/advanced/data-governance/");
+  }, t.prototype.configServiceCannotInitiateHttpCalls = function() {
+    return this.log(d.Warn, 3200, "Client is in offline mode, it cannot initiate HTTP calls.");
+  }, t.prototype.configServiceMethodHasNoEffectDueToDisposedClient = function(e) {
+    return this.log(d.Warn, 3201, C.from("METHOD_NAME")(Re || (Re = A(["The client object is already disposed, thus `", "()` has no effect."], ["The client object is already disposed, thus \\`", "()\\` has no effect."])), e));
+  }, t.prototype.configServiceMethodHasNoEffectDueToOverrideBehavior = function(e, r) {
+    return this.log(d.Warn, 3202, C.from("OVERRIDE_BEHAVIOR", "METHOD_NAME")(De || (De = A(["Client is configured to use the `", "` override behavior, thus `", "()` has no effect."], ["Client is configured to use the \\`", "\\` override behavior, thus \\`", "()\\` has no effect."])), e, r));
+  }, t.prototype.settingEvaluated = function(e) {
+    return this.log(d.Info, 5e3, C.from("EVALUATE_LOG")(Fe || (Fe = A(["", ""], ["", ""])), e));
+  }, t.prototype.configServiceStatusChanged = function(e) {
+    return this.log(d.Info, 5200, C.from("MODE")(ke || (ke = A(["Switched to ", " mode."], ["Switched to ", " mode."])), e.toUpperCase()));
+  }, t;
+}(), st = function() {
+  function t(e) {
+    e === void 0 && (e = d.Warn), this.level = e, this.SOURCE = "ConfigCat";
+  }
+  return t.prototype.log = function(e, r, n, i) {
+    var o = e === d.Debug ? [console.info, "DEBUG"] : e === d.Info ? [console.info, "INFO"] : e === d.Warn ? [console.warn, "WARN"] : e === d.Error ? [console.error, "ERROR"] : [console.log, d[e].toUpperCase()], s = o[0], a = o[1], u = i !== void 0 ? `
+` + $(i, !0) : "";
+    s("".concat(this.SOURCE, " - ").concat(a, " - [").concat(r, "] ").concat(n).concat(u));
+  }, t;
+}(), me, Ee, be, Se, Oe, Ae, Ce, we, Ie, Te, Ne, Le, Re, De, Fe, ke;
+function _(t) {
+  return !!t.fn;
+}
+var at = function() {
+  function t() {
+    this.events = {}, this.eventCount = 0, this.addListener = this.on, this.off = this.removeListener;
+  }
+  return t.prototype.addListenerCore = function(e, r, n) {
+    if (typeof r != "function")
+      throw new TypeError("Listener must be a function");
+    var i = this.events[e], o = { fn: r, once: n };
+    return i ? _(i) ? this.events[e] = [i, o] : i.push(o) : (this.events[e] = o, this.eventCount++), this;
+  }, t.prototype.removeListenerCore = function(e, r, n) {
+    var i = this.events[e];
+    if (!i)
+      return this;
+    if (_(i))
+      n(i, r) && this.removeEvent(e);
+    else
+      for (var o = i.length - 1; o >= 0; o--)
+        if (n(i[o], r)) {
+          i.splice(o, 1), i.length ? i.length === 1 && (this.events[e] = i[0]) : this.removeEvent(e);
+          break;
+        }
+    return this;
+  }, t.prototype.removeEvent = function(e) {
+    --this.eventCount === 0 ? this.events = {} : delete this.events[e];
+  }, t.prototype.on = function(e, r) {
+    return this.addListenerCore(e, r, !1);
+  }, t.prototype.once = function(e, r) {
+    return this.addListenerCore(e, r, !0);
+  }, t.prototype.removeListener = function(e, r) {
+    if (typeof r != "function")
+      throw new TypeError("Listener must be a function");
+    return this.removeListenerCore(e, r, function(n, i) {
+      return n.fn === i;
+    });
+  }, t.prototype.removeAllListeners = function(e) {
+    return e ? this.events[e] && this.removeEvent(e) : (this.events = {}, this.eventCount = 0), this;
+  }, t.prototype.listeners = function(e) {
+    var r = this.events[e];
+    if (!r)
+      return [];
+    if (_(r))
+      return [r.fn];
+    for (var n = r.length, i = new Array(n), o = 0; o < n; o++)
+      i[o] = r[o].fn;
+    return i;
+  }, t.prototype.listenerCount = function(e) {
+    var r = this.events[e];
+    return r ? _(r) ? 1 : r.length : 0;
+  }, t.prototype.eventNames = function() {
+    var e = [];
+    if (this.eventCount === 0)
+      return e;
+    var r = this.events;
+    for (var n in r)
+      Object.prototype.hasOwnProperty.call(r, n) && e.push(n);
+    return Object.getOwnPropertySymbols ? e.concat(Object.getOwnPropertySymbols(r)) : e;
+  }, t.prototype.emit = function(e, r, n, i, o) {
+    var s, a, u = this.events[e];
+    if (!u)
+      return !1;
+    var c, l;
+    _(u) ? (s = [u, 1], c = s[0], l = s[1]) : (u = u.slice(), a = [u[0], u.length], c = a[0], l = a[1]);
+    for (var g = arguments.length - 1, v = 0; ; ) {
+      switch (c.once && this.removeListenerCore(e, c, function(y, E) {
+        return y === E;
+      }), g) {
+        case 0:
+          c.fn.call(this);
+          break;
+        case 1:
+          c.fn.call(this, r);
+          break;
+        case 2:
+          c.fn.call(this, r, n);
+          break;
+        case 3:
+          c.fn.call(this, r, n, i);
+          break;
+        case 4:
+          c.fn.call(this, r, n, i, o);
+          break;
+        default:
+          for (var f = new Array(g), p = 0; p < g; p++)
+            f[p] = arguments[p + 1];
+          c.fn.apply(this, f);
+          break;
+      }
+      if (++v >= l)
+        break;
+      c = u[v];
+    }
+    return !0;
+  }, t;
+}(), ct = function() {
+  function t() {
+    this.addListener = this.on, this.off = this.removeListener;
+  }
+  return t.prototype.on = function() {
+    return this;
+  }, t.prototype.once = function() {
+    return this;
+  }, t.prototype.removeListener = function() {
+    return this;
+  }, t.prototype.removeAllListeners = function() {
+    return this;
+  }, t.prototype.listeners = function() {
+    return [];
+  }, t.prototype.listenerCount = function() {
+    return 0;
+  }, t.prototype.eventNames = function() {
+    return [];
+  }, t.prototype.emit = function() {
+    return !1;
+  }, t;
+}(), Pe = new ct(), ut = function() {
+  function t(e) {
+    this.addListener = this.on, this.off = this.removeListener, this.eventEmitter = e;
+  }
+  return t.prototype.tryDisconnect = function() {
+    var e = this.eventEmitter;
+    return this.eventEmitter = Pe, e !== Pe;
+  }, t.prototype.on = function(e, r) {
+    return this.eventEmitter.on(e, r), this;
+  }, t.prototype.once = function(e, r) {
+    return this.eventEmitter.once(e, r), this;
+  }, t.prototype.removeListener = function(e, r) {
+    return this.eventEmitter.removeListener(e, r), this;
+  }, t.prototype.removeAllListeners = function(e) {
+    return this.eventEmitter.removeAllListeners(e), this;
+  }, t.prototype.listeners = function(e) {
+    return this.eventEmitter.listeners(e);
+  }, t.prototype.listenerCount = function(e) {
+    return this.eventEmitter.listenerCount(e);
+  }, t.prototype.eventNames = function() {
+    return this.eventEmitter.eventNames();
+  }, t.prototype.emit = function(e) {
+    for (var r, n = [], i = 1; i < arguments.length; i++)
+      n[i - 1] = arguments[i];
+    return (r = this.eventEmitter).emit.apply(r, Xe([e], n, !1));
+  }, t;
+}();
+function te(t) {
+  function e(k, N) {
+    var V = k << N | k >>> 32 - N;
+    return V;
+  }
+  function r(k) {
+    for (var N = "", V, L = 7; L >= 0; L--)
+      V = k >>> L * 4 & 15, N += V.toString(16);
+    return N;
+  }
+  function n(k) {
+    k = k.replace(/\r\n/g, `
+`);
+    for (var N = "", V = 0; V < k.length; V++) {
+      var L = k.charCodeAt(V);
+      L < 128 ? N += String.fromCharCode(L) : L > 127 && L < 2048 ? (N += String.fromCharCode(L >> 6 | 192), N += String.fromCharCode(L & 63 | 128)) : (N += String.fromCharCode(L >> 12 | 224), N += String.fromCharCode(L >> 6 & 63 | 128), N += String.fromCharCode(L & 63 | 128));
+    }
+    return N;
+  }
+  var i, o, s, a = new Array(80), u = 1732584193, c = 4023233417, l = 2562383102, g = 271733878, v = 3285377520, f, p, y, E, T, F;
+  t = n(t);
+  var R = t.length, D = new Array();
+  for (o = 0; o < R - 3; o += 4)
+    s = t.charCodeAt(o) << 24 | t.charCodeAt(o + 1) << 16 | t.charCodeAt(o + 2) << 8 | t.charCodeAt(o + 3), D.push(s);
+  switch (R % 4) {
+    case 0:
+      o = 2147483648;
+      break;
+    case 1:
+      o = t.charCodeAt(R - 1) << 24 | 8388608;
+      break;
+    case 2:
+      o = t.charCodeAt(R - 2) << 24 | t.charCodeAt(R - 1) << 16 | 32768;
+      break;
+    case 3:
+      o = t.charCodeAt(R - 3) << 24 | t.charCodeAt(R - 2) << 16 | t.charCodeAt(R - 1) << 8 | 128;
+      break;
+  }
+  for (D.push(o); D.length % 16 != 14; )
+    D.push(0);
+  for (D.push(R >>> 29), D.push(R << 3 & 4294967295), i = 0; i < D.length; i += 16) {
+    for (o = 0; o < 16; o++)
+      a[o] = D[i + o];
+    for (o = 16; o <= 79; o++)
+      a[o] = e(a[o - 3] ^ a[o - 8] ^ a[o - 14] ^ a[o - 16], 1);
+    for (f = u, p = c, y = l, E = g, T = v, o = 0; o <= 19; o++)
+      F = e(f, 5) + (p & y | ~p & E) + T + a[o] + 1518500249 & 4294967295, T = E, E = y, y = e(p, 30), p = f, f = F;
+    for (o = 20; o <= 39; o++)
+      F = e(f, 5) + (p ^ y ^ E) + T + a[o] + 1859775393 & 4294967295, T = E, E = y, y = e(p, 30), p = f, f = F;
+    for (o = 40; o <= 59; o++)
+      F = e(f, 5) + (p & y | p & E | y & E) + T + a[o] + 2400959708 & 4294967295, T = E, E = y, y = e(p, 30), p = f, f = F;
+    for (o = 60; o <= 79; o++)
+      F = e(f, 5) + (p ^ y ^ E) + T + a[o] + 3395469782 & 4294967295, T = E, E = y, y = e(p, 30), p = f, f = F;
+    u = u + f & 4294967295, c = c + p & 4294967295, l = l + y & 4294967295, g = g + E & 4294967295, v = v + T & 4294967295;
+  }
+  return (r(u) + r(c) + r(l) + r(g) + r(v)).toLowerCase();
+}
+var U;
+(function(t) {
+  t[t.AutoPoll = 0] = "AutoPoll", t[t.LazyLoad = 1] = "LazyLoad", t[t.ManualPoll = 2] = "ManualPoll";
+})(U || (U = {}));
+var ie;
+(function(t) {
+  t[t.Global = 0] = "Global", t[t.EuOnly = 1] = "EuOnly";
+})(ie || (ie = {}));
+var pe = function() {
+  function t(e, r, n, i, o) {
+    var s, a, u;
+    if (this.requestTimeoutMs = 3e4, this.baseUrlOverriden = !1, this.proxy = "", this.offline = !1, !e)
       throw new Error("Invalid 'apiKey' value");
-    switch (a || (a = new ye()), this.apiKey = t, this.clientVersion = e, this.dataGovernance = (r = n == null ? void 0 : n.dataGovernance) !== null && r !== void 0 ? r : F.Global, this.cache = a, this.dataGovernance) {
-      case F.EuOnly:
+    switch (this.apiKey = e, this.clientVersion = r, this.dataGovernance = (s = n == null ? void 0 : n.dataGovernance) !== null && s !== void 0 ? s : ie.Global, this.dataGovernance) {
+      case ie.EuOnly:
         this.baseUrl = "https://cdn-eu.configcat.com";
         break;
       default:
         this.baseUrl = "https://cdn-global.configcat.com";
         break;
     }
+    var c = (a = o == null ? void 0 : o()) !== null && a !== void 0 ? a : new at();
+    this.hooks = new ut(c);
+    var l, g;
     if (n) {
-      if (n.logger && (this.logger = n.logger), n.requestTimeoutMs) {
+      if (l = n.logger, g = n.cache, n.requestTimeoutMs) {
         if (n.requestTimeoutMs < 0)
           throw new Error("Invalid 'requestTimeoutMs' value");
         this.requestTimeoutMs = n.requestTimeoutMs;
       }
-      n.baseUrl && (this.baseUrl = n.baseUrl, this.baseUrlOverriden = !0), n.proxy && (this.proxy = n.proxy), n.cache && (this.cache = n.cache), n.flagOverrides && (this.flagOverrides = n.flagOverrides), n.defaultUser && (this.defaultUser = n.defaultUser);
+      n.baseUrl && (this.baseUrl = n.baseUrl, this.baseUrlOverriden = !0), n.proxy && (this.proxy = n.proxy), n.flagOverrides && (this.flagOverrides = n.flagOverrides), n.defaultUser && (this.defaultUser = n.defaultUser), n.offline && (this.offline = n.offline), (u = n.setupHooks) === null || u === void 0 || u.call(n, this.hooks);
     }
+    this.logger = new ot(l ?? new st(), this.hooks), this.cache = g ? new qe(g, this.logger) : i ? i(this) : new it();
   }
-  return i.prototype.getUrl = function() {
-    return this.baseUrl + "/configuration-files/" + this.apiKey + "/" + this.configFileName + ".json?sdk=" + this.clientVersion;
-  }, i.prototype.getCacheKey = function() {
-    return "js_" + this.configFileName + "_" + this.apiKey;
-  }, i;
-}(), se = function(i) {
-  q(t, i);
-  function t(e, n, a, r, s) {
-    var l = i.call(this, e, n + "/a-" + a, r, s) || this;
-    if (l.pollIntervalSeconds = 60, l.configChanged = function() {
-    }, l.maxInitWaitTimeSeconds = 5, r && (r.pollIntervalSeconds !== void 0 && r.pollIntervalSeconds !== null && (l.pollIntervalSeconds = r.pollIntervalSeconds), r.configChanged && (l.configChanged = r.configChanged), r.maxInitWaitTimeSeconds !== void 0 && r.maxInitWaitTimeSeconds !== null && (l.maxInitWaitTimeSeconds = r.maxInitWaitTimeSeconds)), l.pollIntervalSeconds < 1)
+  return t.prototype.getUrl = function() {
+    return this.baseUrl + "/configuration-files/" + this.apiKey + "/" + t.configFileName + "?sdk=" + this.clientVersion;
+  }, t.prototype.getCacheKey = function() {
+    return te("".concat(this.apiKey, "_").concat(t.configFileName, "_").concat(P.serializationFormatVersion));
+  }, t.configFileName = "config_v5.json", t;
+}(), Ue = function(t) {
+  z(e, t);
+  function e(r, n, i, o, s, a) {
+    var u = t.call(this, r, n + "/a-" + i, o, s, a) || this;
+    u.pollIntervalSeconds = 60, u.maxInitWaitTimeSeconds = 5, o && (o.pollIntervalSeconds !== void 0 && o.pollIntervalSeconds !== null && (u.pollIntervalSeconds = o.pollIntervalSeconds), o.maxInitWaitTimeSeconds !== void 0 && o.maxInitWaitTimeSeconds !== null && (u.maxInitWaitTimeSeconds = o.maxInitWaitTimeSeconds));
+    var c = 2147483;
+    if (!(typeof u.pollIntervalSeconds == "number" && 1 <= u.pollIntervalSeconds && u.pollIntervalSeconds <= c))
       throw new Error("Invalid 'pollIntervalSeconds' value");
-    if (l.maxInitWaitTimeSeconds < 0)
+    if (!(typeof u.maxInitWaitTimeSeconds == "number" && u.maxInitWaitTimeSeconds <= c))
       throw new Error("Invalid 'maxInitWaitTimeSeconds' value");
-    return l;
+    return u;
   }
-  return t;
-}(z), be = function(i) {
-  q(t, i);
-  function t(e, n, a, r, s) {
-    return i.call(this, e, n + "/m-" + a, r, s) || this;
+  return e;
+}(pe), Ve = function(t) {
+  z(e, t);
+  function e(r, n, i, o, s, a) {
+    return t.call(this, r, n + "/m-" + i, o, s, a) || this;
   }
-  return t;
-}(z), me = function(i) {
-  q(t, i);
-  function t(e, n, a, r, s) {
-    var l = i.call(this, e, n + "/l-" + a, r, s) || this;
-    if (l.cacheTimeToLiveSeconds = 60, r && r.cacheTimeToLiveSeconds && (l.cacheTimeToLiveSeconds = r.cacheTimeToLiveSeconds), !l.cacheTimeToLiveSeconds || l.cacheTimeToLiveSeconds < 1)
-      throw new Error("Invalid 'cacheTimeToLiveSeconds' value. Value must be greater than zero.");
-    return l;
+  return e;
+}(pe), Me = function(t) {
+  z(e, t);
+  function e(r, n, i, o, s, a) {
+    var u = t.call(this, r, n + "/l-" + i, o, s, a) || this;
+    if (u.cacheTimeToLiveSeconds = 60, o && o.cacheTimeToLiveSeconds !== void 0 && o.cacheTimeToLiveSeconds !== null && (u.cacheTimeToLiveSeconds = o.cacheTimeToLiveSeconds), !(typeof u.cacheTimeToLiveSeconds == "number" && 1 <= u.cacheTimeToLiveSeconds && u.cacheTimeToLiveSeconds <= 2147483647))
+      throw new Error("Invalid 'cacheTimeToLiveSeconds' value");
+    return u;
   }
-  return t;
-}(z), J = function() {
-  function i(t, e, n) {
-    this.Timestamp = t, this.ConfigJSON = JSON.parse(e), this.HttpETag = n;
+  return e;
+}(pe), M;
+(function(t) {
+  t[t.LocalOnly = 0] = "LocalOnly", t[t.LocalOverRemote = 1] = "LocalOverRemote", t[t.RemoteOverLocal = 2] = "RemoteOverLocal";
+})(M || (M = {}));
+var lt = function(t) {
+  z(e, t);
+  function e(r, n) {
+    var i = t.call(this, r, n) || this;
+    return i.cacheTimeToLiveMs = n.cacheTimeToLiveSeconds * 1e3, n.hooks.emit("clientReady"), i;
   }
-  return i.equals = function(t, e) {
-    return !t || !e ? !1 : this.compareEtags(t.HttpETag, e.HttpETag);
-  }, i.compareEtags = function(t, e) {
-    return this.ensureStrictEtag(t) === this.ensureStrictEtag(e);
-  }, i.ensureStrictEtag = function(t) {
-    return t ? t.length > 2 && t.substr(0, 2).toLocaleUpperCase() === "W/" ? t.substring(2) : t : "";
-  }, i;
-}(), X = function() {
-  function i() {
-  }
-  return i.Preferences = "p", i.FeatureFlags = "f", i;
-}(), Z = function() {
-  function i() {
-  }
-  return i.BaseUrl = "u", i.Redirect = "r", i;
-}(), Ce = function() {
-  function i(t, e, n, a) {
-    this.value = t, this.rolloutPercentageItems = e, this.rolloutRules = n, this.variationId = a;
-  }
-  return i.fromJson = function(t) {
-    var e, n, a, r;
-    return new i(t[this.Value], (n = (e = t[this.RolloutPercentageItems]) === null || e === void 0 ? void 0 : e.map(function(s) {
-      return Ie.fromJson(s);
-    })) !== null && n !== void 0 ? n : [], (r = (a = t[this.RolloutRules]) === null || a === void 0 ? void 0 : a.map(function(s) {
-      return Ee.fromJson(s);
-    })) !== null && r !== void 0 ? r : [], t[this.VariationId]);
-  }, i.Value = "v", i.SettingType = "t", i.RolloutPercentageItems = "p", i.RolloutRules = "r", i.VariationId = "i", i;
-}(), Ee = function() {
-  function i(t, e, n, a, r) {
-    this.comparisonAttribute = t, this.comparator = e, this.comparisonValue = n, this.value = a, this.variationId = r;
-  }
-  return i.fromJson = function(t) {
-    return new i(t[this.ComparisonAttribute], t[this.Comparator], t[this.ComparisonValue], t[this.Value], t[this.VariationId]);
-  }, i.Order = "o", i.ComparisonAttribute = "a", i.Comparator = "t", i.ComparisonValue = "c", i.Value = "v", i.VariationId = "i", i;
-}(), Ie = function() {
-  function i(t, e, n) {
-    this.percentage = t, this.value = e, this.variationId = n;
-  }
-  return i.fromJson = function(t) {
-    return new i(t[this.Percentage], t[this.Value], t[this.VariationId]);
-  }, i.Order = "o", i.Value = "v", i.Percentage = "p", i.VariationId = "i", i;
-}(), we = globalThis && globalThis.__awaiter || function(i, t, e, n) {
-  function a(r) {
-    return r instanceof e ? r : new e(function(s) {
-      s(r);
-    });
-  }
-  return new (e || (e = Promise))(function(r, s) {
-    function l(u) {
-      try {
-        o(n.next(u));
-      } catch (h) {
-        s(h);
+  return e.prototype.getConfig = function() {
+    return S(this, void 0, void 0, function() {
+      function r(o, s) {
+        s === void 0 && (s = ""), o.debug("LazyLoadConfigService.getConfig(): cache is empty or expired".concat(s, "."));
       }
-    }
-    function c(u) {
-      try {
-        o(n.throw(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function o(u) {
-      u.done ? r(u.value) : a(u.value).then(l, c);
-    }
-    o((n = n.apply(i, t || [])).next());
-  });
-}, Se = globalThis && globalThis.__generator || function(i, t) {
-  var e = { label: 0, sent: function() {
-    if (r[0] & 1)
-      throw r[1];
-    return r[1];
-  }, trys: [], ops: [] }, n, a, r, s;
-  return s = { next: l(0), throw: l(1), return: l(2) }, typeof Symbol == "function" && (s[Symbol.iterator] = function() {
-    return this;
-  }), s;
-  function l(o) {
-    return function(u) {
-      return c([o, u]);
-    };
-  }
-  function c(o) {
-    if (n)
-      throw new TypeError("Generator is already executing.");
-    for (; e; )
-      try {
-        if (n = 1, a && (r = o[0] & 2 ? a.return : o[0] ? a.throw || ((r = a.return) && r.call(a), 0) : a.next) && !(r = r.call(a, o[1])).done)
-          return r;
-        switch (a = 0, r && (o = [o[0] & 2, r.value]), o[0]) {
+      var n, i;
+      return O(this, function(o) {
+        switch (o.label) {
           case 0:
+            return this.options.logger.debug("LazyLoadConfigService.getConfig() called."), [4, this.options.cache.get(this.cacheKey)];
           case 1:
-            r = o;
-            break;
-          case 4:
-            return e.label++, { value: o[1], done: !1 };
-          case 5:
-            e.label++, a = o[1], o = [0];
-            continue;
-          case 7:
-            o = e.ops.pop(), e.trys.pop();
-            continue;
-          default:
-            if (r = e.trys, !(r = r.length > 0 && r[r.length - 1]) && (o[0] === 6 || o[0] === 2)) {
-              e = 0;
-              continue;
-            }
-            if (o[0] === 3 && (!r || o[1] > r[0] && o[1] < r[3])) {
-              e.label = o[1];
-              break;
-            }
-            if (o[0] === 6 && e.label < r[1]) {
-              e.label = r[1], r = o;
-              break;
-            }
-            if (r && e.label < r[2]) {
-              e.label = r[2], e.ops.push(o);
-              break;
-            }
-            r[2] && e.ops.pop(), e.trys.pop();
-            continue;
-        }
-        o = t.call(i, e);
-      } catch (u) {
-        o = [6, u], a = 0;
-      } finally {
-        n = r = 0;
-      }
-    if (o[0] & 5)
-      throw o[1];
-    return { value: o[0] ? o[1] : void 0, done: !0 };
-  }
-}, Y = function() {
-  function i(t, e) {
-    this.fetchLogicCallbacks = [], this.configFetcher = t, this.baseConfig = e;
-  }
-  return i.prototype.refreshLogicBaseAsync = function(t, e) {
-    var n = this;
-    return e === void 0 && (e = !0), this.baseConfig.logger.debug("ConfigServiceBase.refreshLogicBaseAsync() - called."), new Promise(function(a) {
-      var r;
-      n.fetchLogic(n.baseConfig, (r = t == null ? void 0 : t.HttpETag) !== null && r !== void 0 ? r : null, 0, function(s) {
-        return we(n, void 0, void 0, function() {
-          return Se(this, function(l) {
-            switch (l.label) {
-              case 0:
-                return s && s.ConfigJSON ? (this.baseConfig.logger.debug("ConfigServiceBase.refreshLogicBaseAsync() - fetchLogic() success, returning config."), [4, this.baseConfig.cache.set(this.baseConfig.getCacheKey(), s)]) : [3, 2];
-              case 1:
-                return l.sent(), a(s), [3, 5];
-              case 2:
-                return e && t && t.ConfigJSON ? (this.baseConfig.logger.debug("ConfigServiceBase.refreshLogicBaseAsync() - fetchLogic() didn't return a config, setting the cache with last config with new timestamp, returning last config."), t.Timestamp = new Date().getTime(), [4, this.baseConfig.cache.set(this.baseConfig.getCacheKey(), t)]) : [3, 4];
-              case 3:
-                return l.sent(), a(t), [3, 5];
-              case 4:
-                this.baseConfig.logger.debug("ConfigServiceBase.refreshLogicBaseAsync() - fetchLogic() didn't return a config, returing last config."), a(t), l.label = 5;
-              case 5:
-                return [2];
-            }
-          });
-        });
-      });
-    });
-  }, i.prototype.fetchLogic = function(t, e, n, a) {
-    var r = this;
-    this.baseConfig.logger.debug("ConfigServiceBase.fetchLogic() - called.");
-    var s = this.baseConfig.baseUrl;
-    this.fetchLogicInternal(this.baseConfig, e, n, function(l) {
-      if (r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): result.status: " + (l == null ? void 0 : l.status)), !l || l.status != P.Fetched || J.compareEtags(e ?? "", l.eTag)) {
-        r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): result.status != FetchStatus.Fetched or etags are the same. Returning null."), a(null);
-        return;
-      }
-      if (!l.responseBody) {
-        r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): no response body. Returning null."), a(null);
-        return;
-      }
-      var c = new J(new Date().getTime(), l.responseBody, l.eTag), o = c.ConfigJSON[X.Preferences];
-      if (!o) {
-        r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): preferences is empty. Returning newConfig."), a(c);
-        return;
-      }
-      var u = o[Z.BaseUrl];
-      if (!u || u == s) {
-        r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): baseUrl OK. Returning newConfig."), a(c);
-        return;
-      }
-      var h = o[Z.Redirect];
-      if (t.baseUrlOverriden && h !== 2) {
-        r.baseConfig.logger.debug("ConfigServiceBase.fetchLogic(): options.baseUrlOverriden && redirect !== 2."), a(c);
-        return;
-      }
-      if (t.baseUrl = u, h === 0) {
-        a(c);
-        return;
-      }
-      if (h === 1 && t.logger.warn("Your dataGovernance parameter at ConfigCatClient initialization is not in sync with your preferences on the ConfigCat Dashboard: https://app.configcat.com/organization/data-governance. Only Organization Admins can access this preference."), n >= 2) {
-        t.logger.error("Redirect loop during config.json fetch. Please contact support@configcat.com."), a(c);
-        return;
-      }
-      r.fetchLogic(t, e, ++n, a);
-    });
-  }, i.prototype.fetchLogicInternal = function(t, e, n, a) {
-    var r = this;
-    if (this.baseConfig.logger.debug("ConfigServiceBase.fetchLogicInternal(): called."), n === 0) {
-      if (this.fetchLogicCallbacks.push(a), this.fetchLogicCallbacks.length > 1) {
-        this.baseConfig.logger.debug("ConfigServiceBase.fetchLogicInternal(): The first fetchLogic call is already in progress. this.fetchLogicCallbacks.length = " + this.fetchLogicCallbacks.length);
-        return;
-      }
-      this.baseConfig.logger.debug("ConfigServiceBase.fetchLogicInternal(): Calling fetchLogic"), this.configFetcher.fetchLogic(t, e, function(s) {
-        for (r.baseConfig.logger.debug("ConfigServiceBase.fetchLogicInternal(): fetchLogic() success, calling callbacks. this.fetchLogicCallbacks.length = " + r.fetchLogicCallbacks.length); r.fetchLogicCallbacks.length; ) {
-          var l = r.fetchLogicCallbacks.pop();
-          l && (r.baseConfig.logger.debug("ConfigServiceBase.fetchLogicInternal(): fetchLogic() success, calling callback."), l(s));
-        }
-      });
-    } else
-      this.baseConfig.logger.debug("ConfigServiceBase.fetchLogicInternal(): calling fetchLogic(), recursive call. retries = " + n), this.configFetcher.fetchLogic(t, e, a);
-  }, i;
-}(), Ae = globalThis && globalThis.__extends || function() {
-  var i = function(t, e) {
-    return i = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(n, a) {
-      n.__proto__ = a;
-    } || function(n, a) {
-      for (var r in a)
-        Object.prototype.hasOwnProperty.call(a, r) && (n[r] = a[r]);
-    }, i(t, e);
-  };
-  return function(t, e) {
-    if (typeof e != "function" && e !== null)
-      throw new TypeError("Class extends value " + String(e) + " is not a constructor or null");
-    i(t, e);
-    function n() {
-      this.constructor = t;
-    }
-    t.prototype = e === null ? Object.create(e) : (n.prototype = e.prototype, new n());
-  };
-}(), j = globalThis && globalThis.__awaiter || function(i, t, e, n) {
-  function a(r) {
-    return r instanceof e ? r : new e(function(s) {
-      s(r);
-    });
-  }
-  return new (e || (e = Promise))(function(r, s) {
-    function l(u) {
-      try {
-        o(n.next(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function c(u) {
-      try {
-        o(n.throw(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function o(u) {
-      u.done ? r(u.value) : a(u.value).then(l, c);
-    }
-    o((n = n.apply(i, t || [])).next());
-  });
-}, W = globalThis && globalThis.__generator || function(i, t) {
-  var e = { label: 0, sent: function() {
-    if (r[0] & 1)
-      throw r[1];
-    return r[1];
-  }, trys: [], ops: [] }, n, a, r, s;
-  return s = { next: l(0), throw: l(1), return: l(2) }, typeof Symbol == "function" && (s[Symbol.iterator] = function() {
-    return this;
-  }), s;
-  function l(o) {
-    return function(u) {
-      return c([o, u]);
-    };
-  }
-  function c(o) {
-    if (n)
-      throw new TypeError("Generator is already executing.");
-    for (; e; )
-      try {
-        if (n = 1, a && (r = o[0] & 2 ? a.return : o[0] ? a.throw || ((r = a.return) && r.call(a), 0) : a.next) && !(r = r.call(a, o[1])).done)
-          return r;
-        switch (a = 0, r && (o = [o[0] & 2, r.value]), o[0]) {
-          case 0:
-          case 1:
-            r = o;
-            break;
-          case 4:
-            return e.label++, { value: o[1], done: !1 };
-          case 5:
-            e.label++, a = o[1], o = [0];
-            continue;
-          case 7:
-            o = e.ops.pop(), e.trys.pop();
-            continue;
-          default:
-            if (r = e.trys, !(r = r.length > 0 && r[r.length - 1]) && (o[0] === 6 || o[0] === 2)) {
-              e = 0;
-              continue;
-            }
-            if (o[0] === 3 && (!r || o[1] > r[0] && o[1] < r[3])) {
-              e.label = o[1];
-              break;
-            }
-            if (o[0] === 6 && e.label < r[1]) {
-              e.label = r[1], r = o;
-              break;
-            }
-            if (r && e.label < r[2]) {
-              e.label = r[2], e.ops.push(o);
-              break;
-            }
-            r[2] && e.ops.pop(), e.trys.pop();
-            continue;
-        }
-        o = t.call(i, e);
-      } catch (u) {
-        o = [6, u], a = 0;
-      } finally {
-        n = r = 0;
-      }
-    if (o[0] & 5)
-      throw o[1];
-    return { value: o[0] ? o[1] : void 0, done: !0 };
-  }
-}, Q = function(i) {
-  Ae(t, i);
-  function t(e, n) {
-    var a = i.call(this, e, n) || this;
-    return a.disposed = !1, a.configChanged = n.configChanged, a.autoPollConfig = n, a.startRefreshWorker(n.pollIntervalSeconds * 1e3), a.maxInitWaitTimeStamp = new Date().getTime() + n.maxInitWaitTimeSeconds * 1e3, a;
-  }
-  return t.prototype.getConfig = function() {
-    return j(this, void 0, void 0, function() {
-      var e;
-      return W(this, function(n) {
-        switch (n.label) {
-          case 0:
-            return this.autoPollConfig.logger.debug("AutoPollConfigService.getConfig() called."), [4, this.tryReadFromCache(0)];
-          case 1:
-            return e = n.sent(), e ? (this.autoPollConfig.logger.debug("AutoPollConfigService.getConfig() - returning value from cache."), [2, new Promise(function(a) {
-              return a(e);
-            })]) : (this.autoPollConfig.logger.debug("AutoPollConfigService.getConfig() - cache is empty, refreshing the cache."), [2, this.refreshLogic(!0)]);
-        }
-      });
-    });
-  }, t.prototype.refreshConfigAsync = function() {
-    return this.autoPollConfig.logger.debug("AutoPollConfigService.refreshConfigAsync() called."), this.refreshLogic(!0);
-  }, t.prototype.dispose = function() {
-    this.autoPollConfig.logger.debug("AutoPollConfigService.dispose() called."), this.disposed = !0, this.timerId && (this.autoPollConfig.logger.debug("AutoPollConfigService.dispose() - clearing setTimeout."), clearTimeout(this.timerId));
-  }, t.prototype.refreshLogic = function(e) {
-    var n = this;
-    return this.autoPollConfig.logger.debug("AutoPollConfigService.refreshLogic() - called."), new Promise(function(a) {
-      return j(n, void 0, void 0, function() {
-        var r, s, l, c;
-        return W(this, function(o) {
-          switch (o.label) {
-            case 0:
-              return [4, this.baseConfig.cache.get(this.baseConfig.getCacheKey())];
-            case 1:
-              return r = o.sent(), [4, this.refreshLogicBaseAsync(r, e)];
-            case 2:
-              return s = o.sent(), l = !r && s, c = r && s && !J.equals(r, s), this.autoPollConfig.logger.debug("AutoPollConfigService.refreshLogic() - weDontHaveCachedYetButHaveNew: ." + l + ". weHaveBothButTheyDiffers: " + c + "."), (l || c) && this.configChanged(), a(s), [2];
-          }
-        });
-      });
-    });
-  }, t.prototype.startRefreshWorker = function(e) {
-    var n = this;
-    this.autoPollConfig.logger.debug("AutoPollConfigService.startRefreshWorker() called."), this.refreshLogic(!0).then(function(a) {
-      n.autoPollConfig.logger.debug("AutoPollConfigService.startRefreshWorker() - calling refreshWorkerLogic()'s setTimeout."), setTimeout(function() {
-        return n.refreshWorkerLogic(e);
-      }, e);
-    });
-  }, t.prototype.refreshWorkerLogic = function(e) {
-    var n = this;
-    if (this.disposed) {
-      this.autoPollConfig.logger.debug("AutoPollConfigService.refreshWorkerLogic() - called on a disposed client.");
-      return;
-    }
-    this.autoPollConfig.logger.debug("AutoPollConfigService.refreshWorkerLogic() - called."), this.refreshLogic(!1).then(function(a) {
-      n.autoPollConfig.logger.debug("AutoPollConfigService.refreshWorkerLogic() - calling refreshWorkerLogic()'s setTimeout."), n.timerId = setTimeout(function() {
-        n.refreshWorkerLogic(e);
-      }, e);
-    });
-  }, t.prototype.tryReadFromCache = function(e) {
-    return j(this, void 0, void 0, function() {
-      var n, a, r;
-      return W(this, function(s) {
-        switch (s.label) {
-          case 0:
-            return this.autoPollConfig.logger.debug("AutoPollConfigService.tryReadFromCache() - called. Tries: " + e + "."), [4, this.baseConfig.cache.get(this.baseConfig.getCacheKey())];
-          case 1:
-            return n = s.sent(), this.maxInitWaitTimeStamp > new Date().getTime() && (!n || n.Timestamp < new Date().getTime() - this.autoPollConfig.pollIntervalSeconds * 1e3) ? (n ? this.autoPollConfig.logger.debug("AutoPollConfigService.tryReadFromCache() - waiting for maxInitWaitTimeStamp because cache is expired.") : this.autoPollConfig.logger.debug("AutoPollConfigService.tryReadFromCache() - waiting for maxInitWaitTimeStamp because cache is empty."), a = this.maxInitWaitTimeStamp - new Date().getTime(), r = 30 + e * e * 20, [4, this.sleep(Math.min(a, r))]) : [3, 3];
+            return n = o.sent(), n.isExpired(this.cacheTimeToLiveMs) ? this.isOffline ? [3, 3] : (r(this.options.logger, ", calling refreshConfigCoreAsync()"), [4, this.refreshConfigCoreAsync(n)]) : [3, 5];
           case 2:
-            return s.sent(), e++, [2, this.tryReadFromCache(e)];
+            return i = o.sent(), n = i[1], [3, 4];
           case 3:
-            return this.autoPollConfig.logger.debug("AutoPollConfigService.tryReadFromCache() - returning value from cache."), [2, new Promise(function(l) {
-              return l(n);
-            })];
-        }
-      });
-    });
-  }, t.prototype.sleep = function(e) {
-    return new Promise(function(n) {
-      return setTimeout(n, e);
-    });
-  }, t;
-}(Y), Oe = globalThis && globalThis.__extends || function() {
-  var i = function(t, e) {
-    return i = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(n, a) {
-      n.__proto__ = a;
-    } || function(n, a) {
-      for (var r in a)
-        Object.prototype.hasOwnProperty.call(a, r) && (n[r] = a[r]);
-    }, i(t, e);
-  };
-  return function(t, e) {
-    if (typeof e != "function" && e !== null)
-      throw new TypeError("Class extends value " + String(e) + " is not a constructor or null");
-    i(t, e);
-    function n() {
-      this.constructor = t;
-    }
-    t.prototype = e === null ? Object.create(e) : (n.prototype = e.prototype, new n());
-  };
-}(), ee = globalThis && globalThis.__awaiter || function(i, t, e, n) {
-  function a(r) {
-    return r instanceof e ? r : new e(function(s) {
-      s(r);
-    });
-  }
-  return new (e || (e = Promise))(function(r, s) {
-    function l(u) {
-      try {
-        o(n.next(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function c(u) {
-      try {
-        o(n.throw(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function o(u) {
-      u.done ? r(u.value) : a(u.value).then(l, c);
-    }
-    o((n = n.apply(i, t || [])).next());
-  });
-}, te = globalThis && globalThis.__generator || function(i, t) {
-  var e = { label: 0, sent: function() {
-    if (r[0] & 1)
-      throw r[1];
-    return r[1];
-  }, trys: [], ops: [] }, n, a, r, s;
-  return s = { next: l(0), throw: l(1), return: l(2) }, typeof Symbol == "function" && (s[Symbol.iterator] = function() {
-    return this;
-  }), s;
-  function l(o) {
-    return function(u) {
-      return c([o, u]);
-    };
-  }
-  function c(o) {
-    if (n)
-      throw new TypeError("Generator is already executing.");
-    for (; e; )
-      try {
-        if (n = 1, a && (r = o[0] & 2 ? a.return : o[0] ? a.throw || ((r = a.return) && r.call(a), 0) : a.next) && !(r = r.call(a, o[1])).done)
-          return r;
-        switch (a = 0, r && (o = [o[0] & 2, r.value]), o[0]) {
-          case 0:
-          case 1:
-            r = o;
-            break;
+            r(this.options.logger), o.label = 4;
           case 4:
-            return e.label++, { value: o[1], done: !1 };
+            return [2, n];
           case 5:
-            e.label++, a = o[1], o = [0];
-            continue;
-          case 7:
-            o = e.ops.pop(), e.trys.pop();
-            continue;
-          default:
-            if (r = e.trys, !(r = r.length > 0 && r[r.length - 1]) && (o[0] === 6 || o[0] === 2)) {
-              e = 0;
-              continue;
-            }
-            if (o[0] === 3 && (!r || o[1] > r[0] && o[1] < r[3])) {
-              e.label = o[1];
-              break;
-            }
-            if (o[0] === 6 && e.label < r[1]) {
-              e.label = r[1], r = o;
-              break;
-            }
-            if (r && e.label < r[2]) {
-              e.label = r[2], e.ops.push(o);
-              break;
-            }
-            r[2] && e.ops.pop(), e.trys.pop();
-            continue;
-        }
-        o = t.call(i, e);
-      } catch (u) {
-        o = [6, u], a = 0;
-      } finally {
-        n = r = 0;
-      }
-    if (o[0] & 5)
-      throw o[1];
-    return { value: o[0] ? o[1] : void 0, done: !0 };
-  }
-}, Ve = function(i) {
-  Oe(t, i);
-  function t(e, n) {
-    var a = i.call(this, e, n) || this;
-    return a.cacheTimeToLiveSeconds = n.cacheTimeToLiveSeconds, a;
-  }
-  return t.prototype.getConfig = function() {
-    return ee(this, void 0, void 0, function() {
-      var e;
-      return te(this, function(n) {
-        switch (n.label) {
-          case 0:
-            return this.baseConfig.logger.debug("LazyLoadConfigService.getConfig() called."), [4, this.baseConfig.cache.get(this.baseConfig.getCacheKey())];
-          case 1:
-            return e = n.sent(), e && e.Timestamp + this.cacheTimeToLiveSeconds * 1e3 > new Date().getTime() ? (this.baseConfig.logger.debug("LazyLoadConfigService.getConfig(): cache is valid, returning from cache."), [2, e]) : (this.baseConfig.logger.debug("LazyLoadConfigService.getConfig(): cache is empty or expired, calling refreshLogicBaseAsync()."), [2, this.refreshLogicBaseAsync(e)]);
+            return this.options.logger.debug("LazyLoadConfigService.getConfig(): cache is valid, returning from cache."), [2, n];
         }
       });
     });
-  }, t.prototype.refreshConfigAsync = function() {
-    return ee(this, void 0, void 0, function() {
-      var e;
-      return te(this, function(n) {
-        switch (n.label) {
+  }, e.prototype.refreshConfigAsync = function() {
+    return this.options.logger.debug("LazyLoadConfigService.refreshConfigAsync() called."), t.prototype.refreshConfigAsync.call(this);
+  }, e;
+}(ge), ft = function(t) {
+  z(e, t);
+  function e(r, n) {
+    var i = t.call(this, r, n) || this;
+    return n.hooks.emit("clientReady"), i;
+  }
+  return e.prototype.getConfig = function() {
+    return S(this, void 0, void 0, function() {
+      return O(this, function(r) {
+        switch (r.label) {
           case 0:
-            return this.baseConfig.logger.debug("LazyLoadConfigService.refreshConfigAsync() called."), [4, this.baseConfig.cache.get(this.baseConfig.getCacheKey())];
+            return this.options.logger.debug("ManualPollService.getConfig() called."), [4, this.options.cache.get(this.cacheKey)];
           case 1:
-            return e = n.sent(), [2, this.refreshLogicBaseAsync(e)];
+            return [2, r.sent()];
         }
       });
     });
-  }, t;
-}(Y), Te = globalThis && globalThis.__extends || function() {
-  var i = function(t, e) {
-    return i = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(n, a) {
-      n.__proto__ = a;
-    } || function(n, a) {
-      for (var r in a)
-        Object.prototype.hasOwnProperty.call(a, r) && (n[r] = a[r]);
-    }, i(t, e);
-  };
-  return function(t, e) {
-    if (typeof e != "function" && e !== null)
-      throw new TypeError("Class extends value " + String(e) + " is not a constructor or null");
-    i(t, e);
-    function n() {
-      this.constructor = t;
-    }
-    t.prototype = e === null ? Object.create(e) : (n.prototype = e.prototype, new n());
-  };
-}(), re = globalThis && globalThis.__awaiter || function(i, t, e, n) {
-  function a(r) {
-    return r instanceof e ? r : new e(function(s) {
-      s(r);
-    });
-  }
-  return new (e || (e = Promise))(function(r, s) {
-    function l(u) {
-      try {
-        o(n.next(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function c(u) {
-      try {
-        o(n.throw(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function o(u) {
-      u.done ? r(u.value) : a(u.value).then(l, c);
-    }
-    o((n = n.apply(i, t || [])).next());
-  });
-}, ne = globalThis && globalThis.__generator || function(i, t) {
-  var e = { label: 0, sent: function() {
-    if (r[0] & 1)
-      throw r[1];
-    return r[1];
-  }, trys: [], ops: [] }, n, a, r, s;
-  return s = { next: l(0), throw: l(1), return: l(2) }, typeof Symbol == "function" && (s[Symbol.iterator] = function() {
-    return this;
-  }), s;
-  function l(o) {
-    return function(u) {
-      return c([o, u]);
-    };
-  }
-  function c(o) {
-    if (n)
-      throw new TypeError("Generator is already executing.");
-    for (; e; )
-      try {
-        if (n = 1, a && (r = o[0] & 2 ? a.return : o[0] ? a.throw || ((r = a.return) && r.call(a), 0) : a.next) && !(r = r.call(a, o[1])).done)
-          return r;
-        switch (a = 0, r && (o = [o[0] & 2, r.value]), o[0]) {
-          case 0:
-          case 1:
-            r = o;
-            break;
-          case 4:
-            return e.label++, { value: o[1], done: !1 };
-          case 5:
-            e.label++, a = o[1], o = [0];
-            continue;
-          case 7:
-            o = e.ops.pop(), e.trys.pop();
-            continue;
-          default:
-            if (r = e.trys, !(r = r.length > 0 && r[r.length - 1]) && (o[0] === 6 || o[0] === 2)) {
-              e = 0;
-              continue;
-            }
-            if (o[0] === 3 && (!r || o[1] > r[0] && o[1] < r[3])) {
-              e.label = o[1];
-              break;
-            }
-            if (o[0] === 6 && e.label < r[1]) {
-              e.label = r[1], r = o;
-              break;
-            }
-            if (r && e.label < r[2]) {
-              e.label = r[2], e.ops.push(o);
-              break;
-            }
-            r[2] && e.ops.pop(), e.trys.pop();
-            continue;
-        }
-        o = t.call(i, e);
-      } catch (u) {
-        o = [6, u], a = 0;
-      } finally {
-        n = r = 0;
-      }
-    if (o[0] & 5)
-      throw o[1];
-    return { value: o[0] ? o[1] : void 0, done: !0 };
-  }
-}, Le = function(i) {
-  Te(t, i);
-  function t(e, n) {
-    return i.call(this, e, n) || this;
-  }
-  return t.prototype.getConfig = function() {
-    return re(this, void 0, void 0, function() {
-      return ne(this, function(e) {
-        switch (e.label) {
-          case 0:
-            return this.baseConfig.logger.debug("ManualPollService.getConfig() called."), [4, this.baseConfig.cache.get(this.baseConfig.getCacheKey())];
-          case 1:
-            return [2, e.sent()];
-        }
-      });
-    });
-  }, t.prototype.refreshConfigAsync = function() {
-    return re(this, void 0, void 0, function() {
-      var e;
-      return ne(this, function(n) {
-        switch (n.label) {
-          case 0:
-            return this.baseConfig.logger.debug("ManualPollService.refreshConfigAsync() called."), [4, this.baseConfig.cache.get(this.baseConfig.getCacheKey())];
-          case 1:
-            return e = n.sent(), [2, this.refreshLogicBaseAsync(e)];
-        }
-      });
-    });
-  }, t;
-}(Y);
-function K(i) {
-  function t(A, C) {
-    var T = A << C | A >>> 32 - C;
-    return T;
-  }
-  function e(A) {
-    for (var C = "", T, E = 7; E >= 0; E--)
-      T = A >>> E * 4 & 15, C += T.toString(16);
-    return C;
-  }
-  function n(A) {
-    A = A.replace(/\r\n/g, `
-`);
-    for (var C = "", T = 0; T < A.length; T++) {
-      var E = A.charCodeAt(T);
-      E < 128 ? C += String.fromCharCode(E) : E > 127 && E < 2048 ? (C += String.fromCharCode(E >> 6 | 192), C += String.fromCharCode(E & 63 | 128)) : (C += String.fromCharCode(E >> 12 | 224), C += String.fromCharCode(E >> 6 & 63 | 128), C += String.fromCharCode(E & 63 | 128));
-    }
-    return C;
-  }
-  var a, r, s, l = new Array(80), c = 1732584193, o = 4023233417, u = 2562383102, h = 271733878, S = 3285377520, v, f, y, p, m, I;
-  i = n(i);
-  var w = i.length, V = new Array();
-  for (r = 0; r < w - 3; r += 4)
-    s = i.charCodeAt(r) << 24 | i.charCodeAt(r + 1) << 16 | i.charCodeAt(r + 2) << 8 | i.charCodeAt(r + 3), V.push(s);
-  switch (w % 4) {
-    case 0:
-      r = 2147483648;
-      break;
-    case 1:
-      r = i.charCodeAt(w - 1) << 24 | 8388608;
-      break;
-    case 2:
-      r = i.charCodeAt(w - 2) << 24 | i.charCodeAt(w - 1) << 16 | 32768;
-      break;
-    case 3:
-      r = i.charCodeAt(w - 3) << 24 | i.charCodeAt(w - 2) << 16 | i.charCodeAt(w - 1) << 8 | 128;
-      break;
-  }
-  for (V.push(r); V.length % 16 != 14; )
-    V.push(0);
-  for (V.push(w >>> 29), V.push(w << 3 & 4294967295), a = 0; a < V.length; a += 16) {
-    for (r = 0; r < 16; r++)
-      l[r] = V[a + r];
-    for (r = 16; r <= 79; r++)
-      l[r] = t(l[r - 3] ^ l[r - 8] ^ l[r - 14] ^ l[r - 16], 1);
-    for (v = c, f = o, y = u, p = h, m = S, r = 0; r <= 19; r++)
-      I = t(v, 5) + (f & y | ~f & p) + m + l[r] + 1518500249 & 4294967295, m = p, p = y, y = t(f, 30), f = v, v = I;
-    for (r = 20; r <= 39; r++)
-      I = t(v, 5) + (f ^ y ^ p) + m + l[r] + 1859775393 & 4294967295, m = p, p = y, y = t(f, 30), f = v, v = I;
-    for (r = 40; r <= 59; r++)
-      I = t(v, 5) + (f & y | f & p | y & p) + m + l[r] + 2400959708 & 4294967295, m = p, p = y, y = t(f, 30), f = v, v = I;
-    for (r = 60; r <= 79; r++)
-      I = t(v, 5) + (f ^ y ^ p) + m + l[r] + 3395469782 & 4294967295, m = p, p = y, y = t(f, 30), f = v, v = I;
-    c = c + v & 4294967295, o = o + f & 4294967295, u = u + y & 4294967295, h = h + p & 4294967295, S = S + m & 4294967295;
-  }
-  return (e(c) + e(o) + e(u) + e(h) + e(S)).toLowerCase();
+  }, e.prototype.refreshConfigAsync = function() {
+    return this.options.logger.debug("ManualPollService.refreshConfigAsync() called."), t.prototype.refreshConfigAsync.call(this);
+  }, e;
+}(ge);
+function ht() {
+  typeof Object.values > "u" && (Object.values = gt), typeof Object.entries > "u" && (Object.entries = pt), typeof Object.fromEntries > "u" && (Object.fromEntries = vt);
 }
-var ie = /^[0-9]+$/, k = function(i, t) {
-  var e = ie.test(i), n = ie.test(t);
-  return e && n && (i = +i, t = +t), i === t ? 0 : e && !n ? -1 : n && !e ? 1 : i < t ? -1 : 1;
-}, $ = 256, B = Number.MAX_SAFE_INTEGER || 9007199254740991, D = [], d = [], g = {}, Re = 0, b = function(i, t) {
-  var e = Re++;
-  g[i] = e, d[e] = t, D[e] = new RegExp(t, void 0);
+function gt(t) {
+  for (var e = [], r = 0, n = Object.keys(t); r < n.length; r++) {
+    var i = n[r];
+    e.push(t[i]);
+  }
+  return e;
+}
+function pt(t) {
+  for (var e = [], r = 0, n = Object.keys(t); r < n.length; r++) {
+    var i = n[r];
+    e.push([i, t[i]]);
+  }
+  return e;
+}
+function vt(t) {
+  var e, r = {};
+  if (Array.isArray(t))
+    for (var n = 0, i = t; n < i.length; n++) {
+      var o = i[n], s = o[0], a = o[1];
+      r[s] = a;
+    }
+  else if (typeof Symbol < "u" && (t == null ? void 0 : t[Symbol.iterator]))
+    for (var u = t[Symbol.iterator](), c = void 0, l = void 0; e = u.next(), c = e.value, l = e.done, !l; ) {
+      var s = c[0], a = c[1];
+      r[s] = a;
+    }
+  else
+    throw new TypeError("Object.fromEntries() requires a single iterable argument");
+  return r;
+}
+function dt() {
+  var t = function(e) {
+    this.target = e;
+  };
+  return t.prototype.deref = function() {
+    return this.target;
+  }, t.isFallback = !0, t;
+}
+var yt = function() {
+  return typeof WeakRef == "function";
+}, xe = /^[0-9]+$/, B = function(t, e) {
+  var r = xe.test(t), n = xe.test(e);
+  return r && n && (t = +t, e = +e), t === e ? 0 : r && !n ? -1 : n && !r ? 1 : t < e ? -1 : 1;
+}, fe = 256, Z = Number.MAX_SAFE_INTEGER || 9007199254740991, Y = [], b = [], m = {}, mt = 0, w = function(t, e) {
+  var r = mt++;
+  m[t] = r, b[r] = e, Y[r] = new RegExp(e);
 };
-b("NUMERICIDENTIFIER", "0|[1-9]\\d*");
-b("NUMERICIDENTIFIERLOOSE", "[0-9]+");
-b("NONNUMERICIDENTIFIER", "\\d*[a-zA-Z-][a-zA-Z0-9-]*");
-b("MAINVERSION", "(".concat(d[g.NUMERICIDENTIFIER], ")\\.") + "(".concat(d[g.NUMERICIDENTIFIER], ")\\.") + "(".concat(d[g.NUMERICIDENTIFIER], ")"));
-b("MAINVERSIONLOOSE", "(".concat(d[g.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(d[g.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(d[g.NUMERICIDENTIFIERLOOSE], ")"));
-b("PRERELEASEIDENTIFIER", "(?:".concat(d[g.NUMERICIDENTIFIER], "|").concat(d[g.NONNUMERICIDENTIFIER], ")"));
-b("PRERELEASEIDENTIFIERLOOSE", "(?:".concat(d[g.NUMERICIDENTIFIERLOOSE], "|").concat(d[g.NONNUMERICIDENTIFIER], ")"));
-b("PRERELEASE", "(?:-(".concat(d[g.PRERELEASEIDENTIFIER], "(?:\\.").concat(d[g.PRERELEASEIDENTIFIER], ")*))"));
-b("PRERELEASELOOSE", "(?:-?(".concat(d[g.PRERELEASEIDENTIFIERLOOSE], "(?:\\.").concat(d[g.PRERELEASEIDENTIFIERLOOSE], ")*))"));
-b("BUILDIDENTIFIER", "[0-9A-Za-z-]+");
-b("BUILD", "(?:\\+(".concat(d[g.BUILDIDENTIFIER], "(?:\\.").concat(d[g.BUILDIDENTIFIER], ")*))"));
-b("FULLPLAIN", "v?".concat(d[g.MAINVERSION]).concat(d[g.PRERELEASE], "?").concat(d[g.BUILD], "?"));
-b("FULL", "^".concat(d[g.FULLPLAIN], "$"));
-b("LOOSEPLAIN", "[v=\\s]*".concat(d[g.MAINVERSIONLOOSE]).concat(d[g.PRERELEASELOOSE], "?").concat(d[g.BUILD], "?"));
-b("LOOSE", "^".concat(d[g.LOOSEPLAIN], "$"));
-var M = function() {
-  function i(t, e) {
-    if ((!e || typeof e != "object") && (e = {
-      loose: !!e,
+w("NUMERICIDENTIFIER", "0|[1-9]\\d*");
+w("NUMERICIDENTIFIERLOOSE", "[0-9]+");
+w("NONNUMERICIDENTIFIER", "\\d*[a-zA-Z-][a-zA-Z0-9-]*");
+w("MAINVERSION", "(".concat(b[m.NUMERICIDENTIFIER], ")\\.") + "(".concat(b[m.NUMERICIDENTIFIER], ")\\.") + "(".concat(b[m.NUMERICIDENTIFIER], ")"));
+w("MAINVERSIONLOOSE", "(".concat(b[m.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(b[m.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(b[m.NUMERICIDENTIFIERLOOSE], ")"));
+w("PRERELEASEIDENTIFIER", "(?:".concat(b[m.NUMERICIDENTIFIER], "|").concat(b[m.NONNUMERICIDENTIFIER], ")"));
+w("PRERELEASEIDENTIFIERLOOSE", "(?:".concat(b[m.NUMERICIDENTIFIERLOOSE], "|").concat(b[m.NONNUMERICIDENTIFIER], ")"));
+w("PRERELEASE", "(?:-(".concat(b[m.PRERELEASEIDENTIFIER], "(?:\\.").concat(b[m.PRERELEASEIDENTIFIER], ")*))"));
+w("PRERELEASELOOSE", "(?:-?(".concat(b[m.PRERELEASEIDENTIFIERLOOSE], "(?:\\.").concat(b[m.PRERELEASEIDENTIFIERLOOSE], ")*))"));
+w("BUILDIDENTIFIER", "[0-9A-Za-z-]+");
+w("BUILD", "(?:\\+(".concat(b[m.BUILDIDENTIFIER], "(?:\\.").concat(b[m.BUILDIDENTIFIER], ")*))"));
+w("FULLPLAIN", "v?".concat(b[m.MAINVERSION]).concat(b[m.PRERELEASE], "?").concat(b[m.BUILD], "?"));
+w("FULL", "^".concat(b[m.FULLPLAIN], "$"));
+w("LOOSEPLAIN", "[v=\\s]*".concat(b[m.MAINVERSIONLOOSE]).concat(b[m.PRERELEASELOOSE], "?").concat(b[m.BUILD], "?"));
+w("LOOSE", "^".concat(b[m.LOOSEPLAIN], "$"));
+var oe = function() {
+  function t(e, r) {
+    if ((!r || typeof r != "object") && (r = {
+      loose: !!r,
       includePrerelease: !1
-    }), t instanceof i) {
-      if (t.loose === !!e.loose && t.includePrerelease === !!e.includePrerelease)
-        return t;
-      t = t.version;
-    } else if (typeof t != "string")
-      throw new TypeError("Invalid Version: ".concat(t));
-    if (t.length > $)
-      throw new TypeError("version is longer than ".concat($, " characters"));
-    this.options = e, this.loose = !!e.loose, this.includePrerelease = !!e.includePrerelease;
-    var n = t.trim().match(e.loose ? D[g.LOOSE] : D[g.FULL]);
+    }), e instanceof t) {
+      if (e.loose === !!r.loose && e.includePrerelease === !!r.includePrerelease)
+        return e;
+      e = e.version;
+    } else if (typeof e != "string")
+      throw new TypeError("Invalid Version: ".concat(e));
+    if (e.length > fe)
+      throw new TypeError("version is longer than ".concat(fe, " characters"));
+    this.options = r, this.loose = !!r.loose, this.includePrerelease = !!r.includePrerelease;
+    var n = e.trim().match(r.loose ? Y[m.LOOSE] : Y[m.FULL]);
     if (!n)
-      throw new TypeError("Invalid Version: ".concat(t));
-    if (this.raw = t, this.major = +n[1], this.minor = +n[2], this.patch = +n[3], this.major > B || this.major < 0)
+      throw new TypeError("Invalid Version: ".concat(e));
+    if (this.raw = e, this.major = +n[1], this.minor = +n[2], this.patch = +n[3], this.major > Z || this.major < 0)
       throw new TypeError("Invalid major version");
-    if (this.minor > B || this.minor < 0)
+    if (this.minor > Z || this.minor < 0)
       throw new TypeError("Invalid minor version");
-    if (this.patch > B || this.patch < 0)
+    if (this.patch > Z || this.patch < 0)
       throw new TypeError("Invalid patch version");
-    n[4] ? this.prerelease = n[4].split(".").map(function(a) {
-      if (/^[0-9]+$/.test(a)) {
-        var r = +a;
-        if (r >= 0 && r < B)
-          return r;
+    n[4] ? this.prerelease = n[4].split(".").map(function(i) {
+      if (/^[0-9]+$/.test(i)) {
+        var o = +i;
+        if (o >= 0 && o < Z)
+          return o;
       }
-      return a;
+      return i;
     }) : this.prerelease = [], this.build = n[5] ? n[5].split(".") : [], this.format();
   }
-  return i.prototype.format = function() {
+  return t.prototype.format = function() {
     return this.version = "".concat(this.major, ".").concat(this.minor, ".").concat(this.patch), this.prerelease.length && (this.version += "-".concat(this.prerelease.join("."))), this.version;
-  }, i.prototype.toString = function() {
+  }, t.prototype.toString = function() {
     return this.version;
-  }, i.prototype.compare = function(t) {
-    if (!(t instanceof i)) {
-      if (typeof t == "string" && t === this.version)
+  }, t.prototype.compare = function(e) {
+    if (!(e instanceof t)) {
+      if (typeof e == "string" && e === this.version)
         return 0;
-      t = new i(t, this.options);
+      e = new t(e, this.options);
     }
-    return t.version === this.version ? 0 : this.compareMain(t) || this.comparePre(t);
-  }, i.prototype.compareMain = function(t) {
-    return t instanceof i || (t = new i(t, this.options)), k(this.major, t.major) || k(this.minor, t.minor) || k(this.patch, t.patch);
-  }, i.prototype.comparePre = function(t) {
-    if (t instanceof i || (t = new i(t, this.options)), this.prerelease.length && !t.prerelease.length)
+    return e.version === this.version ? 0 : this.compareMain(e) || this.comparePre(e);
+  }, t.prototype.compareMain = function(e) {
+    return e instanceof t || (e = new t(e, this.options)), B(this.major, e.major) || B(this.minor, e.minor) || B(this.patch, e.patch);
+  }, t.prototype.comparePre = function(e) {
+    if (e instanceof t || (e = new t(e, this.options)), this.prerelease.length && !e.prerelease.length)
       return -1;
-    if (!this.prerelease.length && t.prerelease.length)
+    if (!this.prerelease.length && e.prerelease.length)
       return 1;
-    if (!this.prerelease.length && !t.prerelease.length)
+    if (!this.prerelease.length && !e.prerelease.length)
       return 0;
-    var e = 0;
+    var r = 0;
     do {
-      var n = this.prerelease[e], a = t.prerelease[e];
-      if (n === void 0 && a === void 0)
+      var n = this.prerelease[r], i = e.prerelease[r];
+      if (n === void 0 && i === void 0)
         return 0;
-      if (a === void 0)
+      if (i === void 0)
         return 1;
       if (n === void 0)
         return -1;
-      if (n === a)
+      if (n === i)
         continue;
-      return k(n, a);
-    } while (++e);
-  }, i.prototype.compareBuild = function(t) {
-    t instanceof i || (t = new i(t, this.options));
-    var e = 0;
+      return B(n, i);
+    } while (++r);
+  }, t.prototype.compareBuild = function(e) {
+    e instanceof t || (e = new t(e, this.options));
+    var r = 0;
     do {
-      var n = this.build[e], a = t.build[e];
-      if (n === void 0 && a === void 0)
+      var n = this.build[r], i = e.build[r];
+      if (n === void 0 && i === void 0)
         return 0;
-      if (a === void 0)
+      if (i === void 0)
         return 1;
       if (n === void 0)
         return -1;
-      if (n === a)
+      if (n === i)
         continue;
-      return k(n, a);
-    } while (++e);
-  }, i.prototype.inc = function(t, e) {
-    switch (t) {
+      return B(n, i);
+    } while (++r);
+  }, t.prototype.inc = function(e, r) {
+    switch (e) {
       case "premajor":
-        this.prerelease.length = 0, this.patch = 0, this.minor = 0, this.major++, this.inc("pre", e);
+        this.prerelease.length = 0, this.patch = 0, this.minor = 0, this.major++, this.inc("pre", r);
         break;
       case "preminor":
-        this.prerelease.length = 0, this.patch = 0, this.minor++, this.inc("pre", e);
+        this.prerelease.length = 0, this.patch = 0, this.minor++, this.inc("pre", r);
         break;
       case "prepatch":
-        this.prerelease.length = 0, this.inc("patch", e), this.inc("pre", e);
+        this.prerelease.length = 0, this.inc("patch", r), this.inc("pre", r);
         break;
       case "prerelease":
-        this.prerelease.length === 0 && this.inc("patch", e), this.inc("pre", e);
+        this.prerelease.length === 0 && this.inc("patch", r), this.inc("pre", r);
         break;
       case "major":
         (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) && this.major++, this.minor = 0, this.patch = 0, this.prerelease = [];
@@ -1013,712 +1273,781 @@ var M = function() {
             typeof this.prerelease[n] == "number" && (this.prerelease[n]++, n = -2);
           n === -1 && this.prerelease.push(0);
         }
-        e && (this.prerelease[0] === e ? isNaN(this.prerelease[1]) && (this.prerelease = [e, 0]) : this.prerelease = [e, 0]);
+        r && (this.prerelease[0] === r ? isNaN(this.prerelease[1]) && (this.prerelease = [r, 0]) : this.prerelease = [r, 0]);
         break;
       default:
-        throw new Error("invalid increment argument: ".concat(t));
+        throw new Error("invalid increment argument: ".concat(e));
     }
     return this.format(), this.raw = this.version, this;
-  }, i;
-}(), _e = function(i, t) {
-  if ((!t || typeof t != "object") && (t = {
-    loose: !!t,
+  }, t;
+}(), Et = function(t, e) {
+  if ((!e || typeof e != "object") && (e = {
+    loose: !!e,
     includePrerelease: !1
-  }), i instanceof M)
-    return i;
-  if (typeof i != "string" || i.length > $)
+  }), t instanceof oe)
+    return t;
+  if (typeof t != "string" || t.length > fe)
     return null;
-  var e = t.loose ? D[g.LOOSE] : D[g.FULL];
-  if (!e.test(i))
+  var r = e.loose ? Y[m.LOOSE] : Y[m.FULL];
+  if (!r.test(t))
     return null;
   try {
-    return new M(i, t);
+    return new oe(t, e);
   } catch {
     return null;
   }
-}, U = function(i, t, e) {
-  return new M(i, e).compare(new M(t, e));
-}, N = function(i) {
-  var t = _e(i, !1);
-  return t ? t.version : null;
-}, Ne = function(i, t) {
-  return U(i, t, !0) === 0;
-}, xe = function(i, t) {
-  return U(i, t, !1) === 0;
-}, Pe = function(i, t) {
-  return U(i, t, !1) < 0;
-}, Fe = function(i, t) {
-  return U(i, t, !1) <= 0;
-}, Ue = function(i, t) {
-  return U(i, t, !1) > 0;
-}, ke = function(i, t) {
-  return U(i, t, !1) >= 0;
-}, H = function(i) {
-  return i === void 0;
-};
-function ae(i) {
-  return i ? Object.fromEntries(Object.entries(i[X.FeatureFlags]).map(function(t) {
-    var e = t[0], n = t[1];
-    return [e, Ce.fromJson(n)];
-  })) : {};
-}
-var De = function() {
-  function i(t) {
-    this.logger = t;
+}, H = function(t, e, r) {
+  return new oe(t, r).compare(new oe(e, r));
+}, j = function(t) {
+  var e = Et(t, !1);
+  return e ? e.version : null;
+}, bt = function(t, e) {
+  return H(t, e, !0) === 0;
+}, St = function(t, e) {
+  return H(t, e, !1) === 0;
+}, Ot = function(t, e) {
+  return H(t, e, !1) < 0;
+}, At = function(t, e) {
+  return H(t, e, !1) <= 0;
+}, Ct = function(t, e) {
+  return H(t, e, !1) > 0;
+}, wt = function(t, e) {
+  return H(t, e, !1) >= 0;
+}, It = function() {
+  function t(e) {
+    this.logger = e;
   }
-  return i.prototype.Evaluate = function(t, e, n, a, r) {
-    if (this.logger.debug("RolloutEvaluator.Evaluate() called."), !t[e]) {
-      var s = "Evaluating getValue('" + e + "') failed. Returning default value: '" + n + "'.";
-      return s += " Here are the available keys: {" + Object.keys(t).join() + "}.", this.logger.error(s), { Value: n, VariationId: r };
+  return t.prototype.evaluate = function(e, r, n, i, o) {
+    if (this.logger.debug("RolloutEvaluator.Evaluate() called."), e.type < 0 && !_e(e.value))
+      throw new TypeError(e.value === null ? "Setting value is null." : e.value === void 0 ? "Setting value is undefined." : "Setting value '".concat(e.value, "' is of an unsupported type (").concat(typeof e.value, ")."));
+    var s = new Tt();
+    s.user = i, s.keyName = r, s.returnValue = n;
+    var a;
+    try {
+      if (i) {
+        if (a = this.evaluateRules(e.targetingRules, i, s), a !== null || (a = this.evaluatePercentageRules(e.percentageOptions, r, i), e.percentageOptions && e.percentageOptions.length > 0 && s.opAppendLine("Evaluating % options => " + (a ? "user targeted" : "user not targeted")), a !== null))
+          return s.returnValue = a.value, a;
+      } else
+        (e.targetingRules && e.targetingRules.length > 0 || e.percentageOptions && e.percentageOptions.length > 0) && this.logger.targetingIsNotPossible(r);
+      return a = {
+        value: e.value,
+        variationId: e.variationId
+      }, s.returnValue = a.value, a;
+    } finally {
+      this.logger.settingEvaluated(s);
     }
-    var l = t[e], c = new Be();
-    c.User = a, c.KeyName = e, c.ReturnValue = n;
-    var o = new oe();
-    if (o.EvaluateLog = c, a)
-      o = this.EvaluateRules(l.rolloutRules, a, c), o.ValueAndVariationId == null && (o.ValueAndVariationId = this.EvaluateVariations(l.rolloutPercentageItems, e, a), o.ValueAndVariationId && (o.EvaluateLog.ReturnValue = o.ValueAndVariationId.Value), l.rolloutPercentageItems.length > 0 && o.EvaluateLog.OpAppendLine("Evaluating % options => " + (o.ValueAndVariationId == null ? "user not targeted" : "user targeted")));
-    else if (l.rolloutRules && l.rolloutRules.length > 0 || l.rolloutPercentageItems && l.rolloutPercentageItems.length > 0) {
-      var s = "Evaluating getValue('" + e + "'). ";
-      s += "UserObject missing! You should pass a UserObject to getValue(), in order to make targeting work properly. ", s += "Read more: https://configcat.com/docs/advanced/user-object", this.logger.warn(s);
-    }
-    return o.ValueAndVariationId == null && (o.ValueAndVariationId = {
-      Value: l.value,
-      VariationId: l.variationId
-    }, o.EvaluateLog.ReturnValue = o.ValueAndVariationId.Value), this.logger.info(o.EvaluateLog.GetLog()), o.ValueAndVariationId;
-  }, i.prototype.EvaluateRules = function(t, e, n) {
-    this.logger.debug("RolloutEvaluator.EvaluateRules() called.");
-    var a = new oe();
-    if (a.ValueAndVariationId = null, t && t.length > 0)
-      for (var r = function(o) {
-        var u = t[o], h = s.GetUserAttribute(e, u.comparisonAttribute), S = u.comparator, v = u.comparisonValue, f = "Evaluating rule: '" + h + "' " + s.RuleToString(S) + " '" + v + "' => ";
-        if (!h)
-          return f += "NO MATCH (Attribute is not defined on the user object)", n.OpAppendLine(f), "continue";
-        switch (S) {
-          case 0:
-            for (var y = v.split(","), p = 0; p < y.length; p++)
-              if (y[p].trim() === h)
-                return f += "MATCH", n.OpAppendLine(f), a.ValueAndVariationId = {
-                  Value: u.value,
-                  VariationId: u.variationId
-                }, n.ReturnValue = a.ValueAndVariationId.Value, a.EvaluateLog = n, { value: a };
+  }, t.prototype.evaluateRules = function(e, r, n) {
+    if (this.logger.debug("RolloutEvaluator.EvaluateRules() called."), e && e.length > 0)
+      for (var i = function(u) {
+        var c = e[u], l = o.getUserAttribute(r, c.comparisonAttribute), g = c.comparator, v = c.comparisonValue, f = "Evaluating rule: '" + l + "' " + o.ruleToString(g) + " '" + v + "' => ";
+        if (!l)
+          return f += "NO MATCH (Attribute is not defined on the user object)", n.opAppendLine(f), "continue";
+        var p = {
+          value: c.value,
+          variationId: c.variationId,
+          matchedTargetingRule: c
+        };
+        switch (g) {
+          case h.In:
+            for (var y = v.split(","), E = 0; E < y.length; E++)
+              if (y[E].trim() === l)
+                return f += "MATCH", n.opAppendLine(f), { value: p };
             f += "no match";
             break;
-          case 1:
-            if (!v.split(",").some(function(I) {
-              return I.trim() === h;
+          case h.NotIn:
+            if (!v.split(",").some(function(D) {
+              return D.trim() === l;
             }))
-              return f += "MATCH", n.OpAppendLine(f), a.ValueAndVariationId = {
-                Value: u.value,
-                VariationId: u.variationId
-              }, n.ReturnValue = a.ValueAndVariationId.Value, a.EvaluateLog = n, { value: a };
+              return f += "MATCH", n.opAppendLine(f), { value: p };
             f += "no match";
             break;
-          case 2:
-            if (h.indexOf(v) !== -1)
-              return f += "MATCH", n.OpAppendLine(f), a.ValueAndVariationId = {
-                Value: u.value,
-                VariationId: u.variationId
-              }, n.ReturnValue = a.ValueAndVariationId.Value, a.EvaluateLog = n, { value: a };
+          case h.Contains:
+            if (l.indexOf(v) !== -1)
+              return f += "MATCH", n.opAppendLine(f), { value: p };
             f += "no match";
             break;
-          case 3:
-            if (h.indexOf(v) === -1)
-              return f += "MATCH", n.OpAppendLine(f), a.ValueAndVariationId = {
-                Value: u.value,
-                VariationId: u.variationId
-              }, n.ReturnValue = a.ValueAndVariationId.Value, a.EvaluateLog = n, { value: a };
+          case h.NotContains:
+            if (l.indexOf(v) === -1)
+              return f += "MATCH", n.opAppendLine(f), { value: p };
             f += "no match";
             break;
-          case 4:
-          case 5:
-          case 6:
-          case 7:
-          case 8:
-          case 9:
-            if (s.EvaluateSemver(h, v, S))
-              return f += "MATCH", n.OpAppendLine(f), a.ValueAndVariationId = {
-                Value: u.value,
-                VariationId: u.variationId
-              }, n.ReturnValue = a.ValueAndVariationId.Value, a.EvaluateLog = n, { value: a };
+          case h.SemVerIn:
+          case h.SemVerNotIn:
+          case h.SemVerLessThan:
+          case h.SemVerLessThanEqual:
+          case h.SemVerGreaterThan:
+          case h.SemVerGreaterThanEqual:
+            if (o.evaluateSemver(l, v, g))
+              return f += "MATCH", n.opAppendLine(f), { value: p };
             f += "no match";
             break;
-          case 10:
-          case 11:
-          case 12:
-          case 13:
-          case 14:
-          case 15:
-            if (s.EvaluateNumber(h, v, S))
-              return f += "MATCH", n.OpAppendLine(f), a.ValueAndVariationId = {
-                Value: u.value,
-                VariationId: u.variationId
-              }, n.ReturnValue = a.ValueAndVariationId.Value, a.EvaluateLog = n, { value: a };
+          case h.NumberEqual:
+          case h.NumberNotEqual:
+          case h.NumberLessThan:
+          case h.NumberLessThanEqual:
+          case h.NumberGreaterThan:
+          case h.NumberGreaterThanEqual:
+            if (o.evaluateNumber(l, v, g))
+              return f += "MATCH", n.opAppendLine(f), { value: p };
             f += "no match";
             break;
-          case 16:
-            for (var m = v.split(","), p = 0; p < m.length; p++)
-              if (m[p].trim() === K(h))
-                return f += "MATCH", n.OpAppendLine(f), a.ValueAndVariationId = {
-                  Value: u.value,
-                  VariationId: u.variationId
-                }, n.ReturnValue = a.ValueAndVariationId.Value, a.EvaluateLog = n, { value: a };
+          case h.SensitiveOneOf: {
+            for (var T = v.split(","), F = te(l), E = 0; E < T.length; E++)
+              if (T[E].trim() === F)
+                return f += "MATCH", n.opAppendLine(f), { value: p };
             f += "no match";
             break;
-          case 17:
-            if (!v.split(",").some(function(I) {
-              return I.trim() === K(h);
+          }
+          case h.SensitiveNotOneOf: {
+            var R = te(l);
+            if (!v.split(",").some(function(D) {
+              return D.trim() === R;
             }))
-              return f += "MATCH", n.OpAppendLine(f), a.ValueAndVariationId = {
-                Value: u.value,
-                VariationId: u.variationId
-              }, n.ReturnValue = a.ValueAndVariationId.Value, a.EvaluateLog = n, { value: a };
+              return f += "MATCH", n.opAppendLine(f), { value: p };
             f += "no match";
             break;
+          }
         }
-        n.OpAppendLine(f);
-      }, s = this, l = 0; l < t.length; l++) {
-        var c = r(l);
-        if (typeof c == "object")
-          return c.value;
+        n.opAppendLine(f);
+      }, o = this, s = 0; s < e.length; s++) {
+        var a = i(s);
+        if (typeof a == "object")
+          return a.value;
       }
-    return a.EvaluateLog = n, a;
-  }, i.prototype.EvaluateVariations = function(t, e, n) {
-    if (this.logger.debug("RolloutEvaluator.EvaluateVariations() called."), t && t.length > 0)
-      for (var a = e + (n.identifier === null || n.identifier === void 0 ? "" : n.identifier), r = K(a).substring(0, 7), s = parseInt(r, 16) % 100, l = 0, c = 0; c < t.length; c++) {
-        var o = t[c];
-        if (l += +o.percentage, s < l)
+    return null;
+  }, t.prototype.evaluatePercentageRules = function(e, r, n) {
+    if (this.logger.debug("RolloutEvaluator.EvaluateVariations() called."), e && e.length > 0)
+      for (var i = r + (n.identifier === null || n.identifier === void 0 ? "" : n.identifier), o = te(i).substring(0, 7), s = parseInt(o, 16) % 100, a = 0, u = 0; u < e.length; u++) {
+        var c = e[u];
+        if (a += +c.percentage, s < a)
           return {
-            Value: o.value,
-            VariationId: o.variationId
+            value: c.value,
+            variationId: c.variationId,
+            matchedPercentageOption: c
           };
       }
     return null;
-  }, i.prototype.EvaluateNumber = function(t, e, n) {
+  }, t.prototype.evaluateNumber = function(e, r, n) {
     this.logger.debug("RolloutEvaluator.EvaluateNumber() called.");
-    var a, r;
-    if (t && !Number.isNaN(Number.parseFloat(t.replace(",", "."))))
-      a = Number.parseFloat(t.replace(",", "."));
+    var i, o;
+    if (e && !Number.isNaN(Number.parseFloat(e.replace(",", "."))))
+      i = Number.parseFloat(e.replace(",", "."));
     else
       return !1;
-    if (e && !Number.isNaN(Number.parseFloat(e.replace(",", "."))))
-      r = Number.parseFloat(e.replace(",", "."));
+    if (r && !Number.isNaN(Number.parseFloat(r.replace(",", "."))))
+      o = Number.parseFloat(r.replace(",", "."));
     else
       return !1;
     switch (n) {
-      case 10:
-        return a == r;
-      case 11:
-        return a != r;
-      case 12:
-        return a < r;
-      case 13:
-        return a <= r;
-      case 14:
-        return a > r;
-      case 15:
-        return a >= r;
+      case h.NumberEqual:
+        return i === o;
+      case h.NumberNotEqual:
+        return i !== o;
+      case h.NumberLessThan:
+        return i < o;
+      case h.NumberLessThanEqual:
+        return i <= o;
+      case h.NumberGreaterThan:
+        return i > o;
+      case h.NumberGreaterThanEqual:
+        return i >= o;
     }
     return !1;
-  }, i.prototype.EvaluateSemver = function(t, e, n) {
-    if (this.logger.debug("RolloutEvaluator.EvaluateSemver() called."), N(t) == null || H(e))
+  }, t.prototype.evaluateSemver = function(e, r, n) {
+    if (this.logger.debug("RolloutEvaluator.EvaluateSemver() called."), j(e) == null || r === void 0)
       return !1;
-    switch (e = e.trim(), n) {
-      case 4:
-        for (var a = e.split(","), r = !1, s = 0; s < a.length; s++)
-          if (!(!a[s] || H(a[s]) || a[s].trim() === "")) {
-            if (N(a[s].trim()) == null)
+    switch (r = r.trim(), n) {
+      case h.SemVerIn:
+        for (var i = r.split(","), o = !1, s = 0; s < i.length; s++)
+          if (!(!i[s] || i[s].trim() === "")) {
+            if (j(i[s].trim()) == null)
               return !1;
-            r || (r = Ne(t, a[s].trim()));
+            o || (o = bt(e, i[s].trim()));
           }
-        return r;
-      case 5:
-        return !e.split(",").some(function(l) {
-          return !l || H(l) || l.trim() === "" || (l = N(l.trim()), l == null) ? !1 : xe(t, l);
+        return o;
+      case h.SemVerNotIn:
+        return !r.split(",").some(function(a) {
+          return !a || a.trim() === "" || (a = j(a.trim()), a == null) ? !1 : St(e, a);
         });
-      case 6:
-        return N(e) == null ? !1 : Pe(t, e);
-      case 7:
-        return N(e) == null ? !1 : Fe(t, e);
-      case 8:
-        return N(e) == null ? !1 : Ue(t, e);
-      case 9:
-        return N(e) == null ? !1 : ke(t, e);
+      case h.SemVerLessThan:
+        return j(r) == null ? !1 : Ot(e, r);
+      case h.SemVerLessThanEqual:
+        return j(r) == null ? !1 : At(e, r);
+      case h.SemVerGreaterThan:
+        return j(r) == null ? !1 : Ct(e, r);
+      case h.SemVerGreaterThanEqual:
+        return j(r) == null ? !1 : wt(e, r);
     }
     return !1;
-  }, i.prototype.GetUserAttribute = function(t, e) {
-    switch (e) {
+  }, t.prototype.getUserAttribute = function(e, r) {
+    switch (r) {
       case "Identifier":
-        return t.identifier;
+        return e.identifier;
       case "Email":
-        return t.email;
+        return e.email;
       case "Country":
-        return t.country;
+        return e.country;
       default:
-        return (t.custom || {})[e];
+        return (e.custom || {})[r];
     }
-  }, i.prototype.RuleToString = function(t) {
-    switch (t) {
-      case 0:
+  }, t.prototype.ruleToString = function(e) {
+    switch (e) {
+      case h.In:
         return "IS ONE OF";
-      case 1:
+      case h.NotIn:
         return "IS NOT ONE OF";
-      case 2:
+      case h.Contains:
         return "CONTAINS";
-      case 3:
+      case h.NotContains:
         return "DOES NOT CONTAIN";
-      case 4:
+      case h.SemVerIn:
         return "IS ONE OF (SemVer)";
-      case 5:
+      case h.SemVerNotIn:
         return "IS NOT ONE OF (SemVer)";
-      case 6:
+      case h.SemVerLessThan:
         return "< (SemVer)";
-      case 7:
+      case h.SemVerLessThanEqual:
         return "<= (SemVer)";
-      case 8:
+      case h.SemVerGreaterThan:
         return "> (SemVer)";
-      case 9:
+      case h.SemVerGreaterThanEqual:
         return ">= (SemVer)";
-      case 10:
+      case h.NumberEqual:
         return "= (Number)";
-      case 11:
+      case h.NumberNotEqual:
         return "!= (Number)";
-      case 12:
+      case h.NumberLessThan:
         return "< (Number)";
-      case 13:
+      case h.NumberLessThanEqual:
         return "<= (Number)";
-      case 14:
+      case h.NumberGreaterThan:
         return "> (Number)";
-      case 15:
+      case h.NumberGreaterThanEqual:
         return ">= (Number)";
-      case 16:
+      case h.SensitiveOneOf:
         return "IS ONE OF (Sensitive)";
-      case 17:
+      case h.SensitiveNotOneOf:
         return "IS NOT ONE OF (Sensitive)";
       default:
-        return t;
+        return e + "";
     }
-  }, i;
-}(), oe = function() {
-  function i() {
+  }, t;
+}(), Tt = function() {
+  function t() {
+    this.operations = "";
   }
-  return i;
-}(), Be = function() {
-  function i() {
-    this.Operations = "";
-  }
-  return i.prototype.OpAppendLine = function(t) {
-    this.Operations += " " + t + `
+  return t.prototype.opAppendLine = function(e) {
+    this.operations += " " + e + `
 `;
-  }, i.prototype.GetLog = function() {
-    return "Evaluate '" + this.KeyName + `'
- User : ` + JSON.stringify(this.User) + `
-` + this.Operations + " Returning value : " + this.ReturnValue;
-  }, i;
-}(), O;
-(function(i) {
-  i[i.LocalOnly = 0] = "LocalOnly", i[i.LocalOverRemote = 1] = "LocalOverRemote", i[i.RemoteOverLocal = 2] = "RemoteOverLocal";
-})(O || (O = {}));
-var x = globalThis && globalThis.__assign || function() {
-  return x = Object.assign || function(i) {
-    for (var t, e = 1, n = arguments.length; e < n; e++) {
-      t = arguments[e];
-      for (var a in t)
-        Object.prototype.hasOwnProperty.call(t, a) && (i[a] = t[a]);
+  }, t.prototype.toString = function() {
+    return "Evaluate '" + this.keyName + `'
+ User : ` + JSON.stringify(this.user) + `
+` + this.operations + " Returning value : " + this.returnValue;
+  }, t;
+}();
+function He(t, e, r, n) {
+  return {
+    key: t,
+    value: e.value,
+    variationId: e.variationId,
+    fetchTime: r,
+    user: n,
+    isDefaultValue: !1,
+    matchedEvaluationRule: e.matchedTargetingRule,
+    matchedEvaluationPercentageRule: e.matchedPercentageOption
+  };
+}
+function X(t, e, r, n, i, o) {
+  return {
+    key: t,
+    value: e,
+    fetchTime: r,
+    user: n,
+    isDefaultValue: !0,
+    errorMessage: i,
+    errorException: o
+  };
+}
+function je(t, e, r, n, i, o, s) {
+  var a;
+  if (!e)
+    return a = s.configJsonIsNotPresentSingle(r, "defaultValue", n).toString(), X(r, n, W(o), i, a);
+  var u = e[r];
+  if (!u)
+    return a = s.settingEvaluationFailedDueToMissingKey(r, "defaultValue", n, Nt(e)).toString(), X(r, n, W(o), i, a);
+  var c = t.evaluate(u, r, n, i, o);
+  if (n != null && typeof n != typeof c.value)
+    throw new TypeError(`The type of a setting must match the type of the given default value.
+The setting's type was `.concat(typeof n, ", the given default value's type was ").concat(typeof c.value, `.
+Please pass a corresponding default value type.`));
+  return He(r, c, W(o), i);
+}
+function Ke(t, e, r, n, i, o) {
+  var s;
+  if (!he(e, i, o))
+    return [[], s];
+  for (var a = [], u = 0, c = Object.entries(e); u < c.length; u++) {
+    var l = c[u], g = l[0], v = l[1], f = void 0;
+    try {
+      var p = t.evaluate(v, g, null, r, n);
+      f = He(g, p, W(n), r);
+    } catch (y) {
+      s ?? (s = []), s.push(y), f = X(g, null, W(n), r, $(y), y);
     }
-    return i;
-  }, x.apply(this, arguments);
-}, L = globalThis && globalThis.__awaiter || function(i, t, e, n) {
-  function a(r) {
-    return r instanceof e ? r : new e(function(s) {
-      s(r);
-    });
+    a.push(f);
   }
-  return new (e || (e = Promise))(function(r, s) {
-    function l(u) {
-      try {
-        o(n.next(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function c(u) {
-      try {
-        o(n.throw(u));
-      } catch (h) {
-        s(h);
-      }
-    }
-    function o(u) {
-      u.done ? r(u.value) : a(u.value).then(l, c);
-    }
-    o((n = n.apply(i, t || [])).next());
-  });
-}, R = globalThis && globalThis.__generator || function(i, t) {
-  var e = { label: 0, sent: function() {
-    if (r[0] & 1)
-      throw r[1];
-    return r[1];
-  }, trys: [], ops: [] }, n, a, r, s;
-  return s = { next: l(0), throw: l(1), return: l(2) }, typeof Symbol == "function" && (s[Symbol.iterator] = function() {
-    return this;
-  }), s;
-  function l(o) {
-    return function(u) {
-      return c([o, u]);
-    };
+  return [a, s];
+}
+function he(t, e, r) {
+  return t ? !0 : (e.configJsonIsNotPresent(r), !1);
+}
+function _e(t) {
+  return t == null || typeof t == "boolean" || typeof t == "number" || typeof t == "string";
+}
+function W(t) {
+  return t ? new Date(t.timestamp) : void 0;
+}
+function Nt(t) {
+  return Object.keys(t).map(function(e) {
+    return "'".concat(e, "'");
+  }).join(", ");
+}
+var Lt = function() {
+  function t() {
+    this.instances = {};
   }
-  function c(o) {
-    if (n)
-      throw new TypeError("Generator is already executing.");
-    for (; e; )
-      try {
-        if (n = 1, a && (r = o[0] & 2 ? a.return : o[0] ? a.throw || ((r = a.return) && r.call(a), 0) : a.next) && !(r = r.call(a, o[1])).done)
-          return r;
-        switch (a = 0, r && (o = [o[0] & 2, r.value]), o[0]) {
-          case 0:
-          case 1:
-            r = o;
-            break;
-          case 4:
-            return e.label++, { value: o[1], done: !1 };
-          case 5:
-            e.label++, a = o[1], o = [0];
-            continue;
-          case 7:
-            o = e.ops.pop(), e.trys.pop();
-            continue;
-          default:
-            if (r = e.trys, !(r = r.length > 0 && r[r.length - 1]) && (o[0] === 6 || o[0] === 2)) {
-              e = 0;
-              continue;
-            }
-            if (o[0] === 3 && (!r || o[1] > r[0] && o[1] < r[3])) {
-              e.label = o[1];
-              break;
-            }
-            if (o[0] === 6 && e.label < r[1]) {
-              e.label = r[1], r = o;
-              break;
-            }
-            if (r && e.label < r[2]) {
-              e.label = r[2], e.ops.push(o);
-              break;
-            }
-            r[2] && e.ops.pop(), e.trys.pop();
-            continue;
-        }
-        o = t.call(i, e);
-      } catch (u) {
-        o = [6, u], a = 0;
-      } finally {
-        n = r = 0;
-      }
-    if (o[0] & 5)
-      throw o[1];
-    return { value: o[0] ? o[1] : void 0, done: !0 };
-  }
-}, Me = function() {
-  function i(t, e) {
-    var n;
-    if (!t)
+  return t.prototype.getOrCreate = function(e, r) {
+    var n, i = this.instances[e.apiKey];
+    if (i) {
+      var o = i[0];
+      if (n = o.deref(), n)
+        return [n, !0];
+    }
+    var s = {};
+    n = new ve(e, r, s);
+    var a = yt() ? WeakRef : dt();
+    return this.instances[e.apiKey] = [new a(n), s], [n, !1];
+  }, t.prototype.remove = function(e, r) {
+    var n = this.instances[e];
+    if (n) {
+      var i = n[0], o = n[1], s = !!i.deref();
+      if (!s || o === r)
+        return delete this.instances[e], s;
+    }
+    return !1;
+  }, t.prototype.clear = function() {
+    for (var e = [], r = 0, n = Object.entries(this.instances); r < n.length; r++) {
+      var i = n[r], o = i[0], s = i[1][0], a = s.deref();
+      a && e.push(a), delete this.instances[o];
+    }
+    return e;
+  }, t;
+}(), G = new Lt(), ve = function() {
+  function t(e, r, n) {
+    var i;
+    if (this.cacheToken = n, this.addListener = this.on, this.off = this.removeListener, !e)
       throw new Error("Invalid 'options' value");
-    if (this.options = t, this.options.logger.debug("Initializing ConfigCatClient. Options: " + JSON.stringify(this.options)), !e)
+    if (this.options = e, this.options.logger.debug("Initializing ConfigCatClient. Options: " + JSON.stringify(this.options)), !r)
       throw new Error("Invalid 'configCatKernel' value");
-    if (!e.configFetcher)
+    if (!r.configFetcher)
       throw new Error("Invalid 'configCatKernel.configFetcher' value");
-    if (t != null && t.defaultUser && this.setDefaultUser(t.defaultUser), this.evaluator = new De(t.logger), ((n = t == null ? void 0 : t.flagOverrides) === null || n === void 0 ? void 0 : n.behaviour) != O.LocalOnly)
-      if (t && t instanceof me)
-        this.configService = new Ve(e.configFetcher, t);
-      else if (t && t instanceof be)
-        this.configService = new Le(e.configFetcher, t);
-      else if (t && t instanceof se)
-        this.configService = new Q(e.configFetcher, t);
-      else
+    if (e.defaultUser && this.setDefaultUser(e.defaultUser), this.evaluator = new It(e.logger), ((i = e.flagOverrides) === null || i === void 0 ? void 0 : i.behaviour) !== M.LocalOnly) {
+      var o = e instanceof Ue ? nt : e instanceof Ve ? ft : e instanceof Me ? lt : function() {
         throw new Error("Invalid 'options' value");
+      }();
+      this.configService = new o(r.configFetcher, e);
+    } else
+      this.options.hooks.emit("clientReady");
+    this.suppressFinalize = re(this, { sdkKey: e.apiKey, cacheToken: n, configService: this.configService, logger: e.logger });
   }
-  return i.prototype.dispose = function() {
-    this.options.logger.debug("dispose() called"), this.configService instanceof Q && (this.options.logger.debug("Disposing AutoPollConfigService"), this.configService.dispose());
-  }, i.prototype.getValue = function(t, e, n, a) {
-    this.options.logger.debug("getValue() called."), this.getValueAsync(t, e, a).then(function(r) {
-      n(r);
-    });
-  }, i.prototype.getValueAsync = function(t, e, n) {
-    var a = this;
-    return this.options.logger.debug("getValueAsync() called."), new Promise(function(r) {
-      return L(a, void 0, void 0, function() {
-        var s, l;
-        return R(this, function(c) {
-          switch (c.label) {
-            case 0:
-              return [4, this.getSettingsAsync()];
-            case 1:
-              return s = c.sent(), s ? (l = this.evaluator.Evaluate(s, t, e, n ?? this.defaultUser).Value, r(l), [2]) : (this.options.logger.error("config.json is not present. Returning default value: '" + e + "'."), r(e), [2]);
-          }
-        });
-      });
-    });
-  }, i.prototype.forceRefresh = function(t) {
-    this.options.logger.debug("forceRefresh() called."), this.forceRefreshAsync().then(function() {
-      t();
-    });
-  }, i.prototype.forceRefreshAsync = function() {
-    var t = this;
-    return this.options.logger.debug("forceRefreshAsync() called."), new Promise(function(e) {
-      return L(t, void 0, void 0, function() {
-        var n;
-        return R(this, function(a) {
-          switch (a.label) {
-            case 0:
-              return [4, (n = this.configService) === null || n === void 0 ? void 0 : n.refreshConfigAsync()];
-            case 1:
-              return a.sent(), e(), [2];
-          }
-        });
-      });
-    });
-  }, i.prototype.getAllKeys = function(t) {
-    this.options.logger.debug("getAllKeys() called."), this.getAllKeysAsync().then(function(e) {
-      t(e);
-    });
-  }, i.prototype.getAllKeysAsync = function() {
-    var t = this;
-    return this.options.logger.debug("getAllKeysAsync() called."), new Promise(function(e) {
-      return L(t, void 0, void 0, function() {
-        var n;
-        return R(this, function(a) {
-          switch (a.label) {
-            case 0:
-              return [4, this.getSettingsAsync()];
-            case 1:
-              return n = a.sent(), n ? (e(Object.keys(n)), [2]) : (this.options.logger.error("config.json is not present, returning empty array"), e([]), [2]);
-          }
-        });
-      });
-    });
-  }, i.prototype.getVariationId = function(t, e, n, a) {
-    this.options.logger.debug("getVariationId() called."), this.getVariationIdAsync(t, e, a).then(function(r) {
-      n(r);
-    });
-  }, i.prototype.getVariationIdAsync = function(t, e, n) {
-    var a = this;
-    return this.options.logger.debug("getVariationIdAsync() called."), new Promise(function(r) {
-      return L(a, void 0, void 0, function() {
-        var s, l;
-        return R(this, function(c) {
-          switch (c.label) {
-            case 0:
-              return [4, this.getSettingsAsync()];
-            case 1:
-              return s = c.sent(), s ? (l = this.evaluator.Evaluate(s, t, null, n ?? this.defaultUser, e).VariationId, r(l), [2]) : (this.options.logger.error("config.json is not present. Returning default variationId: '" + e + "'."), r(e), [2]);
-          }
-        });
-      });
-    });
-  }, i.prototype.getAllVariationIds = function(t, e) {
-    this.options.logger.debug("getAllVariationIds() called."), this.getAllVariationIdsAsync(e).then(function(n) {
-      t(n);
-    });
-  }, i.prototype.getAllVariationIdsAsync = function(t) {
-    var e = this;
-    return this.options.logger.debug("getAllVariationIdsAsync() called."), new Promise(function(n) {
-      return L(e, void 0, void 0, function() {
-        var a, r, s, l = this;
-        return R(this, function(c) {
-          switch (c.label) {
-            case 0:
-              return [4, this.getAllKeysAsync()];
-            case 1:
-              return a = c.sent(), a.length === 0 ? (n([]), [2]) : (r = a.map(function(o) {
-                return l.getVariationIdAsync(o, null, t);
-              }), [4, Promise.all(r)]);
-            case 2:
-              return s = c.sent(), n(s), [2];
-          }
-        });
-      });
-    });
-  }, i.prototype.getKeyAndValue = function(t, e) {
-    this.options.logger.debug("getKeyAndValue() called."), this.getKeyAndValueAsync(t).then(function(n) {
-      e(n);
-    });
-  }, i.prototype.getKeyAndValueAsync = function(t) {
-    var e = this;
-    return this.options.logger.debug("getKeyAndValueAsync() called."), new Promise(function(n) {
-      return L(e, void 0, void 0, function() {
-        var a, r, s, o, l, c, o, u;
-        return R(this, function(h) {
-          switch (h.label) {
-            case 0:
-              return [4, this.getSettingsAsync()];
-            case 1:
-              if (a = h.sent(), !a)
-                return this.options.logger.error("config.json is not present, returning empty array"), n(null), [2];
-              for (r in a) {
-                if (t === a[r].variationId)
-                  return n({ settingKey: r, settingValue: a[r].value }), [2];
-                if (s = a[r].rolloutRules, s && s.length > 0) {
-                  for (o = 0; o < s.length; o++)
-                    if (l = s[o], t === l.variationId)
-                      return n({ settingKey: r, settingValue: l.value }), [2];
-                }
-                if (c = a[r].rolloutPercentageItems, c && c.length > 0) {
-                  for (o = 0; o < c.length; o++)
-                    if (u = c[o], t === u.variationId)
-                      return n({ settingKey: r, settingValue: u.value }), [2];
-                }
-              }
-              return this.options.logger.error("Could not find the setting for the given variation ID: " + t), n(null), [2];
-          }
-        });
-      });
-    });
-  }, i.prototype.getAllValues = function(t, e) {
-    this.options.logger.debug("getAllValues() called."), this.getAllValuesAsync(e).then(function(n) {
-      t(n);
-    });
-  }, i.prototype.getAllValuesAsync = function(t) {
-    var e = this;
-    return this.options.logger.debug("getAllValuesAsync() called."), new Promise(function(n) {
-      return L(e, void 0, void 0, function() {
-        var a, r, s, l = this;
-        return R(this, function(c) {
-          switch (c.label) {
-            case 0:
-              return [4, this.getSettingsAsync()];
-            case 1:
-              return a = c.sent(), a ? (r = Object.keys(a), s = [], r.forEach(function(o) {
-                s.push({
-                  settingKey: o,
-                  settingValue: l.evaluator.Evaluate(a, o, void 0, t ?? l.defaultUser).Value
-                });
-              }), n(s), [2]) : (this.options.logger.error("config.json is not present, returning empty array"), n([]), [2]);
-          }
-        });
-      });
-    });
-  }, i.prototype.setDefaultUser = function(t) {
-    this.defaultUser = t;
-  }, i.prototype.clearDefaultUser = function() {
-    this.defaultUser = void 0;
-  }, i.prototype.getSettingsAsync = function() {
-    var t = this;
-    return this.options.logger.debug("getSettingsAsync() called."), new Promise(function(e) {
-      return L(t, void 0, void 0, function() {
-        var n, a, r, s, l, c, o;
-        return R(this, function(u) {
-          switch (u.label) {
-            case 0:
-              return !((l = this.options) === null || l === void 0) && l.flagOverrides ? [4, this.options.flagOverrides.dataSource.getOverrides()] : [3, 3];
-            case 1:
-              return n = u.sent(), this.options.flagOverrides.behaviour == O.LocalOnly ? (e(n), [2]) : [4, (c = this.configService) === null || c === void 0 ? void 0 : c.getConfig()];
-            case 2:
-              if (a = u.sent(), r = ae(a == null ? void 0 : a.ConfigJSON), this.options.flagOverrides.behaviour == O.LocalOverRemote)
-                return e(x(x({}, r), n)), [2];
-              if (this.options.flagOverrides.behaviour == O.RemoteOverLocal)
-                return e(x(x({}, n), r)), [2];
-              u.label = 3;
-            case 3:
-              return [4, (o = this.configService) === null || o === void 0 ? void 0 : o.getConfig()];
-            case 4:
-              return s = u.sent(), !s || !s.ConfigJSON || !s.ConfigJSON[X.FeatureFlags] ? (e(null), [2]) : (e(ae(s.ConfigJSON)), [2]);
-          }
-        });
-      });
-    });
-  }, i;
-}();
-function je() {
-  Object.fromEntries || (Object.fromEntries = function(i) {
-    if (!i || !i[Symbol.iterator])
-      throw new Error("Object.fromEntries() requires a single iterable argument");
-    for (var t = {}, e = 0, n = i; e < n.length; e++) {
-      var a = n[e], r = a[0], s = a[1];
-      t[r] = s;
+  return Object.defineProperty(t, "instanceCache", {
+    get: function() {
+      return G;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), t.get = function(e, r, n, i) {
+    if (!e)
+      throw new Error("Invalid 'sdkKey' value");
+    var o = r === U.AutoPoll ? Ue : r === U.ManualPoll ? Ve : r === U.LazyLoad ? Me : function() {
+      throw new Error("Invalid 'pollingMode' value");
+    }(), s = new o(e, i.sdkType, i.sdkVersion, n, i.defaultCacheFactory, i.eventEmitterFactory), a = G.getOrCreate(s, i), u = a[0], c = a[1];
+    return c && n && s.logger.clientIsAlreadyCreated(e), u;
+  }, t.finalize = function(e) {
+    var r;
+    (r = e.logger) === null || r === void 0 || r.debug("finalize() called"), e.cacheToken && G.remove(e.sdkKey, e.cacheToken), t.close(e.configService, e.logger);
+  }, t.close = function(e, r, n) {
+    r == null || r.debug("close() called"), n == null || n.tryDisconnect(), e == null || e.dispose();
+  }, t.prototype.dispose = function() {
+    var e = this.options;
+    e.logger.debug("dispose() called"), this.cacheToken && G.remove(e.apiKey, this.cacheToken), t.close(this.configService, e.logger, e.hooks), this.suppressFinalize();
+  }, t.disposeAll = function() {
+    for (var e = G.clear(), r, n = 0, i = e; n < i.length; n++) {
+      var o = i[n];
+      try {
+        t.close(o.configService, o.options.logger, o.options.hooks), o.suppressFinalize();
+      } catch (s) {
+        r ?? (r = []), r.push(s);
+      }
     }
-    return t;
+    if (r)
+      throw typeof AggregateError < "u" ? new AggregateError(r) : r.pop();
+  }, t.prototype.getValueAsync = function(e, r, n) {
+    return S(this, void 0, void 0, function() {
+      var i, o, s, a, u, c;
+      return O(this, function(l) {
+        switch (l.label) {
+          case 0:
+            this.options.logger.debug("getValueAsync() called."), We(e), ze(r), s = null, n ?? (n = this.defaultUser), l.label = 1;
+          case 1:
+            return l.trys.push([1, 3, , 4]), a = void 0, [4, this.getSettingsAsync()];
+          case 2:
+            return c = l.sent(), a = c[0], s = c[1], o = je(this.evaluator, a, e, r, n, s, this.options.logger), i = o.value, [3, 4];
+          case 3:
+            return u = l.sent(), this.options.logger.settingEvaluationErrorSingle("getValueAsync", e, "defaultValue", r, u), o = X(e, r, W(s), n, $(u), u), i = r, [3, 4];
+          case 4:
+            return this.options.hooks.emit("flagEvaluated", o), [2, i];
+        }
+      });
+    });
+  }, t.prototype.getValueDetailsAsync = function(e, r, n) {
+    return S(this, void 0, void 0, function() {
+      var i, o, s, a, u;
+      return O(this, function(c) {
+        switch (c.label) {
+          case 0:
+            this.options.logger.debug("getValueDetailsAsync() called."), We(e), ze(r), o = null, n ?? (n = this.defaultUser), c.label = 1;
+          case 1:
+            return c.trys.push([1, 3, , 4]), s = void 0, [4, this.getSettingsAsync()];
+          case 2:
+            return u = c.sent(), s = u[0], o = u[1], i = je(this.evaluator, s, e, r, n, o, this.options.logger), [3, 4];
+          case 3:
+            return a = c.sent(), this.options.logger.settingEvaluationErrorSingle("getValueDetailsAsync", e, "defaultValue", r, a), i = X(e, r, W(o), n, $(a), a), [3, 4];
+          case 4:
+            return this.options.hooks.emit("flagEvaluated", i), [2, i];
+        }
+      });
+    });
+  }, t.prototype.getAllKeysAsync = function() {
+    return S(this, void 0, void 0, function() {
+      var e, r, n;
+      return O(this, function(i) {
+        switch (i.label) {
+          case 0:
+            this.options.logger.debug("getAllKeysAsync() called."), e = "empty array", i.label = 1;
+          case 1:
+            return i.trys.push([1, 3, , 4]), [4, this.getSettingsAsync()];
+          case 2:
+            return r = i.sent()[0], he(r, this.options.logger, e) ? [2, Object.keys(r)] : [2, []];
+          case 3:
+            return n = i.sent(), this.options.logger.settingEvaluationError("getAllKeysAsync", e, n), [2, []];
+          case 4:
+            return [2];
+        }
+      });
+    });
+  }, t.prototype.getAllValuesAsync = function(e) {
+    return S(this, void 0, void 0, function() {
+      var r, n, i, o, s, a, u, c, l, g, v, f;
+      return O(this, function(p) {
+        switch (p.label) {
+          case 0:
+            this.options.logger.debug("getAllValuesAsync() called."), r = "empty array", e ?? (e = this.defaultUser), p.label = 1;
+          case 1:
+            return p.trys.push([1, 3, , 4]), [4, this.getSettingsAsync()];
+          case 2:
+            if (i = p.sent(), o = i[0], s = i[1], a = void 0, f = Ke(this.evaluator, o, e, s, this.options.logger, r), n = f[0], a = f[1], a != null && a.length)
+              throw typeof AggregateError < "u" ? new AggregateError(a) : a.pop();
+            return [3, 4];
+          case 3:
+            return u = p.sent(), this.options.logger.settingEvaluationError("getAllValuesAsync", r, u), n ?? (n = []), [3, 4];
+          case 4:
+            for (c = n.map(function(y) {
+              return new Q(y.key, y.value);
+            }), l = 0, g = n; l < g.length; l++)
+              v = g[l], this.options.hooks.emit("flagEvaluated", v);
+            return [2, c];
+        }
+      });
+    });
+  }, t.prototype.getAllValueDetailsAsync = function(e) {
+    return S(this, void 0, void 0, function() {
+      var r, n, i, o, s, a, u, c, l, g, v;
+      return O(this, function(f) {
+        switch (f.label) {
+          case 0:
+            this.options.logger.debug("getAllValueDetailsAsync() called."), r = "empty array", e ?? (e = this.defaultUser), f.label = 1;
+          case 1:
+            return f.trys.push([1, 3, , 4]), [4, this.getSettingsAsync()];
+          case 2:
+            if (i = f.sent(), o = i[0], s = i[1], a = void 0, v = Ke(this.evaluator, o, e, s, this.options.logger, r), n = v[0], a = v[1], a != null && a.length)
+              throw typeof AggregateError < "u" ? new AggregateError(a) : a.pop();
+            return [3, 4];
+          case 3:
+            return u = f.sent(), this.options.logger.settingEvaluationError("getAllValueDetailsAsync", r, u), n ?? (n = []), [3, 4];
+          case 4:
+            for (c = 0, l = n; c < l.length; c++)
+              g = l[c], this.options.hooks.emit("flagEvaluated", g);
+            return [2, n];
+        }
+      });
+    });
+  }, t.prototype.getKeyAndValueAsync = function(e) {
+    return S(this, void 0, void 0, function() {
+      var r, n, i, o, s, a, u, c, v, l, g, v, f, p;
+      return O(this, function(y) {
+        switch (y.label) {
+          case 0:
+            this.options.logger.debug("getKeyAndValueAsync() called."), r = "null", y.label = 1;
+          case 1:
+            return y.trys.push([1, 3, , 4]), [4, this.getSettingsAsync()];
+          case 2:
+            if (n = y.sent()[0], !he(n, this.options.logger, r))
+              return [2, null];
+            for (i = 0, o = Object.entries(n); i < o.length; i++) {
+              if (s = o[i], a = s[0], u = s[1], e === u.variationId)
+                return [2, new Q(a, u.value)];
+              if (c = n[a].targetingRules, c && c.length > 0) {
+                for (v = 0; v < c.length; v++)
+                  if (l = c[v], e === l.variationId)
+                    return [2, new Q(a, l.value)];
+              }
+              if (g = n[a].percentageOptions, g && g.length > 0) {
+                for (v = 0; v < g.length; v++)
+                  if (f = g[v], e === f.variationId)
+                    return [2, new Q(a, f.value)];
+              }
+            }
+            return this.options.logger.settingForVariationIdIsNotPresent(e), [3, 4];
+          case 3:
+            return p = y.sent(), this.options.logger.settingEvaluationError("getKeyAndValueAsync", r, p), [3, 4];
+          case 4:
+            return [2, null];
+        }
+      });
+    });
+  }, t.prototype.forceRefreshAsync = function() {
+    return S(this, void 0, void 0, function() {
+      var e, r;
+      return O(this, function(n) {
+        switch (n.label) {
+          case 0:
+            if (this.options.logger.debug("forceRefreshAsync() called."), !this.configService)
+              return [3, 5];
+            n.label = 1;
+          case 1:
+            return n.trys.push([1, 3, , 4]), [4, this.configService.refreshConfigAsync()];
+          case 2:
+            return e = n.sent()[0], [2, e];
+          case 3:
+            return r = n.sent(), this.options.logger.forceRefreshError("forceRefreshAsync", r), [2, ne.failure($(r), r)];
+          case 4:
+            return [3, 6];
+          case 5:
+            return [2, ne.failure("Client is configured to use the LocalOnly override behavior, which prevents making HTTP requests.")];
+          case 6:
+            return [2];
+        }
+      });
+    });
+  }, t.prototype.setDefaultUser = function(e) {
+    this.defaultUser = e;
+  }, t.prototype.clearDefaultUser = function() {
+    this.defaultUser = void 0;
+  }, Object.defineProperty(t.prototype, "isOffline", {
+    get: function() {
+      var e, r;
+      return (r = (e = this.configService) === null || e === void 0 ? void 0 : e.isOffline) !== null && r !== void 0 ? r : !0;
+    },
+    enumerable: !1,
+    configurable: !0
+  }), t.prototype.setOnline = function() {
+    this.configService ? this.configService.setOnline() : this.options.logger.configServiceMethodHasNoEffectDueToOverrideBehavior(M[M.LocalOnly], "setOnline");
+  }, t.prototype.setOffline = function() {
+    var e;
+    (e = this.configService) === null || e === void 0 || e.setOffline();
+  }, t.prototype.getSettingsAsync = function() {
+    var e;
+    return S(this, void 0, void 0, function() {
+      var r, n, i, o, s, a, u, c, l = this;
+      return O(this, function(g) {
+        switch (g.label) {
+          case 0:
+            return this.options.logger.debug("getSettingsAsync() called."), r = function() {
+              return S(l, void 0, void 0, function() {
+                var v, f;
+                return O(this, function(p) {
+                  switch (p.label) {
+                    case 0:
+                      return [4, this.configService.getConfig()];
+                    case 1:
+                      return v = p.sent(), f = v.isEmpty ? null : v.config.settings, [2, [f, v]];
+                  }
+                });
+              });
+            }, n = (e = this.options) === null || e === void 0 ? void 0 : e.flagOverrides, n ? (i = void 0, o = void 0, [4, n.dataSource.getOverrides()]) : [3, 7];
+          case 1:
+            switch (s = g.sent(), a = n.behaviour, a) {
+              case M.LocalOnly:
+                return [3, 2];
+              case M.LocalOverRemote:
+                return [3, 3];
+              case M.RemoteOverLocal:
+                return [3, 5];
+            }
+            return [3, 7];
+          case 2:
+            return [2, [s, null]];
+          case 3:
+            return [4, r()];
+          case 4:
+            return u = g.sent(), i = u[0], o = u[1], [2, [q(q({}, i ?? {}), s), o]];
+          case 5:
+            return [4, r()];
+          case 6:
+            return c = g.sent(), i = c[0], o = c[1], [2, [q(q({}, s), i ?? {}), o]];
+          case 7:
+            return [4, r()];
+          case 8:
+            return [2, g.sent()];
+        }
+      });
+    });
+  }, t.prototype.on = function(e, r) {
+    return this.options.hooks.on(e, r), this;
+  }, t.prototype.once = function(e, r) {
+    return this.options.hooks.once(e, r), this;
+  }, t.prototype.removeListener = function(e, r) {
+    return this.options.hooks.removeListener(e, r), this;
+  }, t.prototype.removeAllListeners = function(e) {
+    return this.options.hooks.removeAllListeners(e), this;
+  }, t.prototype.listeners = function(e) {
+    return this.options.hooks.listeners(e);
+  }, t.prototype.listenerCount = function(e) {
+    return this.options.hooks.listenerCount(e);
+  }, t.prototype.eventNames = function() {
+    return this.options.hooks.eventNames();
+  }, t;
+}(), Q = function() {
+  function t(e, r) {
+    this.settingKey = e, this.settingValue = r;
+  }
+  return t;
+}();
+function We(t) {
+  if (!t)
+    throw new Error("Invalid 'key' value");
+}
+function ze(t) {
+  if (!_e(t))
+    throw new TypeError("The default value must be boolean, number, string, null or undefined.");
+}
+var re = function(t, e) {
+  if (typeof FinalizationRegistry < "u") {
+    var r = new FinalizationRegistry(function(n) {
+      return ve.finalize(n);
+    });
+    re = function(n, i) {
+      var o = {};
+      return r.register(n, i, o), function() {
+        return r.unregister(o);
+      };
+    };
+  } else
+    re = function() {
+      return function() {
+      };
+    };
+  return re(t, e);
+};
+ht();
+function Rt(t, e, r, n) {
+  return ve.get(t, e, r, n);
+}
+var Dt = function() {
+  function t() {
+  }
+  return t.prototype.set = function(e, r) {
+    try {
+      localStorage.setItem(e, btoa(r));
+    } catch {
+    }
+  }, t.prototype.get = function(e) {
+    try {
+      var r = localStorage.getItem(e);
+      if (r)
+        return atob(r);
+    } catch {
+    }
+  }, t;
+}(), Ft = function() {
+  function t() {
+  }
+  return t.prototype.handleStateChange = function(e, r, n) {
+    var i;
+    try {
+      if (e.readyState === 4) {
+        var o = e.status, s = e.statusText;
+        if (o === 200) {
+          var a = (i = e.getResponseHeader("ETag")) !== null && i !== void 0 ? i : void 0;
+          r({ statusCode: o, reasonPhrase: s, eTag: a, body: e.responseText });
+        } else
+          o && r({ statusCode: o, reasonPhrase: s });
+      }
+    } catch (u) {
+      n(u);
+    }
+  }, t.prototype.fetchLogic = function(e, r) {
+    var n = this;
+    return new Promise(function(i, o) {
+      try {
+        e.logger.debug("HttpConfigFetcher.fetchLogic() called.");
+        var s = new XMLHttpRequest();
+        s.onreadystatechange = function() {
+          return n.handleStateChange(s, i, o);
+        }, s.ontimeout = function() {
+          return o(new ee("timeout", e.requestTimeoutMs));
+        }, s.onabort = function() {
+          return o(new ee("abort"));
+        }, s.onerror = function() {
+          return o(new ee("failure"));
+        }, s.open("GET", e.getUrl(), !0), s.timeout = e.requestTimeoutMs, s.send(null);
+      } catch (a) {
+        o(a);
+      }
+    });
+  }, t;
+}();
+const kt = "8.0.2";
+function ce(t, e, r) {
+  return Rt(t, e ?? U.AutoPoll, r, {
+    configFetcher: new Ft(),
+    sdkType: "ConfigCat-JS",
+    sdkVersion: kt,
+    defaultCacheFactory: function(n) {
+      return new qe(new Dt(), n.logger);
+    }
   });
 }
-je();
-function We(i, t, e) {
-  return new Me(new se(i, t.sdkType, t.sdkVersion, e, t.cache), t);
-}
-var _;
-(function(i) {
-  i[i.Debug = 4] = "Debug", i[i.Info = 3] = "Info", i[i.Warn = 2] = "Warn", i[i.Error = 1] = "Error", i[i.Off = -1] = "Off";
-})(_ || (_ = {}));
-var P;
-(function(i) {
-  i[i.Fetched = 0] = "Fetched", i[i.NotModified = 1] = "NotModified", i[i.Errored = 2] = "Errored";
-})(P || (P = {}));
-var G = function() {
-  function i(t, e, n) {
-    this.status = t, this.responseBody = e, this.eTag = n;
-  }
-  return i.success = function(t, e) {
-    return new i(P.Fetched, t, e);
-  }, i.notModified = function() {
-    return new i(P.NotModified, "");
-  }, i.error = function() {
-    return new i(P.Errored, "");
-  }, i;
-}(), Ke = function() {
-  function i() {
-  }
-  return i.prototype.fetchLogic = function(t, e, n) {
-    var a = new XMLHttpRequest();
-    a.onreadystatechange = function() {
-      if (a.readyState === 4) {
-        var r = a.getResponseHeader("ETag");
-        a.status === 200 ? n(G.success(a.responseText, r)) : a.status === 304 ? n(G.notModified()) : (t.logger.error("Failed to download feature flags & settings from ConfigCat. " + a.status + " - " + a.statusText), n(G.error()));
-      }
-    }, a.open("GET", t.getUrl(), !0), a.timeout = t.requestTimeoutMs, a.send(null);
-  }, i;
-}(), He = function() {
-  function i() {
-    this.cache = {};
-  }
-  return i.prototype.set = function(t, e) {
-    this.cache[t] = e;
-    try {
-      localStorage.setItem(t, btoa(JSON.stringify(e)));
-    } catch {
-    }
-  }, i.prototype.get = function(t) {
-    var e = this.cache[t];
-    if (e)
-      return e;
-    try {
-      var n = localStorage.getItem(t);
-      if (n) {
-        var a = JSON.parse(atob(n));
-        if (a)
-          return this.cache[t] = a, a;
-      }
-    } catch {
-    }
-    return null;
-  }, i;
-}();
-const Ge = "6.0.1";
-function Je(i, t) {
-  return $e(i, t);
-}
-function $e(i, t) {
-  return We(i, {
-    configFetcher: new Ke(),
-    cache: new He(),
-    sdkType: "ConfigCat-JS",
-    sdkVersion: Ge
-  }, t);
-}
-F.Global, F.EuOnly;
-O.LocalOnly, O.LocalOverRemote, O.RemoteOverLocal;
-const Xe = {
-  install: (i, t) => {
-    let e = Je(t.SDKKey, t.clientOptions);
-    i.config.globalProperties.configCatClient = e;
+const Vt = {
+  install: (t, e) => {
+    let r = ce(
+      e.SDKKey,
+      U.AutoPoll,
+      e.clientOptions
+    );
+    e.pollingMode == "manual" && (r = ce(
+      e.SDKKey,
+      U.ManualPoll,
+      e.clientOptions
+    )), e.pollingMode == "lazy" && (r = ce(
+      e.SDKKey,
+      U.LazyLoad,
+      e.clientOptions
+    )), t.config.globalProperties.configCatClient = r;
   }
 };
 export {
-  Xe as ConfigCatPlugin,
-  ze as FeatureWrapper
+  Vt as ConfigCatPlugin,
+  Ut as FeatureWrapper
 };
