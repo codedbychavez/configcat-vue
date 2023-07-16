@@ -2,169 +2,34 @@
 
 [![npm - configcat-vue](https://img.shields.io/badge/npm-configcat--vue-green?logo=npm&logoColor=white)](https://www.npmjs.com/package/configcat-vue)
 
-## Pre-requisites
+## Quick links
 
-- [Vue 3](https://vuejs.org/)
+- Visit the docs website here: <https://configcat-vue.netlify.app/>
+- Download the npm package here: <https://www.npmjs.com/package/configcat-vue>
+- Check out the sample vue here: <https://github.com/codedbychavez/configcat-vue-sample>
 
-## Installation
+## Introduction
 
-1. Install the npm package:
+Welcome to the official documentation for the [configcat-vue](https://www.npmjs.com/package/configcat-vue) plugin, a powerful and versatile npm package designed to streamline your feature development workflow. Whether you're a seasoned developer or just starting out, ConfigCat-Vue offers a comprehensive way to leverage all the benefits of using ConfigCat feature flags in your Vue.js applications. This plugin was designed to be simple yet inclusive of all the features offered by other [ConfigCat SDKs](https://configcat.com/docs/sdk-reference/overview/). This plugin empowers you to handle both simple and complex feature management in your Vue.js app, saving you time and effort.
 
-```sh
-npm install configcat-vue
-```
+## What you can do with this plugin
 
-## Usage
+Here's a quick overview of what you can do with this plugin:
 
-In your `main.js` file:
+- Easily toggle features in your Vue.js app on and off, even after it is deployed.
+- Experiment with new features and quickly roll them back with the click of a button if things go awry, without taking your app offline.
+- Release specific features in your Vue.js app to targeted users based on demographics such as country, email, or any custom attribute like eye color.
+- Gradually release new features to a specific percentage of users using the percentage rollout feature.
+- Conduct A/B testing of your Vue.js app's features effortlessly.
 
-1. Import the plugin
+## With you in mind
 
-```js
-import { ConfigCatPlugin } from 'configcat-vue';
-```
+The rest of [this documentation](https://configcat-vue.netlify.app/guide/) provides specific examples of the aforementioned capabilities, along with links to the relevant sections in ConfigCat's JavaScript SDK documentation. These examples and links will help you better understand how to utilize the features of the ConfigCat-Vue plugin effectively.
 
-2. Use the plugin:
+By referring to ConfigCat's JavaScript SDK documentation at <https://configcat.com/docs/sdk-reference/js/>, you can access detailed information and further explore the extensive range of options and functionalities offered by the ConfigCat ecosystem.
 
-```js
-app.use(ConfigCatPlugin, {
-  SDKKey: "YOUR-CONFIGCAT-SDK-KEY", // SDKKey is required
-  clientOptions: { // clientOptions is optional
-    pollIntervalSeconds: 95,
-  }
-});
-```
+Please note that the provided link is subject to ConfigCat's website and may change over time. Make sure to consult their official documentation for the most up-to-date information.
 
-## Using the FeatureWrapper component
+## Want to contribute?
 
-The **FeatureWrapper** component allows you to wrap features, components, and HTML within your Vue3 app. When the feature flag is enabled, the wrapped components are rendered.
-
-1. In your `.vue` file import the **FeatureWrapper** component:
-
-```js
-<script>
-import { FeatureWrapper } from "configcat-vue";
-
-export default {
-  components: {
-    FeatureWrapper,
-  },
-};
-</script>
-```
-
-2. You can use it in your template by passing your feature key to the **featureKey** prop:
-
-```js
-<template>
-  <div class="my-app">
-    <FeatureWrapper featureKey="featurekey">
-      <p>
-        This will show if the feature flag with <b>featurekey</b> is enabled in
-        ConfigCat
-      </p>
-    </FeatureWrapper>
-  </div>
-</template>
-```
-
-3. That's it! Need to know more? check out the [**Advanced usage**](https://github.com/codedbychavez/configcat-vue#advanced-usage) section below.
-
-## Advanced usage
-
-### Using the plugin with a logger
-
-The plugin can also be used with a logger, as explained in the [ConfigCat Docs](https://configcat.com/docs/sdk-reference/js/#logging).
-
-1. Install the `configcat-js` npm package:
-
-```sh
-npm install configcat-js
-```
-
-Then in `main.js`:
-
-2. Import ConfigCat:
-
-```js
-import * as configcat from 'configcat-js';
-```
-
-3. Create the logger:
-
-```js
-const logger = configcat.createConsoleLogger(3);
-```
-
-4. Use the logger in `clientOptions`:
-
-```js
-app.use(ConfigCatPlugin, {
-  SDKKey: "YOUR-CONFIGCAT-SDK-KEY", // SDKKey is required
-  clientOptions: { // clientOptions is optional
-    pollIntervalSeconds: 95,
-    logger: logger,
-  }
-});
-```
-### Using the FeatureWrapper with a User Object
-
-According to the documentation for ConfigCat, the [User Object](https://configcat.com/docs/advanced/user-object/) can be used to pass potential Targeting rules variables. In addition, it allows you to represent a user in your application.
-
-A User Object can be passed as a prop to the **Feature Wrapper** component.
-
-1. Define the User Object as a **data** property
-
-```js
-<script>
-import { FeatureWrapper } from "configcat-vue";
-
-export default {
-  components: {
-    FeatureWrapper,
-  },
-  data() {
-    return {
-      userObject: { // Passing userObject as a prop to the FeatureWrapper is optional
-        identifier: 'john@example.com',
-      }
-    }
-  }
-};
-</script>
-```
-
-2. Pass it to the **userObject** prop:
-
-```js
-<template>
-  <div class="my-app">
-    <FeatureWrapper featureKey="featurekey" :userObject="userObject">
-      <p>
-        This will show if the feature flag with <b>featurekey</b> is enabled in
-        ConfigCat
-      </p>
-    </FeatureWrapper>
-  </div>
-</template>
-```
-
-## Sample app
-
-**[https://github.com/codedbychavez/configcat-vue-sample](https://github.com/codedbychavez/configcat-vue-sample)**
-
-## References
-
-### Logging
-
-- [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
-
-### Polling modes
-
-- [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
-
-### User Object
-
-- [https://configcat.com/docs/advanced/user-object](https://configcat.com/docs/advanced/user-object/)
-
-- [https://configcat.com/docs/sdk-reference/js/#user-object](https://configcat.com/docs/sdk-reference/js/#user-object)
+Whether your strengths lie in coding, documentation, testing, or bug reporting, your expertise is highly valued. Visit the [configcat-vue GitHub repository](https://github.com/codedbychavez/configcat-vue), explore the codebase, and embark on your journey to make a meaningful impact. Let's unite our efforts to create something extraordinary and leave a lasting impression.

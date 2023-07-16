@@ -1,7 +1,7 @@
 {
   "name": "configcat-vue",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A simple and easy to use Vue3 plugin for using ConfigCat Feature Flags in your Vue.js Application",
   "keywords": [
     "ConfigCat",
