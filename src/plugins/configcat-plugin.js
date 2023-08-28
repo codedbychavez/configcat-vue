@@ -1,4 +1,4 @@
-import * as configcat from 'configcat-js';
+import * as configcat from 'configcat-js-ssr';
 
 export default {
   install: (app, options) => {
