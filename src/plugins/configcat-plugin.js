@@ -28,6 +28,6 @@ export default {
       );
     }
 
-    app.config.globalProperties.configCatClient = configCatClient;
+    app.config.globalProperties.$configCatClient = configCatClient;
   },
 };
