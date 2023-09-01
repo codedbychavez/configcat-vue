@@ -35,10 +35,12 @@ export default {
       this.isFeatureFlagEnabled = value;
     });
     this.$configCatClient.on('configChanged', (response) => {
-      // This will emit when the feature flag value is toggled in the Dashboard
-      const featureFlagValue = response.settings[this.featureKey].value;
-      this.isFeatureFlagEnabled = featureFlagValue;
-      this.$emit('flagValueChanged', featureFlagValue);
+      this.$configCatClient.getValueAsync(this.featureKey, false, this.userObject).then((value) => {
+        if (this.isFeatureFlagEnabled !== value) {
+          this.$emit('flagValueChanged', value);
+        }
+        this.isFeatureFlagEnabled = value;
+      });
     })
   },
   unmounted() {
