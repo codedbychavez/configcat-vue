@@ -31,7 +31,6 @@ const Je = (t, e) => {
     });
   },
   unmounted() {
-    this.configCatClient.dispose();
   }
 }, Ye = { key: 0 }, Xe = { key: 1 };
 function Ze(t, e, r, n, i, o) {

@@ -4,7 +4,7 @@ export default {
   install: (app, options) => {
 
      // Auto poll is default
-     let configCatClient = configcat.getClient(
+    let configCatClient = configcat.getClient(
       options.SDKKey,
       configcat.PollingMode.AutoPoll, 
       options.clientOptions

@@ -42,7 +42,7 @@ export default {
     })
   },
   unmounted() {
-    this.configCatClient.dispose();
+    
   }
 };
 </script>
