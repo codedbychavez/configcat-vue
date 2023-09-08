@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div v-if="isFeatureFlagEnabled">
+    <div v-if="$configCat.ready && isFeatureFlagEnabled">
       <slot />
     </div>
-    <div v-else>
+    <div v-else-if="$configCat.ready && !isFeatureFlagEnabled">
       <slot name="else" />
     </div>
-
+    <div v-else>
+      <slot name="loading" />
+    </div>
   </div>
 </template>
 
@@ -31,17 +33,17 @@ export default {
   },
   mounted() {
     // Check if feature flag is enabled
-    this.$configCatClient.getValueAsync(this.featureKey, false, this.userObject).then((value) => {
+    this.$configCat.client.getValueAsync(this.featureKey, false, this.userObject).then((value) => {
       this.isFeatureFlagEnabled = value;
     });
-    this.$configCatClient.on('configChanged', this.listener);
+    this.$configCat.client.on('configChanged', this.listener);
   },
   unmounted() {
-    this.$configCatClient.removeListener('configChanged', this.listener);
+    this.$configCat.client.removeListener('configChanged', this.listener);
   },
   methods: {
     listener(newConfig) {
-      this.$configCatClient.getValueAsync(this.featureKey, false, this.userObject).then((value) => {
+      this.$configCat.client.getValueAsync(this.featureKey, false, this.userObject).then((value) => {
         this.isFeatureFlagEnabled = value;
         this.$emit('flagValueChanged', value);
       })

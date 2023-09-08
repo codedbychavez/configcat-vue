@@ -1,33 +1,52 @@
-import * as configcat from 'configcat-js';
+import * as configcat from "configcat-js";
 
 export default {
   install: (app, options) => {
+    const configCat = {
+      client: undefined,
+      ready: false,
+    };
+    const clientOptions = {
+      setupHooks: (hooks) =>
+        hooks.on("clientReady", () => (configCat.ready = true)),
+      ...options.clientOptions,
+    };
 
-     // Auto poll is default
-    let configCatClient = configcat.getClient(
-      options.SDKKey,
-      configcat.PollingMode.AutoPoll, 
-      options.clientOptions
-    )
+    // Auto poll is default
+    if (options.pollingMode == "auto") {
+      configCat.client = configcat.getClient(
+        options.SDKKey,
+        configcat.PollingMode.AutoPoll,
+        clientOptions
+      );
+    }
 
-    if (options.pollingMode == 'manual') {
+    else if (options.pollingMode == "manual") {
       // https://configcat.com/docs/sdk-reference/js/#manual-polling
-      configCatClient = configcat.getClient(
+      configCat.client = configcat.getClient(
         options.SDKKey,
-        configcat.PollingMode.ManualPoll, 
-        options.clientOptions
+        configcat.PollingMode.AutoPoll,
+        clientOptions
       );
     }
 
-    if (options.pollingMode == 'lazy') {
+    else if (options.pollingMode == "lazy") {
       // https://configcat.com/docs/sdk-reference/js/#lazy-loading
-      configCatClient = configcat.getClient(
+      configCat.client = configcat.getClient(
         options.SDKKey,
-        configcat.PollingMode.LazyLoad, 
-        options.clientOptions
+        configcat.PollingMode.AutoPoll,
+        clientOptions
       );
     }
 
-    app.config.globalProperties.$configCatClient = configCatClient;
+    else { // auto
+      configCat.client = configcat.getClient(
+        options.SDKKey,
+        configcat.PollingMode.AutoPoll,
+        clientOptions
+      );
+    }
+
+    app.config.globalProperties.$configCat = configCat;
   },
 };
