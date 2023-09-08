@@ -1,14 +1,16 @@
-import * as configcat from "configcat-js";
+import * as configcat from "configcat-js";  
+import {ref} from "vue";
 
 export default {
   install: (app, options) => {
+    const ready = ref(false)
     const configCat = {
       client: undefined,
-      ready: false,
+      ready,
     };
     const clientOptions = {
       setupHooks: (hooks) =>
-        hooks.on("clientReady", () => (configCat.ready = true)),
+        hooks.on("clientReady", () => (configCat.ready.value = true)),
       ...options.clientOptions,
     };
 

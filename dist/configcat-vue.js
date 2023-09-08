@@ -1,10 +1,10 @@
-import { openBlock as Q, createElementBlock as ee, renderSlot as pe } from "vue";
-const Je = (t, e) => {
+import { openBlock as Q, createElementBlock as ee, renderSlot as pe, ref as Je } from "vue";
+const $e = (t, e) => {
   const r = t.__vccOpts || t;
   for (const [n, i] of e)
     r[n] = i;
   return r;
-}, $e = {
+}, Ye = {
   emits: ["flagValueChanged"],
   props: {
     featureKey: {
@@ -37,19 +37,19 @@ const Je = (t, e) => {
       });
     }
   }
-}, Ye = { key: 0 }, Xe = { key: 1 }, Ze = { key: 2 };
-function Qe(t, e, r, n, i, o) {
+}, Xe = { key: 0 }, Ze = { key: 1 }, Qe = { key: 2 };
+function et(t, e, r, n, i, o) {
   return Q(), ee("div", null, [
-    t.$configCat.ready && i.isFeatureFlagEnabled ? (Q(), ee("div", Ye, [
+    t.$configCat.ready && i.isFeatureFlagEnabled ? (Q(), ee("div", Xe, [
       pe(t.$slots, "default")
-    ])) : t.$configCat.ready && !i.isFeatureFlagEnabled ? (Q(), ee("div", Xe, [
+    ])) : t.$configCat.ready && !i.isFeatureFlagEnabled ? (Q(), ee("div", Ze, [
       pe(t.$slots, "else")
-    ])) : (Q(), ee("div", Ze, [
+    ])) : (Q(), ee("div", Qe, [
       pe(t.$slots, "loading")
     ]))
   ]);
 }
-const xt = /* @__PURE__ */ Je($e, [["render", Qe]]);
+const jt = /* @__PURE__ */ $e(Ye, [["render", et]]);
 var ve = function(t, e) {
   return ve = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(r, n) {
     r.__proto__ = n;
@@ -169,7 +169,7 @@ function O(t, e) {
     return { value: u[0] ? u[1] : void 0, done: !0 };
   }
 }
-function et() {
+function tt() {
   for (var t = 0, e = 0, r = arguments.length; e < r; e++)
     t += arguments[e].length;
   for (var n = Array(t), i = 0, e = 0; e < r; e++)
@@ -268,15 +268,15 @@ var K = function() {
   function t(e) {
     this.settings = e.f ? Object.fromEntries(Object.entries(e.f).map(function(r) {
       var n = r[0], i = r[1];
-      return [n, new rt(i)];
-    })) : {}, this.preferences = e.p ? new tt(e.p) : void 0;
+      return [n, new nt(i)];
+    })) : {}, this.preferences = e.p ? new rt(e.p) : void 0;
   }
   return t;
 }(), X;
 (function(t) {
   t[t.No = 0] = "No", t[t.Should = 1] = "Should", t[t.Force = 2] = "Force";
 })(X || (X = {}));
-var tt = function() {
+var rt = function() {
   function t(e) {
     this.baseUrl = e.u, this.redirectMode = e.r;
   }
@@ -285,13 +285,13 @@ var tt = function() {
 (function(t) {
   t[t.Boolean = 0] = "Boolean", t[t.String = 1] = "String", t[t.Int = 2] = "Int", t[t.Double = 3] = "Double";
 })(Oe || (Oe = {}));
-var rt = function() {
+var nt = function() {
   function t(e) {
     var r, n, i, o;
     this.value = e.v, this.type = e.t, this.percentageOptions = (n = (r = e.p) === null || r === void 0 ? void 0 : r.map(function(s) {
-      return new it(s);
+      return new ot(s);
     })) !== null && n !== void 0 ? n : [], this.targetingRules = (o = (i = e.r) === null || i === void 0 ? void 0 : i.map(function(s) {
-      return new nt(s);
+      return new it(s);
     })) !== null && o !== void 0 ? o : [], this.variationId = e.i;
   }
   return t.fromValue = function(e) {
@@ -304,12 +304,12 @@ var rt = function() {
 (function(t) {
   t[t.In = 0] = "In", t[t.NotIn = 1] = "NotIn", t[t.Contains = 2] = "Contains", t[t.NotContains = 3] = "NotContains", t[t.SemVerIn = 4] = "SemVerIn", t[t.SemVerNotIn = 5] = "SemVerNotIn", t[t.SemVerLessThan = 6] = "SemVerLessThan", t[t.SemVerLessThanEqual = 7] = "SemVerLessThanEqual", t[t.SemVerGreaterThan = 8] = "SemVerGreaterThan", t[t.SemVerGreaterThanEqual = 9] = "SemVerGreaterThanEqual", t[t.NumberEqual = 10] = "NumberEqual", t[t.NumberNotEqual = 11] = "NumberNotEqual", t[t.NumberLessThan = 12] = "NumberLessThan", t[t.NumberLessThanEqual = 13] = "NumberLessThanEqual", t[t.NumberGreaterThan = 14] = "NumberGreaterThan", t[t.NumberGreaterThanEqual = 15] = "NumberGreaterThanEqual", t[t.SensitiveOneOf = 16] = "SensitiveOneOf", t[t.SensitiveNotOneOf = 17] = "SensitiveNotOneOf";
 })(g || (g = {}));
-var nt = function() {
+var it = function() {
   function t(e) {
     this.order = e.o, this.comparisonAttribute = e.a, this.comparator = e.t, this.comparisonValue = e.c, this.value = e.v, this.variationId = e.i;
   }
   return t;
-}(), it = function() {
+}(), ot = function() {
   function t(e) {
     this.order = e.o, this.percentage = e.p, this.value = e.v, this.variationId = e.i;
   }
@@ -500,7 +500,7 @@ var Ee = function() {
       });
     });
   }, t;
-}(), ot = function() {
+}(), st = function() {
   function t() {
     this.addListener = this.on, this.off = this.removeListener;
   }
@@ -525,7 +525,7 @@ var Ee = function() {
 (function(t) {
   t[t.NoFlagData = 0] = "NoFlagData", t[t.HasLocalOverrideFlagDataOnly = 1] = "HasLocalOverrideFlagDataOnly", t[t.HasCachedFlagDataOnly = 2] = "HasCachedFlagDataOnly", t[t.HasUpToDateFlagData = 3] = "HasUpToDateFlagData";
 })(P || (P = {}));
-var Ae = new ot(), st = function() {
+var Ae = new st(), at = function() {
   function t(e) {
     this.addListener = this.on, this.off = this.removeListener, this.eventEmitter = e;
   }
@@ -549,10 +549,10 @@ var Ae = new ot(), st = function() {
   }, t.prototype.emit = function(e) {
     for (var r, n = [], i = 1; i < arguments.length; i++)
       n[i - 1] = arguments[i];
-    return (r = this.eventEmitter).emit.apply(r, et([e], n));
+    return (r = this.eventEmitter).emit.apply(r, tt([e], n));
   }, t;
 }();
-function at(t, e) {
+function ut(t, e) {
   var r, n = new Promise(function(i) {
     return r = setTimeout(i, t);
   });
@@ -563,7 +563,7 @@ function at(t, e) {
 function q(t, e) {
   return e === void 0 && (e = !1), t instanceof Error ? e && t.stack ? t.stack : t.toString() : t + "";
 }
-var ut = function(t) {
+var lt = function(t) {
   B(e, t);
   function e(r, n) {
     var i = t.call(this, r, n) || this;
@@ -601,7 +601,7 @@ var ut = function(t) {
                   });
                 });
               }(),
-              at(this.options.maxInitWaitTimeSeconds * 1e3, function(s) {
+              ut(this.options.maxInitWaitTimeSeconds * 1e3, function(s) {
                 return r = s;
               })
             ])];
@@ -686,7 +686,7 @@ var ut = function(t) {
   }, e.prototype.getReadyState = function(r) {
     return r.isEmpty ? P.NoFlagData : r.isExpired(this.pollIntervalMs) ? P.HasCachedFlagDataOnly : P.HasUpToDateFlagData;
   }, e;
-}(Ee), lt = function() {
+}(Ee), ct = function() {
   function t() {
     this.cachedConfig = M.empty;
   }
@@ -772,7 +772,7 @@ var w = function() {
   }), t.prototype.toString = function() {
     return this.defaultFormattedMessage;
   }, t;
-}(), ct = function() {
+}(), ft = function() {
   function t(e, r) {
     this.logger = e, this.hooks = r;
   }
@@ -839,7 +839,7 @@ var w = function() {
   }, t.prototype.configServiceStatusChanged = function(e) {
     return this.log(d.Info, 5200, w.from("MODE")(je || (je = A(["Switched to ", " mode."], ["Switched to ", " mode."])), e.toUpperCase()));
   }, t;
-}(), ft = function() {
+}(), ht = function() {
   function t(e) {
     e === void 0 && (e = d.Warn), this.level = e, this.SOURCE = "ConfigCat";
   }
@@ -852,7 +852,7 @@ var w = function() {
 function J(t) {
   return !!t.fn;
 }
-var ht = function() {
+var gt = function() {
   function t() {
     this.events = {}, this.eventCount = 0, this.addListener = this.on, this.off = this.removeListener;
   }
@@ -1024,8 +1024,8 @@ var be = function() {
         this.baseUrl = "https://cdn-global.configcat.com";
         break;
     }
-    var c = (l = o == null ? void 0 : o()) !== null && l !== void 0 ? l : new ht();
-    this.hooks = new st(c), this.readyPromise = new Promise(function(f) {
+    var c = (l = o == null ? void 0 : o()) !== null && l !== void 0 ? l : new gt();
+    this.hooks = new at(c), this.readyPromise = new Promise(function(f) {
       return s.hooks.once("clientReady", f);
     });
     var h, p;
@@ -1037,7 +1037,7 @@ var be = function() {
       }
       n.baseUrl && (this.baseUrl = n.baseUrl, this.baseUrlOverriden = !0), n.proxy && (this.proxy = n.proxy), n.flagOverrides && (this.flagOverrides = n.flagOverrides), n.defaultUser && (this.defaultUser = n.defaultUser), n.offline && (this.offline = n.offline), (u = n.setupHooks) === null || u === void 0 || u.call(n, this.hooks);
     }
-    this.logger = new ct(h ?? new ft(), this.hooks), this.cache = p ? new _e(p, this.logger) : i ? i(this) : new lt();
+    this.logger = new ft(h ?? new ht(), this.hooks), this.cache = p ? new _e(p, this.logger) : i ? i(this) : new ct();
   }
   return t.prototype.getUrl = function() {
     return this.baseUrl + "/configuration-files/" + this.apiKey + "/" + t.configFileName + "?sdk=" + this.clientVersion;
@@ -1076,7 +1076,7 @@ var be = function() {
 (function(t) {
   t[t.LocalOnly = 0] = "LocalOnly", t[t.LocalOverRemote = 1] = "LocalOverRemote", t[t.RemoteOverLocal = 2] = "RemoteOverLocal";
 })(F || (F = {}));
-var gt = function(t) {
+var pt = function(t) {
   B(e, t);
   function e(r, n) {
     var i = t.call(this, r, n) || this;
@@ -1110,7 +1110,7 @@ var gt = function(t) {
   }, e.prototype.getReadyState = function(r) {
     return r.isEmpty ? P.NoFlagData : r.isExpired(this.cacheTimeToLiveMs) ? P.HasCachedFlagDataOnly : P.HasUpToDateFlagData;
   }, e;
-}(Ee), pt = function(t) {
+}(Ee), vt = function(t) {
   B(e, t);
   function e(r, n) {
     var i = t.call(this, r, n) || this;
@@ -1133,24 +1133,24 @@ var gt = function(t) {
     return this.options.logger.debug("ManualPollService.refreshConfigAsync() called."), t.prototype.refreshConfigAsync.call(this);
   }, e;
 }(Ee);
-function vt() {
-  typeof Object.values > "u" && (Object.values = dt), typeof Object.entries > "u" && (Object.entries = yt), typeof Object.fromEntries > "u" && (Object.fromEntries = mt);
+function dt() {
+  typeof Object.values > "u" && (Object.values = yt), typeof Object.entries > "u" && (Object.entries = mt), typeof Object.fromEntries > "u" && (Object.fromEntries = Et);
 }
-function dt(t) {
+function yt(t) {
   for (var e = [], r = 0, n = Object.keys(t); r < n.length; r++) {
     var i = n[r];
     e.push(t[i]);
   }
   return e;
 }
-function yt(t) {
+function mt(t) {
   for (var e = [], r = 0, n = Object.keys(t); r < n.length; r++) {
     var i = n[r];
     e.push([i, t[i]]);
   }
   return e;
 }
-function mt(t) {
+function Et(t) {
   var e, r = {};
   if (Array.isArray(t))
     for (var n = 0, i = t; n < i.length; n++) {
@@ -1166,7 +1166,7 @@ function mt(t) {
     throw new TypeError("Object.fromEntries() requires a single iterable argument");
   return r;
 }
-function Et() {
+function bt() {
   var t = function(e) {
     this.target = e;
   };
@@ -1174,13 +1174,13 @@ function Et() {
     return this.target;
   }, t.isFallback = !0, t;
 }
-var bt = function() {
+var St = function() {
   return typeof WeakRef == "function";
 }, ze = /^[0-9]+$/, $ = function(t, e) {
   var r = ze.test(t), n = ze.test(e);
   return r && n && (t = +t, e = +e), t === e ? 0 : r && !n ? -1 : n && !r ? 1 : t < e ? -1 : 1;
-}, ye = 256, te = Number.MAX_SAFE_INTEGER || 9007199254740991, Z = [], b = [], m = {}, St = 0, C = function(t, e) {
-  var r = St++;
+}, ye = 256, te = Number.MAX_SAFE_INTEGER || 9007199254740991, Z = [], b = [], m = {}, Ot = 0, C = function(t, e) {
+  var r = Ot++;
   m[t] = r, b[r] = e, Z[r] = new RegExp(e);
 };
 C("NUMERICIDENTIFIER", "0|[1-9]\\d*");
@@ -1316,7 +1316,7 @@ var ce = function() {
     }
     return this.format(), this.raw = this.version, this;
   }, t;
-}(), Ot = function(t, e) {
+}(), At = function(t, e) {
   if ((!e || typeof e != "object") && (e = {
     loose: !!e,
     includePrerelease: !1
@@ -1335,28 +1335,28 @@ var ce = function() {
 }, G = function(t, e, r) {
   return new ce(t, r).compare(new ce(e, r));
 }, W = function(t) {
-  var e = Ot(t, !1);
+  var e = At(t, !1);
   return e ? e.version : null;
-}, At = function(t, e) {
-  return G(t, e, !0) === 0;
 }, wt = function(t, e) {
-  return G(t, e, !1) === 0;
+  return G(t, e, !0) === 0;
 }, Ct = function(t, e) {
-  return G(t, e, !1) < 0;
+  return G(t, e, !1) === 0;
 }, It = function(t, e) {
-  return G(t, e, !1) <= 0;
+  return G(t, e, !1) < 0;
 }, Tt = function(t, e) {
-  return G(t, e, !1) > 0;
+  return G(t, e, !1) <= 0;
 }, Nt = function(t, e) {
+  return G(t, e, !1) > 0;
+}, Lt = function(t, e) {
   return G(t, e, !1) >= 0;
-}, Lt = function() {
+}, Rt = function() {
   function t(e) {
     this.logger = e;
   }
   return t.prototype.evaluate = function(e, r, n, i, o) {
     if (this.logger.debug("RolloutEvaluator.Evaluate() called."), e.type < 0 && !Ge(e.value))
       throw new TypeError(e.value === null ? "Setting value is null." : e.value === void 0 ? "Setting value is undefined." : "Setting value '" + e.value + "' is of an unsupported type (" + typeof e.value + ").");
-    var s = new Rt();
+    var s = new Dt();
     s.user = i, s.keyName = r, s.returnValue = n;
     var a;
     try {
@@ -1498,21 +1498,21 @@ var ce = function() {
           if (!(!i[s] || i[s].trim() === "")) {
             if (W(i[s].trim()) == null)
               return !1;
-            o || (o = At(e, i[s].trim()));
+            o || (o = wt(e, i[s].trim()));
           }
         return o;
       case g.SemVerNotIn:
         return !r.split(",").some(function(a) {
-          return !a || a.trim() === "" || (a = W(a.trim()), a == null) ? !1 : wt(e, a);
+          return !a || a.trim() === "" || (a = W(a.trim()), a == null) ? !1 : Ct(e, a);
         });
       case g.SemVerLessThan:
-        return W(r) == null ? !1 : Ct(e, r);
-      case g.SemVerLessThanEqual:
         return W(r) == null ? !1 : It(e, r);
-      case g.SemVerGreaterThan:
+      case g.SemVerLessThanEqual:
         return W(r) == null ? !1 : Tt(e, r);
-      case g.SemVerGreaterThanEqual:
+      case g.SemVerGreaterThan:
         return W(r) == null ? !1 : Nt(e, r);
+      case g.SemVerGreaterThanEqual:
+        return W(r) == null ? !1 : Lt(e, r);
     }
     return !1;
   }, t.prototype.getUserAttribute = function(e, r) {
@@ -1568,7 +1568,7 @@ var ce = function() {
         return e + "";
     }
   }, t;
-}(), Rt = function() {
+}(), Dt = function() {
   function t() {
     this.operations = "";
   }
@@ -1610,7 +1610,7 @@ function fe(t, e, r, n, i, o, s) {
     return a = s.configJsonIsNotPresentSingle(r, "defaultValue", n).toString(), _(r, n, j(o), i, a);
   var l = e[r];
   if (!l)
-    return a = s.settingEvaluationFailedDueToMissingKey(r, "defaultValue", n, Dt(e)).toString(), _(r, n, j(o), i, a);
+    return a = s.settingEvaluationFailedDueToMissingKey(r, "defaultValue", n, Ft(e)).toString(), _(r, n, j(o), i, a);
   var u = t.evaluate(l, r, n, i, o);
   if (n != null && typeof n != typeof u.value)
     throw new TypeError(`The type of a setting must match the type of the given default value.
@@ -1643,12 +1643,12 @@ function Ge(t) {
 function j(t) {
   return t ? new Date(t.timestamp) : void 0;
 }
-function Dt(t) {
+function Ft(t) {
   return Object.keys(t).map(function(e) {
     return "'" + e + "'";
   }).join(", ");
 }
-var Ft = function() {
+var Pt = function() {
   function t() {
     this.instances = {};
   }
@@ -1661,7 +1661,7 @@ var Ft = function() {
     }
     var s = {};
     n = new Se(e, r, s);
-    var a = bt() ? WeakRef : Et();
+    var a = St() ? WeakRef : bt();
     return this.instances[e.apiKey] = [new a(n), s], [n, !1];
   }, t.prototype.remove = function(e, r) {
     var n = this.instances[e];
@@ -1678,7 +1678,7 @@ var Ft = function() {
     }
     return e;
   }, t;
-}(), Y = new Ft(), Se = function() {
+}(), Y = new Pt(), Se = function() {
   function t(e, r, n) {
     var i;
     if (this.cacheToken = n, this.addListener = this.on, this.off = this.removeListener, !e)
@@ -1687,7 +1687,7 @@ var Ft = function() {
       throw new Error("Invalid 'configCatKernel' value");
     if (!r.configFetcher)
       throw new Error("Invalid 'configCatKernel.configFetcher' value");
-    e.defaultUser && this.setDefaultUser(e.defaultUser), this.evaluator = new Lt(e.logger), ((i = e.flagOverrides) === null || i === void 0 ? void 0 : i.behaviour) !== F.LocalOnly ? this.configService = e instanceof He ? new ut(r.configFetcher, e) : e instanceof Ke ? new pt(r.configFetcher, e) : e instanceof We ? new gt(r.configFetcher, e) : function() {
+    e.defaultUser && this.setDefaultUser(e.defaultUser), this.evaluator = new Rt(e.logger), ((i = e.flagOverrides) === null || i === void 0 ? void 0 : i.behaviour) !== F.LocalOnly ? this.configService = e instanceof He ? new lt(r.configFetcher, e) : e instanceof Ke ? new vt(r.configFetcher, e) : e instanceof We ? new pt(r.configFetcher, e) : function() {
       throw new Error("Invalid 'options' value");
     }() : this.options.hooks.emit("clientReady", P.HasLocalOverrideFlagDataOnly), this.suppressFinalize = ae(this, { sdkKey: e.apiKey, cacheToken: n, configService: this.configService, logger: e.logger });
   }
@@ -2040,11 +2040,11 @@ var ae = function(t, e) {
     };
   return ae(t, e);
 };
-vt();
-function Pt(t, e, r, n) {
+dt();
+function kt(t, e, r, n) {
   return Se.get(t, e, r, n);
 }
-var kt = function() {
+var Ut = function() {
   function t() {
   }
   return t.prototype.set = function(e, r) {
@@ -2060,7 +2060,7 @@ var kt = function() {
     } catch {
     }
   }, t;
-}(), Ut = function() {
+}(), Mt = function() {
   function t() {
   }
   return t.prototype.handleStateChange = function(e, r, n) {
@@ -2098,34 +2098,34 @@ var kt = function() {
     });
   }, t;
 }();
-const Mt = "8.1.1";
+const Vt = "8.1.1";
 function ie(t, e, r) {
-  return Pt(t, e ?? V.AutoPoll, r, {
-    configFetcher: new Ut(),
+  return kt(t, e ?? V.AutoPoll, r, {
+    configFetcher: new Mt(),
     sdkType: "ConfigCat-JS",
-    sdkVersion: Mt,
+    sdkVersion: Vt,
     defaultCacheFactory: function(n) {
-      return new _e(new kt(), n.logger);
+      return new _e(new Ut(), n.logger);
     }
   });
 }
-const jt = {
+const Ht = {
   install: (t, e) => {
-    const r = {
+    const n = {
       client: void 0,
-      ready: !1
-    }, n = {
-      setupHooks: (i) => i.on("clientReady", () => r.ready = !0),
+      ready: Je(!1)
+    }, i = {
+      setupHooks: (o) => o.on("clientReady", () => n.ready.value = !0),
       ...e.clientOptions
     };
-    e.pollingMode == "auto" || e.pollingMode == "manual" || e.pollingMode == "lazy", r.client = ie(
+    e.pollingMode == "auto" || e.pollingMode == "manual" || e.pollingMode == "lazy", n.client = ie(
       e.SDKKey,
       V.AutoPoll,
-      n
-    ), t.config.globalProperties.$configCat = r;
+      i
+    ), t.config.globalProperties.$configCat = n;
   }
 };
 export {
-  jt as ConfigCatPlugin,
-  xt as FeatureWrapper
+  Ht as ConfigCatPlugin,
+  jt as FeatureWrapper
 };
