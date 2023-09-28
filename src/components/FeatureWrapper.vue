@@ -6,13 +6,12 @@
     <div v-else>
       <slot name="else" />
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
-  emits: ['flagValueChanged'],
+  emits: ["flagValueChanged"],
   props: {
     featureKey: {
       type: String,
@@ -22,7 +21,7 @@ export default {
       type: Object,
       required: false,
       default: {},
-    }
+    },
   },
   data() {
     return {
@@ -30,19 +29,34 @@ export default {
     };
   },
   mounted() {
+    this.configChangedHandler = () => {
+      const snapshot = this.configCatClient.snapshot();
+      const value = snapshot.getValue(this.featureKey, false, this.userObject);
+      if (this.isFeatureFlagEnabled !== value) {
+        this.isFeatureFlagEnabled = value;
+        this.$emit("flagValueChanged", value);
+      }
+    };
+
     // Check if feature flag is enabled
-    this.configCatClient.getValueAsync(this.featureKey, false, this.userObject).then((value) => {
-      this.isFeatureFlagEnabled = value;
-    });
-    this.configCatClient.on('configChanged', (response) => {
-      // This will emit when the feature flag value is toggled in the Dashboard
-      const featureFlagValue = response.settings[this.featureKey].value;
-      this.isFeatureFlagEnabled = featureFlagValue;
-      this.$emit('flagValueChanged', featureFlagValue);
-    })
+    this.configCatClient
+      .getValueAsync(this.featureKey, false, this.userObject)
+      .then((value) => {
+        const configChangedHandler = this.configChangedHandler;
+
+        // Do nothing if the component was unmounted in the meantime
+        if (!configChangedHandler) {
+          return;
+        }
+
+        this.isFeatureFlagEnabled = value;
+        this.configCatClient.on("configChanged", configChangedHandler);
+      });
   },
   unmounted() {
-    this.configCatClient.dispose();
-  }
+    const configChangedHandler = this.configChangedHandler;
+    delete this.configChangedHandler;
+    this.configCatClient.off("configChanged", configChangedHandler);
+  },
 };
 </script>

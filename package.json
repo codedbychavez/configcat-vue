@@ -31,7 +31,9 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
-    "configcat-js": "^8.0.2",
     "vite": "^4.0.0"
+  },
+  "dependencies": {
+    "configcat-js": "^8.1.1"
   }
 }
