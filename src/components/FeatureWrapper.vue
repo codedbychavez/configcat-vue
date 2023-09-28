@@ -1,11 +1,13 @@
 <template>
   <div>
-    <div v-if="isFeatureFlagEnabled">
+    <div v-if="configCatClient.ready && isFeatureFlagEnabled">
       <slot />
     </div>
-    <div v-else>
+    <div v-else-if="configCatClient.ready && !isFeatureFlagEnabled">
       <slot name="else" />
     </div>
+    <div v-else>
+      <slot name="loading" />
   </div>
 </template>
 

@@ -1,7 +1,21 @@
 import * as configcat from 'configcat-js';
+import { ref } from 'vue';
 
 export default {
   install: (app, options) => {
+    const ready = ref(false);
+    const configCat = {
+      client: undefined,
+      ready,
+    }
+
+    const clientOptions = {
+      setupHooks: (hooks) => 
+      hooks.on('ready', () => {
+        ready.value = true;
+      }),
+      ...options.clientOptions,
+    };
 
     let pollingMode = 
     // https://configcat.com/docs/sdk-reference/js/#manual-polling
@@ -11,10 +25,10 @@ export default {
       // Auto poll is default
       configcat.PollingMode.AutoPoll;
 
-     let configCatClient = configcat.getClient(
+     configCat.client = configcat.getClient(
       options.SDKKey,
       pollingMode,
-      options.clientOptions
+      clientOptions
     );
 
     app.config.globalProperties.configCatClient = configCatClient;
