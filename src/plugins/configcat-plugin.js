@@ -31,7 +31,7 @@ export default {
       clientOptions
     );
 
-    app.config.globalProperties.configCatClient = configCatClient;
+    app.config.globalProperties.$configCat = configCat;
 
     // The acquired `configCatClient` object should be active as long as the Vue app is alive (but no longer than that).
     // However, Vue doesn't expose an API currently which would allow us to hook into the lifecycle of the app component.

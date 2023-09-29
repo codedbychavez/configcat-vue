@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-if="configCatClient.ready && isFeatureFlagEnabled">
+    <div v-if="$configCat.ready && isFeatureFlagEnabled">
       <slot />
     </div>
-    <div v-else-if="configCatClient.ready && !isFeatureFlagEnabled">
+    <div v-else-if="$configCat.ready && !isFeatureFlagEnabled">
       <slot name="else" />
     </div>
     <div v-else>
@@ -33,7 +33,7 @@ export default {
   },
   mounted() {
     this.configChangedHandler = () => {
-      const snapshot = this.configCatClient.snapshot();
+      const snapshot = this.$configCat.client.snapshot();
       const value = snapshot.getValue(this.featureKey, false, this.userObject);
       if (this.isFeatureFlagEnabled !== value) {
         this.isFeatureFlagEnabled = value;
@@ -42,7 +42,7 @@ export default {
     };
 
     // Check if feature flag is enabled
-    this.configCatClient
+    this.$configCat.client
       .getValueAsync(this.featureKey, false, this.userObject)
       .then((value) => {
         const configChangedHandler = this.configChangedHandler;
@@ -53,13 +53,13 @@ export default {
         }
 
         this.isFeatureFlagEnabled = value;
-        this.configCatClient.on("configChanged", configChangedHandler);
+        this.$configCat.client.on("configChanged", configChangedHandler);
       });
   },
   unmounted() {
     const configChangedHandler = this.configChangedHandler;
     delete this.configChangedHandler;
-    this.configCatClient.off("configChanged", configChangedHandler);
+    this.$configCat.client.off("configChanged", configChangedHandler);
   },
 };
 </script>
