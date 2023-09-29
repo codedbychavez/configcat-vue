@@ -9,6 +9,7 @@
     <div v-else>
       <slot name="loading" />
   </div>
+  </div>
 </template>
 
 <script>
