@@ -25,7 +25,7 @@ export default {
       // Auto poll is default
       configcat.PollingMode.AutoPoll;
 
-     configCat.client = configcat.getClient(
+     configCat.client = configcat.getClients(
       options.SDKKey,
       pollingMode,
       clientOptions
