@@ -1,21 +1,23 @@
 import * as configcat from 'configcat-js';
-import { ref } from 'vue';
 
 export default {
   install: (app, options) => {
-    const ready = ref(false);
     const configCat = {
       client: undefined,
-      ready,
+      clientReadyState: undefined,
     }
 
+    // We need to subscribe to the `clientReady` hook but also want to preserve the hook subscriptions of the caller,
+    // so we clone the options object and "override" the `setupHooks` property.
+
+    const originalSetupHooks = options.clientOptions?.setupHooks;
     const clientOptions = {
-      setupHooks: (hooks) => 
-      hooks.on('ready', () => {
-        ready.value = true;
-      }),
       ...options.clientOptions,
-    };
+      setupHooks: (hooks) => {
+        hooks.once('clientReady', (state) => configCat.clientReadyState = state);
+        originalSetupHooks?.(hooks);
+      }
+    }
 
     let pollingMode = 
     // https://configcat.com/docs/sdk-reference/js/#manual-polling
