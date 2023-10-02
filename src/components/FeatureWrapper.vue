@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ClientReadyState } from 'configcat-js';
+import { ClientReadyState } from 'configcat-common';
 
 export default {
   emits: ["flagValueChanged"],
