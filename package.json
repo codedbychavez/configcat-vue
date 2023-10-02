@@ -30,10 +30,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "configcat-common": "^8.1.1",
     "@vitejs/plugin-vue": "^4.0.0",
     "vite": "^4.0.0"
-  },
-  "dependencies": {
-    "configcat-js": "^8.1.1"
   }
 }
