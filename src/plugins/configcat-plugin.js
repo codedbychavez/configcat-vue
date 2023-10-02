@@ -30,10 +30,10 @@ export default {
       // Auto poll is default
       configcat.PollingMode.AutoPoll;
 
-    let configCatClient = configcat.getClient(
+    configCat.client = configcat.getClient(
       options.SDKKey,
       pollingMode,
-      options.clientOptions,
+      clientOptions,
       {
         sdkType: "ConfigCat-Vue",
         sdkVersion: CONFIGCAT_SDK_VERSION,
