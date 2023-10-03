@@ -5,23 +5,6 @@ import CONFIGCAT_SDK_VERSION from './version';
 
 export default {
   install: (app, options) => {
-    const configCat = {
-      client: undefined,
-      clientReadyState: undefined,
-    }
-
-    // We need to subscribe to the `clientReady` hook but also want to preserve the hook subscriptions of the caller,
-    // so we clone the options object and "override" the `setupHooks` property.
-
-    const originalSetupHooks = options.clientOptions?.setupHooks;
-    const clientOptions = {
-      ...options.clientOptions,
-      setupHooks: (hooks) => {
-        hooks.once('clientReady', (state) => configCat.clientReadyState = state);
-        originalSetupHooks?.(hooks);
-      }
-    }
-
     let pollingMode =
       // https://configcat.com/docs/sdk-reference/js/#manual-polling
       options.pollingMode === 'manual' ? configcat.PollingMode.ManualPoll :
@@ -30,10 +13,10 @@ export default {
       // Auto poll is default
       configcat.PollingMode.AutoPoll;
 
-    configCat.client = configcat.getClient(
+    const client = configcat.getClient(
       options.SDKKey,
       pollingMode,
-      clientOptions,
+      options.clientOptions,
       {
         sdkType: "ConfigCat-Vue",
         sdkVersion: CONFIGCAT_SDK_VERSION,
@@ -42,9 +25,11 @@ export default {
       }
     );
 
+    const configCat = { client };
+
     app.config.globalProperties.$configCat = configCat;
 
-    // The acquired `configCatClient` object should be active as long as the Vue app is alive (but no longer than that).
+    // The acquired `client` object should be active as long as the Vue app is alive (but no longer than that).
     // However, Vue doesn't expose an API currently which would allow us to hook into the lifecycle of the app component.
     // The recommended workaround is to wrap its `unmount` method
     // (see https://github.com/vuejs/core/issues/4516#issuecomment-913231053).
@@ -52,7 +37,7 @@ export default {
     const originalAppUnmount = app.unmount;
     app.unmount = function () {
       originalAppUnmount.apply(this, arguments);
-      configCatClient.close();
+      client.dispose();
     };
   },
 };
