@@ -8,12 +8,12 @@
     </div>
     <div v-else>
       <slot name="loading" />
-  </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { ClientReadyState } from 'configcat-common';
+import { ClientCacheState } from 'configcat-common';
 
 export default {
   emits: ["flagValueChanged"],
@@ -43,12 +43,11 @@ export default {
       }
     };
 
-    const clientReadyState = this.$configCat.clientReadyState;
-
+    const snapshot = this.$configCat.client.snapshot();
+    const clientCacheState = snapshot.cacheState;
     // Before the initial render of the component, initialize `isFeatureFlagEnabled`
     // if the feature flag value is already available in the cache.
-    if (clientReadyState == ClientReadyState.HasUpToDateFlagData || clientReadyState == ClientReadyState.HasLocalOverrideFlagDataOnly) {
-      const snapshot = this.$configCat.client.snapshot();
+    if (clientCacheState == ClientCacheState.HasUpToDateFlagData || clientCacheState == ClientCacheState.HasLocalOverrideFlagDataOnly) {
       this.isFeatureFlagEnabled = snapshot.getValue(this.featureKey, false, this.userObject);
       this.$configCat.client.on("configChanged", this.configChangedHandler);
     }
