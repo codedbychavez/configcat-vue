@@ -1,15 +1,16 @@
-import { resolve } from 'path'
-import { defineConfig } from 'vite'
-import injectVersion from './rollup-plugin-inject-version'
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import injectVersion from './RollupPluginInjectVersion';
 import vue from '@vitejs/plugin-vue'
+import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
-      name: 'configcat-vue',
-      fileName: 'configcat-vue',
+      entry: resolve(__dirname, 'src/index.ts'),
+      name: 'configcat-vue-ts',
+      fileName: 'configcat-vue-ts',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
@@ -24,5 +25,5 @@ export default defineConfig({
       }
     }
   },
-  plugins: [injectVersion(), vue()],
+  plugins: [injectVersion(), vue(), dts()],
 });
