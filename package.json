@@ -5,16 +5,16 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/configcat-vue-ts.umd.cjs",
-  "module": "./dist/config-vue-ts.js",
+  "main": "./dist/configcat-vue.umd.cjs",
+  "module": "./dist/config-vue.js",
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/configcat-vue-ts.js",
+        "default": "./dist/configcat-vue.js",
         "types": "./dist/index.d.ts"
       },
       "require": {
-        "default": "./dist/configcat-vue-ts.umd.cjs",
+        "default": "./dist/configcat-vue.umd.cjs",
         "types": "./dist/index.d.ts"
       }
     }
