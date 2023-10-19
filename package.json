@@ -6,7 +6,7 @@
     "dist"
   ],
   "main": "./dist/configcat-vue.umd.cjs",
-  "module": "./dist/config-vue.js",
+  "module": "./dist/configcat-vue.js",
   "exports": {
     ".": {
       "import": {
