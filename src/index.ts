@@ -1,13 +1,23 @@
-import FeatureWrapper from "./components/FeatureWrapper.vue";
-import ConfigCatPlugin from "./plugins/ConfigCatPlugin";
-
 import {
   SettingValue,
   FlagOverrides,
   MapOverrideDataSource,
   OverrideBehaviour,
-  createConsoleLogger,
+  createConsoleLogger
 } from "configcat-common";
+
+export {
+  default as ConfigCatPlugin,
+  type PluginOptions as ConfigCatPluginOptions
+} from './plugins/ConfigCatPlugin';
+
+export { default as FeatureWrapper } from './components/FeatureWrapper.vue';
+
+export { createConsoleLogger };
+
+export function createFlagOverridesFromMap(map: { [name: string]: NonNullable<SettingValue>; }, behaviour: OverrideBehaviour) {
+  return new FlagOverrides(new MapOverrideDataSource(map), behaviour);
+}
 
 // These exports should be kept in sync with the exports listed in the section "Public types for end users" of common-js/src/index.ts!
 export type {
@@ -47,12 +57,3 @@ export {
   RefreshResult,
   ClientReadyState,
 } from "configcat-common";
-
-export function createFlagOverridesFromMap(
-  map: { [name: string]: NonNullable<SettingValue> },
-  behaviour: OverrideBehaviour
-) {
-  return new FlagOverrides(new MapOverrideDataSource(map), behaviour);
-}
-
-export { FeatureWrapper, ConfigCatPlugin, createConsoleLogger };
