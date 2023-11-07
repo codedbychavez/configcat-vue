@@ -5,7 +5,7 @@ export default function () {
     name: "inject-version",
     transform(code, id) {
       id = id.replace("\\", "/").toLowerCase();
-      if (id.endsWith("src/plugins/version.js")) {
+      if (id.endsWith("src/plugins/version.ts")) {
         return code.replace("CONFIGCAT_SDK_VERSION", packageJson.version);
       }
 
