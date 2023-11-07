@@ -8,7 +8,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: import("vue").PropType<User>;
     };
 }, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    flagValueChanged: (...args: any[]) => void;
+    flagValueChanged: (newValue: boolean) => void;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     featureKey: {
         type: import("vue").PropType<string>;
@@ -18,7 +18,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: import("vue").PropType<User>;
     };
 }>> & {
-    onFlagValueChanged?: ((...args: any[]) => any) | undefined;
+    onFlagValueChanged?: ((newValue: boolean) => any) | undefined;
 }, {}, {}>, {
     default?(_: {}): any;
     else?(_: {}): any;
