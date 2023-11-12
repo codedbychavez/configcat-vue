@@ -1,18 +1,7 @@
 {
   "name": "configcat-vue",
-  "type": "module",
-  "version": "1.4.0",
   "description": "A simple and easy to use Vue3 plugin for using ConfigCat Feature Flags in your Vue.js Application",
-  "keywords": [
-    "ConfigCat",
-    "vue feature flags",
-    "vuejs feature flags",
-    "feature management",
-    "feature flags",
-    "configcat vue"
-  ],
-  "author": "Chavez Harris",
-  "private": false,
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -20,18 +9,54 @@
   "module": "./dist/configcat-vue.js",
   "exports": {
     ".": {
-      "import": "./dist/configcat-vue.js",
-      "require": "./dist/configcat-vue.umd.cjs"
+      "import": {
+        "default": "./dist/configcat-vue.js",
+        "types": "./dist/index.d.ts"
+      },
+      "require": {
+        "default": "./dist/configcat-vue.umd.cjs",
+        "types": "./dist/index.d.ts"
+      }
     }
   },
+  "version": "2.0.0",
+  "keywords": [
+    "configcat",
+    "ConfigCat",
+    "configcat vue",
+    "configcat vue3",
+    "feature-flags",
+    "feature flags",
+    "feature-toggle",
+    "feature toggle",
+    "feature-management",
+    "feature management",
+    "feature-flag",
+    "feature flag",
+    "feature flags vue",
+    "vue3 feature flags",
+    "vite-plugin-vue-configcat"
+  ],
+  "author": "Chavez Harris",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "configcat-common": "^8.2.0",
-    "vite": "^4.0.0"
+    "@types/node": "^20.8.6",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.6.0",
+    "vue-tsc": "^1.8.5"
+  },
+  "dependencies": {
+    "configcat-common": "^8.2.0"
   }
 }

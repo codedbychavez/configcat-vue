@@ -12,66 +12,72 @@
   </div>
 </template>
 
-<script>
-import { ClientCacheState } from 'configcat-common';
+<script setup lang="ts">
+import { ref, onBeforeMount, onUnmounted, inject, type Ref } from "vue";
+import {
+  ClientCacheState,
+  type IConfigCatClient,
+  type User,
+} from "configcat-common";
 
-export default {
-  emits: ["flagValueChanged"],
-  props: {
-    featureKey: {
-      type: String,
-      required: true,
-    },
-    userObject: {
-      type: Object,
-      required: false,
-      default: {},
-    },
-  },
-  data() {
-    return {
-      isFeatureFlagEnabled: null, // `null` indicates that the feature flag value is not available yet
-    };
-  },
-  beforeMount() {
-    this.configChangedHandler = () => {
-      const snapshot = this.$configCat.client.snapshot();
-      const value = snapshot.getValue(this.featureKey, false, this.userObject);
-      if (this.isFeatureFlagEnabled !== value) {
-        this.isFeatureFlagEnabled = value;
-        this.$emit("flagValueChanged", value);
-      }
-    };
+const emits = defineEmits<{
+  (e: 'flagValueChanged', newValue: boolean): void
+}>();
 
-    const snapshot = this.$configCat.client.snapshot();
-    const clientCacheState = snapshot.cacheState;
-    // Before the initial render of the component, initialize `isFeatureFlagEnabled`
-    // if the feature flag value is already available in the cache.
-    if (clientCacheState == ClientCacheState.HasUpToDateFlagData || clientCacheState == ClientCacheState.HasLocalOverrideFlagDataOnly) {
-      this.isFeatureFlagEnabled = snapshot.getValue(this.featureKey, false, this.userObject);
-      this.$configCat.client.on("configChanged", this.configChangedHandler);
-    }
-    // Otherwise, take the async path to get the feature flag value.
-    else {
-      this.$configCat.client
-        .getValueAsync(this.featureKey, false, this.userObject)
-        .then((value) => {
-          const configChangedHandler = this.configChangedHandler;
+const props = defineProps<{
+  featureKey: string;
+  userObject?: User;
+}>();
 
-          // Do nothing if the component was unmounted in the meantime
-          if (!configChangedHandler) {
-            return;
-          }
+const isFeatureFlagEnabled: Ref<null | boolean> = ref(null);
 
-          this.isFeatureFlagEnabled = value;
-          this.$configCat.client.on("configChanged", configChangedHandler);
-        });
-    }
-  },
-  unmounted() {
-    const configChangedHandler = this.configChangedHandler;
-    delete this.configChangedHandler;
-    this.$configCat.client.off("configChanged", configChangedHandler);
-  },
+const configCatClient = inject<IConfigCatClient>("configCatClient") ??
+  (() => { throw new Error("ConfigCatPlugin was not installed."); })();
+
+const configChangedHandler = () => {
+  const snapshot = configCatClient.snapshot();
+  const value = snapshot.getValue(props.featureKey, false, props.userObject);
+  if (isFeatureFlagEnabled.value !== value) {
+    isFeatureFlagEnabled.value = value;
+    emits("flagValueChanged", value);
+  }
 };
+
+onBeforeMount(() => {
+  const snapshot = configCatClient.snapshot();
+  const clientCacheState = snapshot.cacheState;
+
+  // Before the initial render of the component, initialize `isFeatureFlagEnabled`
+  // if the feature flag value is already available in the cache.
+  if (
+    clientCacheState == ClientCacheState.HasUpToDateFlagData ||
+    clientCacheState == ClientCacheState.HasLocalOverrideFlagDataOnly
+  ) {
+    isFeatureFlagEnabled.value = snapshot.getValue(
+      props.featureKey,
+      false,
+      props.userObject
+    );
+    configCatClient.on("configChanged", configChangedHandler);
+  }
+  // Otherwise take the async path to get the feature flag value.
+  else {
+    configCatClient
+      .getValueAsync(props.featureKey, false, props.userObject)
+      .then((value) => {
+        const configChangedHandlerResult = configChangedHandler;
+
+        if (!configChangedHandlerResult) {
+          return;
+        }
+
+        isFeatureFlagEnabled.value = value;
+        configCatClient.on("configChanged", configChangedHandlerResult);
+      });
+  }
+});
+
+onUnmounted(() => {
+  configCatClient.off("configChanged", configChangedHandler);
+});
 </script>
