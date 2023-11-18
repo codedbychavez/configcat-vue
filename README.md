@@ -10,7 +10,7 @@
 
 ## Introduction
 
-Welcome to the official documentation for the [configcat-vue](https://www.npmjs.com/package/configcat-vue) plugin, a powerful and versatile npm package designed to streamline your feature development workflow. Whether you're a seasoned developer or just starting out, ConfigCat-Vue offers a comprehensive way to leverage all the benefits of using ConfigCat feature flags in your Vue.js applications. This plugin was designed to be simple yet inclusive of all the features offered by other [ConfigCat SDKs](https://configcat.com/docs/sdk-reference/overview/). This plugin empowers you to handle both simple and complex feature management in your Vue.js app, saving you time and effort.
+Welcome to the official npm package for the [configcat-vue](https://www.npmjs.com/package/configcat-vue) plugin, a powerful and versatile npm package designed to streamline your feature development workflow. Whether you're a seasoned developer or just starting out, ConfigCat-Vue offers a comprehensive way to leverage all the benefits of using ConfigCat feature flags in your Vue.js applications. This plugin was designed to be simple yet inclusive of all the features offered by other [ConfigCat SDKs](https://configcat.com/docs/sdk-reference/overview/). This plugin empowers you to handle both simple and complex feature management in your Vue.js app, saving you time and effort.
 
 ## What you can do with this plugin
 
@@ -24,7 +24,7 @@ Here's a quick overview of what you can do with this plugin:
 
 ## With you in mind
 
-The rest of [this documentation](https://configcat-vue.netlify.app/guide/) provides specific examples of the aforementioned capabilities, along with links to the relevant sections in ConfigCat's JavaScript SDK documentation. These examples and links will help you better understand how to utilize the features of the ConfigCat-Vue plugin effectively.
+The rest of this documentation provides specific examples of the aforementioned capabilities, along with links to the relevant sections in ConfigCat's JavaScript SDK documentation. These examples and links will help you better understand how to utilize the features of the ConfigCat-Vue plugin effectively.
 
 By referring to ConfigCat's JavaScript SDK documentation at <https://configcat.com/docs/sdk-reference/js/>, you can access detailed information and further explore the extensive range of options and functionalities offered by the ConfigCat ecosystem.
 
