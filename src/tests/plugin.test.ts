@@ -4,7 +4,7 @@ import { test, expect } from "vitest";
 import ConfigCatPlugin from "../plugins/ConfigCatPlugin";
 import { PollingMode, createConsoleLogger, LogLevel } from "../index";
 
-test("installs without errors", () => {
+test("plugin installs without errors", () => {
   const app = createApp({
     render: () => h("div"),
   });
