@@ -2252,31 +2252,31 @@ const Vt = "2.0.1", _t = {
   },
   emits: ["flagValueChanged"],
   setup(t, { emit: e }) {
-    const r = t, n = $e(null), i = Xe("configCatClient") ?? (() => {
+    const r = e, n = t, i = $e(null), o = Xe("configCatClient") ?? (() => {
       throw new Error("ConfigCatPlugin was not installed.");
-    })(), o = () => {
-      const a = i.snapshot().getValue(r.featureKey, !1, r.userObject);
-      n.value !== a && (n.value = a, e("flagValueChanged", a));
+    })(), s = () => {
+      const c = o.snapshot().getValue(n.featureKey, !1, n.userObject);
+      i.value !== c && (i.value = c, r("flagValueChanged", c));
     };
     return Ze(() => {
-      const s = i.snapshot(), a = s.cacheState;
-      a == w.HasUpToDateFlagData || a == w.HasLocalOverrideFlagDataOnly ? (n.value = s.getValue(
-        r.featureKey,
+      const a = o.snapshot(), c = a.cacheState;
+      c == w.HasUpToDateFlagData || c == w.HasLocalOverrideFlagDataOnly ? (i.value = a.getValue(
+        n.featureKey,
         !1,
-        r.userObject
-      ), i.on("configChanged", o)) : i.getValueAsync(r.featureKey, !1, r.userObject).then((c) => {
-        const u = o;
-        u && (n.value = c, i.on("configChanged", u));
+        n.userObject
+      ), o.on("configChanged", s)) : o.getValueAsync(n.featureKey, !1, n.userObject).then((u) => {
+        const l = s;
+        l && (i.value = u, o.on("configChanged", l));
       });
     }), Qe(() => {
-      i.off("configChanged", o);
-    }), (s, a) => (Q(), ee("div", null, [
-      n.value === !0 ? (Q(), ee("div", xt, [
-        ge(s.$slots, "default")
-      ])) : n.value === !1 ? (Q(), ee("div", jt, [
-        ge(s.$slots, "else")
+      o.off("configChanged", s);
+    }), (a, c) => (Q(), ee("div", null, [
+      i.value === !0 ? (Q(), ee("div", xt, [
+        ge(a.$slots, "default")
+      ])) : i.value === !1 ? (Q(), ee("div", jt, [
+        ge(a.$slots, "else")
       ])) : (Q(), ee("div", Ht, [
-        ge(s.$slots, "loading")
+        ge(a.$slots, "loading")
       ]))
     ]));
   }
