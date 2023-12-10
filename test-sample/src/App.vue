@@ -6,6 +6,7 @@
   </main>
 </template>
 <script setup lang="ts">
+import { FeatureWrapper } from 'configcat-vue';
 import TheNewFeature from "./components/TheNewFeature.vue";
 
 </script>
