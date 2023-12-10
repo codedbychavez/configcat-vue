@@ -1,8 +1,8 @@
 import { createApp, h } from "vue";
 import { test, expect } from "vitest";
 
-import { ConfigCatPlugin } from "../src/index";
-import { PollingMode, createConsoleLogger, LogLevel } from "../src/index";
+import { ConfigCatPlugin } from "../src";
+import { PollingMode, createConsoleLogger, LogLevel } from "../src";
 
 test("plugin installs without errors", () => {
   const app = createApp({
