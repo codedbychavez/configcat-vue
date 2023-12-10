@@ -8,7 +8,7 @@ import { ConfigCatPlugin, PollingMode, createConsoleLogger, LogLevel } from 'con
 const app = createApp(App)
 
 app.use(ConfigCatPlugin, {
-    sdkKey: 'YOUR-CONFIGCAT-SDK-KEY',
+    sdkKey: 'gnLbCJ_nhUCGHl1SZNyC5Q/V794nqFnpkWY_7TuhXTaOw',
     pollingMode: PollingMode.AutoPoll,
     clientOptions: {
         logger: createConsoleLogger(LogLevel.Info),
