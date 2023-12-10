@@ -2221,7 +2221,7 @@ class Mt {
     }
   }
 }
-const Vt = "2.0.0", _t = {
+const Vt = "2.0.1", _t = {
   // Vue's `App.prototype.use` does not play nicely with generic `install` functions, so we resort to using a discriminated union.
   install: (t, e) => {
     const { sdkKey: r, pollingMode: n, clientOptions: i } = e, o = {

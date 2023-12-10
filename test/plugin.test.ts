@@ -1,8 +1,8 @@
 import { createApp, h } from "vue";
 import { test, expect } from "vitest";
 
-import ConfigCatPlugin from "../plugins/ConfigCatPlugin";
-import { PollingMode, createConsoleLogger, LogLevel } from "../index";
+import { ConfigCatPlugin } from "../src/index";
+import { PollingMode, createConsoleLogger, LogLevel } from "../src/index";
 
 test("plugin installs without errors", () => {
   const app = createApp({
@@ -20,7 +20,6 @@ test("throws error when sdkKey is not provided", () => {
   const app = createApp({
     render: () => h("div"),
   });
-
   expect(() => {
     app.use(ConfigCatPlugin, {});
   }).toThrow();
