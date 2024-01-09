@@ -22,16 +22,11 @@ export default {
   // Vue's `App.prototype.use` does not play nicely with generic `install` functions, so we resort to using a discriminated union.
   install: (app: App, options: PluginOptions<PollingMode.AutoPoll> | PluginOptions<PollingMode.LazyLoad> | PluginOptions<PollingMode.ManualPoll>): void => {
     const { sdkKey, pollingMode, clientOptions } = options;
-    const configCatKernel: IConfigCatKernel = {
+    const configCatKernel: IConfigCatKernel = LocalStorageCache.setup({
       sdkType: "ConfigCat-Vue",
       sdkVersion: CONFIGCAT_SDK_VERSION,
       configFetcher: new HttpConfigFetcher(),
-      defaultCacheFactory: (options) =>
-        new configcat.ExternalConfigCache(
-          new LocalStorageCache(),
-          options.logger
-        ),
-    };
+    });
 
     const configCatClient = configcat.getClient(
       sdkKey,
