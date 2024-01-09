@@ -33,7 +33,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
     }
   }
 
-  fetchLogic(options: OptionsBase, _: string | null): Promise<IFetchResponse> {
+  fetchLogic(options: OptionsBase, lastEtag: string | null): Promise<IFetchResponse> {
     return new Promise<IFetchResponse>((resolve, reject) => {
       try {
         options.logger.debug("HttpConfigFetcher.fetchLogic() called.");
@@ -47,7 +47,12 @@ export class HttpConfigFetcher implements IConfigFetcher {
         httpRequest.onabort = () => reject(new FetchError("abort"));
         httpRequest.onerror = () => reject(new FetchError("failure"));
 
-        httpRequest.open("GET", options.getUrl(), true);
+        let url = options.getUrl();
+        if (lastEtag) {
+          // We are sending the etag as a query parameter so if the browser doesn't automatically adds the If-None-Match header, we can transorm this query param to the header in our CDN provider.
+          url += "&ccetag=" + encodeURIComponent(lastEtag);
+        }
+        httpRequest.open("GET", url, true);
         httpRequest.timeout = options.requestTimeoutMs;
 
         httpRequest.send(null);
