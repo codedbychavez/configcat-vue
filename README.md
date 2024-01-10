@@ -4,7 +4,7 @@
 
 ## Quick links
 
-- Visit the docs website here: <https://configcat-vue.netlify.app/>
+- Visit the docs website here: <https://github.com/codedbychavez/configcat-vue/wiki>
 - Download the npm package here: <https://www.npmjs.com/package/configcat-vue>
 - Check out the sample Vue.js app here: <https://github.com/codedbychavez/configcat-vue-sample>
 
