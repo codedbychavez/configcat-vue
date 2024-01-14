@@ -1,15 +1,9 @@
 <template>
-  <div>
-    <div v-if="isFeatureFlagEnabled === true">
-      <slot />
-    </div>
-    <div v-else-if="isFeatureFlagEnabled === false">
-      <slot name="else" />
-    </div>
-    <div v-else>
-      <slot name="loading" />
-    </div>
-  </div>
+  <slot v-if="isFeatureFlagEnabled === true" />
+
+  <slot v-else-if="isFeatureFlagEnabled === false" name="else" />
+
+  <slot v-else name="loading" />
 </template>
 
 <script setup lang="ts">
@@ -21,7 +15,7 @@ import {
 } from "configcat-common";
 
 const emits = defineEmits<{
-  (e: 'flagValueChanged', newValue: boolean): void
+  (e: "flagValueChanged", newValue: boolean): void;
 }>();
 
 const props = defineProps<{
@@ -31,8 +25,11 @@ const props = defineProps<{
 
 const isFeatureFlagEnabled: Ref<null | boolean> = ref(null);
 
-const configCatClient = inject<IConfigCatClient>("configCatClient") ??
-  (() => { throw new Error("ConfigCatPlugin was not installed."); })();
+const configCatClient =
+  inject<IConfigCatClient>("configCatClient") ??
+  (() => {
+    throw new Error("ConfigCatPlugin was not installed.");
+  })();
 
 const configChangedHandler = () => {
   const snapshot = configCatClient.snapshot();
