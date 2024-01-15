@@ -1,7 +1,6 @@
-import * as configcat from "configcat-common";
 import { HttpConfigFetcher } from "./ConfigFetcher";
 import { LocalStorageCache } from "./LocalStorageCache";
-import { PollingMode } from "configcat-common";
+import { PollingMode, getClient } from "configcat-common";
 import CONFIGCAT_SDK_VERSION from "./Version";
 // Types
 import type { App } from "vue";
@@ -28,7 +27,7 @@ export default {
       configFetcher: new HttpConfigFetcher(),
     });
 
-    const configCatClient = configcat.getClient(
+    const configCatClient = getClient(
       sdkKey,
       pollingMode ?? PollingMode.AutoPoll,
       clientOptions,
