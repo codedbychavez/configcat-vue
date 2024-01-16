@@ -57,6 +57,6 @@
     "vue-tsc": "^1.8.5"
   },
   "dependencies": {
-    "configcat-common": "^9.2.0"
+    "configcat-common": "9.2.0"
   }
 }
