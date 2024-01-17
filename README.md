@@ -10,21 +10,21 @@
 
 ## Introduction
 
-Welcome to the official npm package for the [configcat-vue](https://www.npmjs.com/package/configcat-vue) plugin, a powerful and versatile npm package designed to streamline your feature development workflow. Whether you're a seasoned developer or just starting out, ConfigCat-Vue offers a comprehensive way to leverage all the benefits of using ConfigCat feature flags in your Vue.js applications. This plugin was designed to be simple yet inclusive of all the features offered by other [ConfigCat SDKs](https://configcat.com/docs/sdk-reference/overview/). This plugin empowers you to handle both simple and complex feature management in your Vue.js app, saving you time and effort.
+Welcome to the official npm package for the [configcat-vue](https://www.npmjs.com/package/configcat-vue), a powerful and versatile npm package designed to streamline your feature development workflow. Whether you're a seasoned developer or just starting, ConfigCat-Vue offers a comprehensive way to leverage all the benefits of using ConfigCat feature flags in your Vue.js applications. This package includes all the features provided by other [ConfigCat SDKs](https://configcat.com/docs/sdk-reference/overview/). It empowers you to handle simple and complex feature management in your Vue.js app, saving you time and effort.
 
-## What you can do with this plugin
+## What you can do with this package
 
-Here's a quick overview of what you can do with this plugin:
+Here's a quick overview of what you can do with this package:
 
 - Easily toggle features in your Vue.js app on and off, even after it is deployed.
-- Experiment with new features and quickly roll them back with the click of a button if things go awry, without taking your app offline.
+- Experiment with new features and quickly roll them back with the click of a button if things go wrong without taking your app offline.
 - Release specific features in your Vue.js app to targeted users based on demographics such as country, email, or any custom attribute like eye color.
 - Gradually release new features to a specific percentage of users using the percentage rollout feature.
 - Conduct A/B testing of your Vue.js app's features effortlessly.
 
 ## With you in mind
 
-The rest of this documentation provides specific examples of the aforementioned capabilities, along with links to the relevant sections in ConfigCat's JavaScript SDK documentation. These examples and links will help you better understand how to utilize the features of the ConfigCat-Vue plugin effectively.
+The documentation provides specific examples of the mentioned capabilities and provides links to the relevant sections in ConfigCat's JavaScript SDK documentation. The examples and links will help you better understand how to utilize the features of the ConfigCat-Vue package effectively.
 
 By referring to ConfigCat's JavaScript SDK documentation at <https://configcat.com/docs/sdk-reference/js/>, you can access detailed information and further explore the extensive range of options and functionalities offered by the ConfigCat ecosystem.
 
