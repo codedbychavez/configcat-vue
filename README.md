@@ -2,12 +2,6 @@
 
 [![npm - configcat-vue](https://img.shields.io/badge/npm-configcat--vue-green?logo=npm&logoColor=white)](https://www.npmjs.com/package/configcat-vue)
 
-## Quick links
-
-- Visit the docs website here: <https://github.com/codedbychavez/configcat-vue/wiki>
-- Download the npm package here: <https://www.npmjs.com/package/configcat-vue>
-- Check out the sample Vue.js app here: <https://github.com/codedbychavez/configcat-vue-sample>
-
 ## Introduction
 
 Welcome to the official npm package for the [configcat-vue](https://www.npmjs.com/package/configcat-vue), a powerful and versatile npm package designed to streamline your feature development workflow. Whether you're a seasoned developer or just starting, ConfigCat-Vue offers a comprehensive way to leverage all the benefits of using ConfigCat feature flags in your Vue.js applications. This package includes all the features provided by other [ConfigCat SDKs](https://configcat.com/docs/sdk-reference/overview/). It empowers you to handle simple and complex feature management in your Vue.js app, saving you time and effort.
