@@ -16,6 +16,10 @@ Here's a quick overview of what you can do with this package:
 - Gradually release new features to a specific percentage of users using the percentage rollout feature.
 - Conduct A/B testing of your Vue.js app's features effortlessly.
 
+## Documentation
+
+[Read the documentation](https://github.com/codedbychavez/configcat-vue/wiki/Documentation)
+
 ## With you in mind
 
 The documentation provides specific examples of the mentioned capabilities and provides links to the relevant sections in ConfigCat's JavaScript SDK documentation. The examples and links will help you better understand how to utilize the features of the ConfigCat-Vue package effectively.
