@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Welcome to the official npm package for the [configcat-vue](https://www.npmjs.com/package/configcat-vue), a powerful and versatile npm package designed to streamline your feature development workflow. Whether you're a seasoned developer or just starting, ConfigCat-Vue offers a comprehensive way to leverage all the benefits of using ConfigCat feature flags in your Vue.js applications. This package includes all the features provided by other [ConfigCat SDKs](https://configcat.com/docs/sdk-reference/overview/). It empowers you to handle simple and complex feature management in your Vue.js app, saving you time and effort.
+Welcome to the Unofficial Vue SDK for ConfigCat Feature Flags, a powerful and versatile npm package designed to streamline your feature development workflow. Whether you're a seasoned developer or just starting, ConfigCat-Vue offers a comprehensive way to leverage all the benefits of using ConfigCat feature flags in your Vue.js applications. This package includes all the features provided by other [ConfigCat SDKs](https://configcat.com/docs/sdk-reference/overview/). It empowers you to handle simple and complex feature management in your Vue.js app, saving you time and effort.
 
 ## What you can do with this package
 
