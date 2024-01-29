@@ -81,6 +81,7 @@ test("The loading slot should render when the client is still initializing", () 
 
   const clientMock = new class extends ConfigCatClientMockBase {
     snapshot() {
+      // Returning a snapshot with NoFlagData will cause the component to take the "async" way on component initialization (see onBeforeMount).
       return new ConfigCatClientSnapshotMockBase(ClientCacheState.NoFlagData);
     }
 
@@ -94,6 +95,8 @@ test("The loading slot should render when the client is still initializing", () 
     
     off<TEventName extends keyof HookEvents>(eventName: TEventName, listener: (...args: HookEvents[TEventName]) => void): this {
       if (eventName == "configChanged") {
+        // The component unsubscribes from this event on component teardown (see onUnmounted).
+        // This is irrelevant in the case of this test, so a no-op will be fine.
         return this;
       }
 
