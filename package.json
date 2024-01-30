@@ -43,17 +43,21 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.8.6",
-    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue": "^4.6.2",
+    "@vue/test-utils": "^2.4.3",
+    "happy-dom": "^13.2.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-plugin-dts": "^3.6.0",
+    "vitest": "^1.2.1",
     "vue-tsc": "^1.8.5"
   },
   "dependencies": {
