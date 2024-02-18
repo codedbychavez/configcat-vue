@@ -6,6 +6,7 @@ import {
   ClientCacheState,
   FeatureWrapper,
   HookEvents,
+  IConfigCatClientSnapshot,
   OverrideBehaviour,
   SettingTypeOf,
   SettingValue,
@@ -173,4 +174,41 @@ test("The FeatureWrapper component should throw an exception when the plugin is 
     // Assert that the error is the expected exception
     expect(error.message).toContain("ConfigCatPlugin was not installed.");
   }
+});
+
+test("The FeatureWrapper component should emit flagValueChanged when the feature flag value changes", async () => {
+  const featureFlagKey = "isFeatureFlagEnabled";
+
+  const pluginOptions: PluginOptions = {
+    sdkKey: "local-only",
+    clientOptions: {
+      flagOverrides: createFlagOverridesFromMap(
+        { [featureFlagKey]: false },
+        OverrideBehaviour.LocalOnly
+      ),
+    },
+  };
+
+  const wrapper = mount(FeatureWrapper, {
+    global: {
+      plugins: [[ConfigCatPlugin, pluginOptions]],
+    },
+    props: {
+      featureKey: featureFlagKey,
+    },
+    slots: {
+      default: "<div>the new feature</div>",
+      else: "<div>feature is not enabled</div>",
+      loading: "<div>component is loading</div>",
+    },
+  });
+
+  // Update the ref
+  wrapper.vm.isFeatureFlagEnabled = true;
+
+  // Trigger the configChangeHandler method, which executes an emit
+  wrapper.vm.configChangedHandler();
+
+  // Check if the wrapper emitted as expected
+  expect(wrapper.emitted().flagValueChanged).toBeTruthy();
 });
