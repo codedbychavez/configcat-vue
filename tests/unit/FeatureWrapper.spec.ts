@@ -153,8 +153,6 @@ test("The loading slot should render when the client is still initializing", () 
   }
 });
 
-// Verify that an exception is thrown in case the FeatureWrapper component is used without installing the plugin.
-
 test("The FeatureWrapper component should throw an exception when the plugin is not installed", () => {
   const featureFlagKey = "isFeatureFlagEnabled";
 
