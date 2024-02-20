@@ -246,8 +246,6 @@ test("The FeatureWrapper component should transition from loading to default", a
     },
   });
 
-  // Wait for any asynchronous updates
-
   try {
     // Set the feature flag value to null
     wrapper.vm.isFeatureFlagEnabled = null;
@@ -266,6 +264,56 @@ test("The FeatureWrapper component should transition from loading to default", a
 
     // The default slot should be displayed
     expect(wrapper.html()).toContain("<div>the new feature</div>");
+  } finally {
+    wrapper.unmount();
+  }
+});
+
+test("The FeatureWrapper should transition from loading to else", async () => {
+  const featureFlagKey = "isFeatureFlagEnabled";
+
+  const pluginOptions: PluginOptions = {
+    sdkKey: "local-only",
+    clientOptions: {
+      flagOverrides: createFlagOverridesFromMap(
+        { [featureFlagKey]: true },
+        OverrideBehaviour.LocalOnly
+      ),
+    },
+  };
+
+  const wrapper = mount(FeatureWrapper, {
+    global: {
+      plugins: [[ConfigCatPlugin, pluginOptions]],
+    },
+    props: {
+      featureKey: featureFlagKey,
+    },
+    slots: {
+      default: "<div>the new feature</div>",
+      else: "<div>feature is not enabled</div>",
+      loading: "<div>component is loading</div>",
+    },
+  });
+
+  try {
+    // Set the feature flag value to null
+    wrapper.vm.isFeatureFlagEnabled = null;
+
+    // Trigger reactivity updates
+    await wrapper.vm.$nextTick();
+
+    // The loading slot should be displayed
+    expect(wrapper.html()).toContain("<div>component is loading</div>");
+
+    // Set the feature flag value to false
+    wrapper.vm.isFeatureFlagEnabled = false;
+
+    // Trigger reactivity updates
+    await wrapper.vm.$nextTick();
+
+    // The else slot should be displayed
+    expect(wrapper.html()).toContain("<div>feature is not enabled</div>");
   } finally {
     wrapper.unmount();
   }
