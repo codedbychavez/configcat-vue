@@ -183,7 +183,7 @@ test("The FeatureWrapper component should emit flagValueChanged when the feature
     sdkKey: "local-only",
     clientOptions: {
       flagOverrides: createFlagOverridesFromMap(
-        { [featureFlagKey]: false },
+        { [featureFlagKey]: true },
         OverrideBehaviour.LocalOnly
       ),
     },
@@ -204,11 +204,69 @@ test("The FeatureWrapper component should emit flagValueChanged when the feature
   });
 
   // Update the ref
-  wrapper.vm.isFeatureFlagEnabled = true;
+  wrapper.vm.isFeatureFlagEnabled = false;
 
   // Trigger the configChangeHandler method, which executes an emit
   wrapper.vm.configChangedHandler();
 
   // Check if the wrapper emitted as expected
-  expect(wrapper.emitted().flagValueChanged).toBeTruthy();
+  try {
+    expect(wrapper.emitted().flagValueChanged).toBeTruthy();
+  } finally {
+    wrapper.unmount();
+  }
+});
+
+// Transitions
+
+test("The FeatureWrapper component should transition from loading to default", async () => {
+  const featureFlagKey = "isFeatureFlagEnabled";
+
+  const pluginOptions: PluginOptions = {
+    sdkKey: "local-only",
+    clientOptions: {
+      flagOverrides: createFlagOverridesFromMap(
+        { [featureFlagKey]: true },
+        OverrideBehaviour.LocalOnly
+      ),
+    },
+  };
+
+  const wrapper = mount(FeatureWrapper, {
+    global: {
+      plugins: [[ConfigCatPlugin, pluginOptions]],
+    },
+    props: {
+      featureKey: featureFlagKey,
+    },
+    slots: {
+      default: "<div>the new feature</div>",
+      else: "<div>feature is not enabled</div>",
+      loading: "<div>component is loading</div>",
+    },
+  });
+
+  // Wait for any asynchronous updates
+
+  try {
+    // Set the feature flag value to null
+    wrapper.vm.isFeatureFlagEnabled = null;
+
+    // Trigger reactivity updates
+    await wrapper.vm.$nextTick();
+
+    // The loading slot should be displayed
+    expect(wrapper.html()).toContain("<div>component is loading</div>");
+
+    // Set the feature flag value to true
+    wrapper.vm.isFeatureFlagEnabled = true;
+
+    // Trigger reactivity updates
+    await wrapper.vm.$nextTick();
+
+    // The default slot should be displayed
+    expect(wrapper.html()).toContain("<div>the new feature</div>");
+  } finally {
+    wrapper.unmount();
+  }
 });
