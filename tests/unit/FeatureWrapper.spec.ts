@@ -171,7 +171,7 @@ test("The FeatureWrapper component should throw an exception when the plugin is 
     // If the component was created successfully, fail the test
     expect(wrapper.exists()).toBe(false);
   } catch (error) {
-    // Assert that the error is the expected exception
+    // Check if the error thrown contains the expected text
     expect(error.message).toContain("ConfigCatPlugin was not installed.");
   }
 });
@@ -209,7 +209,7 @@ test("The FeatureWrapper component should emit flagValueChanged when the feature
   // Trigger the configChangeHandler method, which executes an emit
   wrapper.vm.configChangedHandler();
 
-  // Check if the wrapper emitted as expected
+  // Check if the wrapper emitted
   try {
     expect(wrapper.emitted().flagValueChanged).toBeTruthy();
   } finally {
@@ -314,6 +314,106 @@ test("The FeatureWrapper should transition from loading to else", async () => {
 
     // The else slot should be displayed
     expect(wrapper.html()).toContain("<div>feature is not enabled</div>");
+  } finally {
+    wrapper.unmount();
+  }
+});
+
+test("The FeatureWrapper should transition from default to else", async () => {
+  const featureFlagKey = "isFeatureFlagEnabled";
+
+  const pluginOptions: PluginOptions = {
+    sdkKey: "local-only",
+    clientOptions: {
+      flagOverrides: createFlagOverridesFromMap(
+        { [featureFlagKey]: true },
+        OverrideBehaviour.LocalOnly
+      ),
+    },
+  };
+
+  const wrapper = mount(FeatureWrapper, {
+    global: {
+      plugins: [[ConfigCatPlugin, pluginOptions]],
+    },
+    props: {
+      featureKey: featureFlagKey,
+    },
+    slots: {
+      default: "<div>the new feature</div>",
+      else: "<div>feature is not enabled</div>",
+      loading: "<div>component is loading</div>",
+    },
+  });
+
+  try {
+    // Set the feature flag value to true
+    wrapper.vm.isFeatureFlagEnabled = true;
+
+    // Trigger reactivity updates
+    await wrapper.vm.$nextTick();
+
+    // The default slot should be displayed
+    expect(wrapper.html()).toContain("<div>the new feature</div>");
+
+    // Set the feature flag value to false
+    wrapper.vm.isFeatureFlagEnabled = false;
+
+    // Trigger reactivity updates
+    await wrapper.vm.$nextTick();
+
+    // The else slot should be displayed
+    expect(wrapper.html()).toContain("<div>feature is not enabled</div>");
+  } finally {
+    wrapper.unmount();
+  }
+});
+
+test("The FeatureWrapper should transition from else to default", async () => {
+  const featureFlagKey = "isFeatureFlagEnabled";
+
+  const pluginOptions: PluginOptions = {
+    sdkKey: "local-only",
+    clientOptions: {
+      flagOverrides: createFlagOverridesFromMap(
+        { [featureFlagKey]: true },
+        OverrideBehaviour.LocalOnly
+      ),
+    },
+  };
+
+  const wrapper = mount(FeatureWrapper, {
+    global: {
+      plugins: [[ConfigCatPlugin, pluginOptions]],
+    },
+    props: {
+      featureKey: featureFlagKey,
+    },
+    slots: {
+      default: "<div>the new feature</div>",
+      else: "<div>feature is not enabled</div>",
+      loading: "<div>component is loading</div>",
+    },
+  });
+
+  try {
+    // Set the feature flag value to false
+    wrapper.vm.isFeatureFlagEnabled = false;
+
+    // Trigger reactivity updates
+    await wrapper.vm.$nextTick();
+
+    // The else slot should be displayed
+    expect(wrapper.html()).toContain("<div>feature is not enabled</div>");
+
+    // Set the feature flag value to true
+    wrapper.vm.isFeatureFlagEnabled = true;
+
+    // Trigger reactivity updates
+    await wrapper.vm.$nextTick();
+
+    // The default slot should be displayed
+    expect(wrapper.html()).toContain("<div>the new feature</div>");
   } finally {
     wrapper.unmount();
   }
