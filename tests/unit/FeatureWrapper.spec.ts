@@ -3,22 +3,15 @@ import { test, expect } from "vitest";
 
 // Mock Component
 import {
-  ClientCacheState,
   FeatureWrapper,
-  HookEvents,
-  IConfigCatClientSnapshot,
   OverrideBehaviour,
-  SettingTypeOf,
-  SettingValue,
-  User,
   createFlagOverridesFromMap,
 } from "../../src";
 import ConfigCatPlugin, {
   type PluginOptions,
 } from "../../src/plugins/ConfigCatPlugin";
 import {
-  ConfigCatClientMockBase,
-  ConfigCatClientSnapshotMockBase,
+  SimpleValueConfigCatClientMock,
 } from "../mocks/ConfigCatClientMocks";
 
 test("The default slot should render when the isFeatureFlagEnabled value is true", () => {
@@ -97,38 +90,9 @@ test("The loading slot should render when the client is still initializing", () 
   // To test this scenario, we can't use flag overrides because there's no initialization period in that case,
   // feature flag values provided by flag overrides are available immediately.
   // So, we have to take the hard way: we need to provide a mock implementation of `IConfigCatClient` to the component.
+  const clientMock = new SimpleValueConfigCatClientMock(featureFlagKey);
 
-  const clientMock = new (class extends ConfigCatClientMockBase {
-    snapshot() {
-      // Returning a snapshot with NoFlagData will cause the component to take the "async" way on component initialization (see onBeforeMount).
-      return new ConfigCatClientSnapshotMockBase(ClientCacheState.NoFlagData);
-    }
-
-    getValueAsync<T extends SettingValue>(
-      key: string,
-      defaultValue: T,
-      user?: User | undefined
-    ): Promise<SettingTypeOf<T>> {
-      if (key === featureFlagKey) {
-        return new Promise((_) => {}); // by returning a Promise which never fullfils, we can make the initialization period infinite
-      }
-
-      return super.getValueAsync(key, defaultValue, user);
-    }
-
-    off<TEventName extends keyof HookEvents>(
-      eventName: TEventName,
-      listener: (...args: HookEvents[TEventName]) => void
-    ): this {
-      if (eventName == "configChanged") {
-        // The component unsubscribes from this event on component teardown (see onUnmounted).
-        // This is irrelevant in the case of this test, so a no-op will be fine.
-        return this;
-      }
-
-      return super.off(eventName, listener);
-    }
-  })();
+  // We don't call `clientMock.setReady()`, so it will never get past the initialization state and provide a feature flag value.
 
   const wrapper = mount(FeatureWrapper, {
     global: {
@@ -168,8 +132,13 @@ test("The FeatureWrapper component should throw an exception when the plugin is 
         loading: "<div>component is loading</div>",
       },
     });
-    // If the component was created successfully, fail the test
-    expect(wrapper.exists()).toBe(false);
+    try {
+      // If the component was created successfully, fail the test
+      expect(wrapper.exists()).toBe(false);
+    }
+    finally {
+      wrapper.unmount();
+    }
   } catch (error) {
     // Check if the error thrown contains the expected text
     expect(error.message).toContain("ConfigCatPlugin was not installed.");
@@ -179,19 +148,14 @@ test("The FeatureWrapper component should throw an exception when the plugin is 
 test("The FeatureWrapper component should emit flagValueChanged when the feature flag value changes", async () => {
   const featureFlagKey = "isFeatureFlagEnabled";
 
-  const pluginOptions: PluginOptions = {
-    sdkKey: "local-only",
-    clientOptions: {
-      flagOverrides: createFlagOverridesFromMap(
-        { [featureFlagKey]: true },
-        OverrideBehaviour.LocalOnly
-      ),
-    },
-  };
+  const clientMock = new SimpleValueConfigCatClientMock(featureFlagKey);
+  await clientMock.setReady(false);
 
   const wrapper = mount(FeatureWrapper, {
     global: {
-      plugins: [[ConfigCatPlugin, pluginOptions]],
+      provide: {
+        configCatClient: clientMock,
+      },
     },
     props: {
       featureKey: featureFlagKey,
@@ -203,15 +167,13 @@ test("The FeatureWrapper component should emit flagValueChanged when the feature
     },
   });
 
-  // Update the ref
-  wrapper.vm.isFeatureFlagEnabled = false;
-
-  // Trigger the configChangeHandler method, which executes an emit
-  wrapper.vm.configChangedHandler();
-
   // Check if the wrapper emitted
   try {
-    expect(wrapper.emitted().flagValueChanged).toBeTruthy();
+    expect(wrapper.emitted().flagValueChanged).toBeUndefined();
+
+    clientMock.changeValue(true);
+
+    expect(wrapper.emitted().flagValueChanged).toBeDefined();
   } finally {
     wrapper.unmount();
   }
@@ -222,19 +184,13 @@ test("The FeatureWrapper component should emit flagValueChanged when the feature
 test("The FeatureWrapper component should transition from loading to default", async () => {
   const featureFlagKey = "isFeatureFlagEnabled";
 
-  const pluginOptions: PluginOptions = {
-    sdkKey: "local-only",
-    clientOptions: {
-      flagOverrides: createFlagOverridesFromMap(
-        { [featureFlagKey]: true },
-        OverrideBehaviour.LocalOnly
-      ),
-    },
-  };
+  const clientMock = new SimpleValueConfigCatClientMock(featureFlagKey);
 
   const wrapper = mount(FeatureWrapper, {
     global: {
-      plugins: [[ConfigCatPlugin, pluginOptions]],
+      provide: {
+        configCatClient: clientMock,
+      },
     },
     props: {
       featureKey: featureFlagKey,
@@ -247,20 +203,11 @@ test("The FeatureWrapper component should transition from loading to default", a
   });
 
   try {
-    // Set the feature flag value to null
-    wrapper.vm.isFeatureFlagEnabled = null;
-
-    // Trigger reactivity updates
-    await wrapper.vm.$nextTick();
-
     // The loading slot should be displayed
     expect(wrapper.html()).toContain("<div>component is loading</div>");
 
-    // Set the feature flag value to true
-    wrapper.vm.isFeatureFlagEnabled = true;
-
-    // Trigger reactivity updates
-    await wrapper.vm.$nextTick();
+    // Simulate client getting ready, with the initial feature flag value set to true
+    await clientMock.setReady(true);
 
     // The default slot should be displayed
     expect(wrapper.html()).toContain("<div>the new feature</div>");
@@ -272,19 +219,13 @@ test("The FeatureWrapper component should transition from loading to default", a
 test("The FeatureWrapper should transition from loading to else", async () => {
   const featureFlagKey = "isFeatureFlagEnabled";
 
-  const pluginOptions: PluginOptions = {
-    sdkKey: "local-only",
-    clientOptions: {
-      flagOverrides: createFlagOverridesFromMap(
-        { [featureFlagKey]: true },
-        OverrideBehaviour.LocalOnly
-      ),
-    },
-  };
+  const clientMock = new SimpleValueConfigCatClientMock(featureFlagKey);
 
   const wrapper = mount(FeatureWrapper, {
     global: {
-      plugins: [[ConfigCatPlugin, pluginOptions]],
+      provide: {
+        configCatClient: clientMock,
+      },
     },
     props: {
       featureKey: featureFlagKey,
@@ -297,20 +238,11 @@ test("The FeatureWrapper should transition from loading to else", async () => {
   });
 
   try {
-    // Set the feature flag value to null
-    wrapper.vm.isFeatureFlagEnabled = null;
-
-    // Trigger reactivity updates
-    await wrapper.vm.$nextTick();
-
     // The loading slot should be displayed
     expect(wrapper.html()).toContain("<div>component is loading</div>");
 
-    // Set the feature flag value to false
-    wrapper.vm.isFeatureFlagEnabled = false;
-
-    // Trigger reactivity updates
-    await wrapper.vm.$nextTick();
+    // Simulate client getting ready, with the initial feature flag value set to false
+    await clientMock.setReady(false);
 
     // The else slot should be displayed
     expect(wrapper.html()).toContain("<div>feature is not enabled</div>");
@@ -322,19 +254,14 @@ test("The FeatureWrapper should transition from loading to else", async () => {
 test("The FeatureWrapper should transition from default to else", async () => {
   const featureFlagKey = "isFeatureFlagEnabled";
 
-  const pluginOptions: PluginOptions = {
-    sdkKey: "local-only",
-    clientOptions: {
-      flagOverrides: createFlagOverridesFromMap(
-        { [featureFlagKey]: true },
-        OverrideBehaviour.LocalOnly
-      ),
-    },
-  };
+  const clientMock = new SimpleValueConfigCatClientMock(featureFlagKey);
+  await clientMock.setReady(true);
 
   const wrapper = mount(FeatureWrapper, {
     global: {
-      plugins: [[ConfigCatPlugin, pluginOptions]],
+      provide: {
+        configCatClient: clientMock,
+      },
     },
     props: {
       featureKey: featureFlagKey,
@@ -347,20 +274,11 @@ test("The FeatureWrapper should transition from default to else", async () => {
   });
 
   try {
-    // Set the feature flag value to true
-    wrapper.vm.isFeatureFlagEnabled = true;
-
-    // Trigger reactivity updates
-    await wrapper.vm.$nextTick();
-
     // The default slot should be displayed
     expect(wrapper.html()).toContain("<div>the new feature</div>");
 
-    // Set the feature flag value to false
-    wrapper.vm.isFeatureFlagEnabled = false;
-
-    // Trigger reactivity updates
-    await wrapper.vm.$nextTick();
+    // Simulate config change, with the feature flag value set to false
+    await clientMock.changeValue(false);
 
     // The else slot should be displayed
     expect(wrapper.html()).toContain("<div>feature is not enabled</div>");
@@ -372,19 +290,14 @@ test("The FeatureWrapper should transition from default to else", async () => {
 test("The FeatureWrapper should transition from else to default", async () => {
   const featureFlagKey = "isFeatureFlagEnabled";
 
-  const pluginOptions: PluginOptions = {
-    sdkKey: "local-only",
-    clientOptions: {
-      flagOverrides: createFlagOverridesFromMap(
-        { [featureFlagKey]: true },
-        OverrideBehaviour.LocalOnly
-      ),
-    },
-  };
+  const clientMock = new SimpleValueConfigCatClientMock(featureFlagKey);
+  await clientMock.setReady(false);
 
   const wrapper = mount(FeatureWrapper, {
     global: {
-      plugins: [[ConfigCatPlugin, pluginOptions]],
+      provide: {
+        configCatClient: clientMock,
+      },
     },
     props: {
       featureKey: featureFlagKey,
@@ -397,20 +310,11 @@ test("The FeatureWrapper should transition from else to default", async () => {
   });
 
   try {
-    // Set the feature flag value to false
-    wrapper.vm.isFeatureFlagEnabled = false;
-
-    // Trigger reactivity updates
-    await wrapper.vm.$nextTick();
-
     // The else slot should be displayed
     expect(wrapper.html()).toContain("<div>feature is not enabled</div>");
 
-    // Set the feature flag value to true
-    wrapper.vm.isFeatureFlagEnabled = true;
-
-    // Trigger reactivity updates
-    await wrapper.vm.$nextTick();
+    // Simulate config change, with the feature flag value set to true
+    await clientMock.changeValue(true);
 
     // The default slot should be displayed
     expect(wrapper.html()).toContain("<div>the new feature</div>");
