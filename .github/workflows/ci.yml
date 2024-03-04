@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    branches:
+      - 'main'
+    tags: ["v[0-9]+.[0-9]+[0-9]+"]
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run unit and integration tests
+    strategy:
+      matrix:
+        version: [18, 20]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Using Node.js ${{ matrix.version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.version }}
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+  
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm build
+      
+      - name: Publish
+        run: npm publish
+        env:
+          NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+
+
+        
+
