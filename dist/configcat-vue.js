@@ -2798,7 +2798,7 @@ function br(t) {
 function Tr(t) {
   return t = atob(t), t = t.replace(/[%\x80-\xFF]/g, (e) => "%" + e.charCodeAt(0).toString(16)), decodeURIComponent(t);
 }
-const Ir = "2.2.2", Rr = {
+const Ir = "2.2.3", Rr = {
   // Vue's `App.prototype.use` does not play nicely with generic `install` functions, so we resort to using a discriminated union.
   install: (t, e) => {
     const { sdkKey: r, pollingMode: n, clientOptions: i } = e, s = ke.setup({
