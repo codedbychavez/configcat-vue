@@ -48,7 +48,7 @@ jobs:
       - name: Publish
         run: npm publish
         env:
-          NPM_PUBLISH_TOKEN: ${{ secrets.NPM_GRANULAR_TOKEN }}
+          NPM_PUBLISH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
         
