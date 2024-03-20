@@ -1,6 +1,6 @@
 {
   "name": "configcat-vue",
-  "description": "A simple and easy to use Vue3 plugin for using ConfigCat Feature Flags in your Vue.js Application",
+  "description": "A community-maintained SDK for integrating ConfigCat feature flags into Vue.js applications.",
   "type": "module",
   "files": [
     "dist"
@@ -19,7 +19,7 @@
       }
     }
   },
-  "version": "2.2.4",
+  "version": "2.2.5",
   "keywords": [
     "configcat",
     "ConfigCat",
