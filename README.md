@@ -18,7 +18,7 @@ Here's a quick overview of what you can do with this package:
 
 ## Documentation
 
-[Read the documentation](https://github.com/codedbychavez/configcat-vue/wiki/Documentation)
+[Read the documentation on ConfigCat](https://configcat.com/docs/sdk-reference/community/vue/)
 
 ## With you in mind
 
