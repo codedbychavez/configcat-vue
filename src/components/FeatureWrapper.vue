@@ -12,7 +12,7 @@ import {
   ClientCacheState,
   type IConfigCatClient,
   type User,
-} from "configcat-common";
+} from "@configcat/sdk";
 
 const emits = defineEmits<{
   (e: "flagValueChanged", newValue: boolean): void;

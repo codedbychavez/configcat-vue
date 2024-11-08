@@ -1,6 +1,5 @@
-import { PollingMode } from "configcat-common";
-import type { App } from "vue";
-import type { IAutoPollOptions, ILazyLoadingOptions, IManualPollOptions } from "configcat-common";
+import { PollingMode, IAutoPollOptions, ILazyLoadingOptions, IManualPollOptions } from '@configcat/sdk';
+import { App } from 'vue';
 type ClientOptions<TMode extends PollingMode> = {
     [PollingMode.AutoPoll]: IAutoPollOptions;
     [PollingMode.ManualPoll]: IManualPollOptions;

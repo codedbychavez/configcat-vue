@@ -1,2 +1,2 @@
-declare const _default: "CONFIGCAT_SDK_VERSION";
+declare const _default: string;
 export default _default;

@@ -1,9 +1,7 @@
-import { isAllowedValue } from "configcat-common/lib/RolloutEvaluator";
-import { ClientCacheState, HookEvents, IConfig, IConfigCatClient, IConfigCatClientSnapshot, IEvaluationDetails, RefreshResult, SettingKeyValue, SettingTypeOf, SettingValue, User } from "../../src";
-import { DefaultEventEmitter } from "configcat-common/lib/DefaultEventEmitter";
-import { IEventEmitter } from "configcat-common";
-import * as ConfigJson from "configcat-common/lib/ConfigJson";
-import { Config } from "configcat-common/lib/ProjectConfig";
+import { ConfigJson, ClientCacheState, HookEvents, IConfig, IConfigCatClient, IConfigCatClientSnapshot, IEvaluationDetails, RefreshResult, SettingKeyValue, SettingTypeOf, SettingValue, User } from "../../src";
+import { Internals } from "@configcat/sdk";
+import { Config } from "@configcat/sdk/lib/esm/ProjectConfig.js";
+import { isAllowedValue } from "@configcat/sdk/lib/esm/RolloutEvaluator.js";
 
 export class ConfigCatClientMockBase implements IConfigCatClient {
     constructor(
@@ -99,7 +97,7 @@ export class ConfigCatClientSnapshotMockBase implements IConfigCatClientSnapshot
 }
 
 export class SimpleValueConfigCatClientMock extends ConfigCatClientMockBase {
-    private readonly eventEmitter = new DefaultEventEmitter();
+    private readonly eventEmitter = new Internals.DefaultEventEmitter();
     private readonly readyPromise: Promise<ClientCacheState>;
     private signalReady: (value: NonNullable<SettingValue>) => void;
     private cacheState = ClientCacheState.NoFlagData;
@@ -114,7 +112,7 @@ export class SimpleValueConfigCatClientMock extends ConfigCatClientMockBase {
             this.currentValue = initialValue;
             this.currentConfig = createConfigFromValue(this.key, initialValue);
             this.cacheState = ClientCacheState.HasUpToDateFlagData;
-            (this.eventEmitter as IEventEmitter<HookEvents>).emit("clientReady", this.cacheState);
+            (this.eventEmitter as Internals.IEventEmitter<HookEvents>).emit("clientReady", this.cacheState);
             return this.cacheState;
         });
     }
@@ -135,7 +133,7 @@ export class SimpleValueConfigCatClientMock extends ConfigCatClientMockBase {
 
         this.currentValue = newValue;
         this.currentConfig = createConfigFromValue(this.key, newValue);
-        (this.eventEmitter as IEventEmitter<HookEvents>).emit("configChanged", this.currentConfig);
+        (this.eventEmitter as Internals.IEventEmitter<HookEvents>).emit("configChanged", this.currentConfig);
     }
 
     async getValueAsync<T extends SettingValue>(key: string, defaultValue: T, user?: User | undefined): Promise<SettingTypeOf<T>> {
