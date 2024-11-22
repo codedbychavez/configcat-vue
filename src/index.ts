@@ -15,6 +15,8 @@ export const {
 
 export type IQueryStringProvider = Internals.IQueryStringProvider;
 
+/* Public types re-export from @configcat/sdk */
+
 // These exports should be kept in sync with the exports listed in the `src/index.ts` module
 // located in the `js-unified-sdk` repo (https://github.com/configcat/js-unified-sdk)!
 
@@ -41,13 +43,11 @@ export type {
 
 export { PrerequisiteFlagComparator, SegmentComparator, SettingType, UserComparator } from "@configcat/sdk";
 
-export type { IConfigCatClient, IConfigCatClientSnapshot } from "@configcat/sdk";
-
-export { SettingKeyValue } from "@configcat/sdk";
+export type { IConfigCatClient, IConfigCatClientSnapshot, SettingKeyValue } from "@configcat/sdk";
 
 export type { IEvaluationDetails, SettingTypeOf } from "@configcat/sdk";
 
-export type { UserAttributeValue } from "@configcat/sdk";
+export type { IUser, UserAttributeValue } from "@configcat/sdk";
 
 export { User } from "@configcat/sdk";
 
