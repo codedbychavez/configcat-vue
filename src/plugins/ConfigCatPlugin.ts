@@ -1,10 +1,8 @@
-import { HttpConfigFetcher } from "./ConfigFetcher";
-import { LocalStorageCache } from "./LocalStorageCache";
-import { PollingMode, getClient } from "configcat-common";
+import { Internals, PollingMode } from "@configcat/sdk";
 import CONFIGCAT_SDK_VERSION from "./Version";
 // Types
 import type { App } from "vue";
-import type { IAutoPollOptions, IConfigCatKernel, ILazyLoadingOptions, IManualPollOptions } from "configcat-common";
+import type { IAutoPollOptions, ILazyLoadingOptions, IManualPollOptions } from "@configcat/sdk";
 
 type ClientOptions<TMode extends PollingMode> = {
   [PollingMode.AutoPoll]: IAutoPollOptions,
@@ -21,13 +19,15 @@ export default {
   // Vue's `App.prototype.use` does not play nicely with generic `install` functions, so we resort to using a discriminated union.
   install: (app: App, options: PluginOptions<PollingMode.AutoPoll> | PluginOptions<PollingMode.LazyLoad> | PluginOptions<PollingMode.ManualPoll>): void => {
     const { sdkKey, pollingMode, clientOptions } = options;
-    const configCatKernel: IConfigCatKernel = LocalStorageCache.setup({
+    const configCatKernel: Internals.IConfigCatKernel = {
       sdkType: "ConfigCat-Vue",
       sdkVersion: CONFIGCAT_SDK_VERSION,
-      configFetcher: new HttpConfigFetcher(),
-    });
+      configFetcher: new Internals.XmlHttpRequestConfigFetcher(),
+      eventEmitterFactory: () => new Internals.DefaultEventEmitter(),
+      defaultCacheFactory: Internals.LocalStorageConfigCache.tryGetFactory()
+    };
 
-    const configCatClient = getClient(
+    const configCatClient = Internals.getClient(
       sdkKey,
       pollingMode ?? PollingMode.AutoPoll,
       clientOptions,
