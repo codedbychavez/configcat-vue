@@ -10,12 +10,12 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/configcat-vue.js",
-        "types": "./dist/index.d.ts"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/configcat-vue.js"
       },
       "require": {
-        "default": "./dist/configcat-vue.umd.cjs",
-        "types": "./dist/index.d.ts"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/configcat-vue.umd.cjs"
       }
     }
   },
