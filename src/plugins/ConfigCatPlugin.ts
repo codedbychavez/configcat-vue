@@ -1,4 +1,4 @@
-import { Internals, PollingMode } from "@configcat/sdk";
+import { Internals, LocalStorageConfigCache, PollingMode, XmlHttpRequestConfigFetcher } from "@configcat/sdk";
 import CONFIGCAT_SDK_VERSION from "./Version";
 // Types
 import type { App } from "vue";
@@ -22,9 +22,9 @@ export default {
     const configCatKernel: Internals.IConfigCatKernel = {
       sdkType: "ConfigCat-Vue",
       sdkVersion: CONFIGCAT_SDK_VERSION,
-      configFetcher: new Internals.XmlHttpRequestConfigFetcher(),
       eventEmitterFactory: () => new Internals.DefaultEventEmitter(),
-      defaultCacheFactory: Internals.LocalStorageConfigCache.tryGetFactory()
+      defaultCacheFactory: LocalStorageConfigCache["tryGetFactory"](),
+      configFetcherFactory: XmlHttpRequestConfigFetcher["getFactory"](),
     };
 
     const configCatClient = Internals.getClient(

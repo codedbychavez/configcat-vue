@@ -1,7 +1,5 @@
-import { ConfigJson, ClientCacheState, HookEvents, IConfig, IConfigCatClient, IConfigCatClientSnapshot, IEvaluationDetails, RefreshResult, SettingKeyValue, SettingTypeOf, SettingValue, User } from "../../src";
-import { Internals } from "@configcat/sdk";
-import { Config } from "@configcat/sdk/lib/esm/ProjectConfig.js";
-import { isAllowedValue } from "@configcat/sdk/lib/esm/RolloutEvaluator.js";
+import { Config, ConfigJson, ClientCacheState, EvaluationDetails, HookEvents, IConfigCatClient, IConfigCatClientSnapshot, Internals, prepareConfig, RefreshResult, SettingKeyValue, SettingTypeOf, SettingValue, User } from "@configcat/sdk";
+import { isAllowedValue } from "@configcat/sdk/lib/esm/ProjectConfig.js";
 
 export class ConfigCatClientMockBase implements IConfigCatClient {
     constructor(
@@ -11,7 +9,7 @@ export class ConfigCatClientMockBase implements IConfigCatClient {
     getValueAsync<T extends SettingValue>(key: string, defaultValue: T, user?: User | undefined): Promise<SettingTypeOf<T>> {
         throw new Error("Method not implemented.");
     }
-    getValueDetailsAsync<T extends SettingValue>(key: string, defaultValue: T, user?: User | undefined): Promise<IEvaluationDetails<SettingTypeOf<T>>> {
+    getValueDetailsAsync<T extends SettingValue>(key: string, defaultValue: T, user?: User | undefined): Promise<EvaluationDetails<SettingTypeOf<T>>> {
         throw new Error("Method not implemented.");
     }
     getAllKeysAsync(): Promise<string[]> {
@@ -20,7 +18,7 @@ export class ConfigCatClientMockBase implements IConfigCatClient {
     getAllValuesAsync(user?: User | undefined): Promise<SettingKeyValue<SettingValue>[]> {
         throw new Error("Method not implemented.");
     }
-    getAllValueDetailsAsync(user?: User | undefined): Promise<IEvaluationDetails<SettingValue>[]> {
+    getAllValueDetailsAsync(user?: User | undefined): Promise<EvaluationDetails<SettingValue>[]> {
         throw new Error("Method not implemented.");
     }
     getKeyAndValueAsync(variationId: string): Promise<SettingKeyValue<SettingValue> | null> {
@@ -82,7 +80,7 @@ export class ConfigCatClientMockBase implements IConfigCatClient {
 export class ConfigCatClientSnapshotMockBase implements IConfigCatClientSnapshot {
     constructor(
         public cacheState = ClientCacheState.NoFlagData,
-        public fetchedConfig: IConfig | null = null) {
+        public fetchedConfig: Config | null = null) {
     }
 
     getAllKeys(): readonly string[] {
@@ -91,7 +89,10 @@ export class ConfigCatClientSnapshotMockBase implements IConfigCatClientSnapshot
     getValue<T extends SettingValue>(key: string, defaultValue: T, user?: User | undefined): SettingTypeOf<T> {
         throw new Error("Method not implemented.");
     }
-    getValueDetails<T extends SettingValue>(key: string, defaultValue: T, user?: User | undefined): IEvaluationDetails<SettingTypeOf<T>> {
+    getValueDetails<T extends SettingValue>(key: string, defaultValue: T, user?: User | undefined): EvaluationDetails<SettingTypeOf<T>> {
+        throw new Error("Method not implemented.");
+    }
+    getKeyAndValue(variationId: string): SettingKeyValue | null {
         throw new Error("Method not implemented.");
     }
 }
@@ -186,7 +187,7 @@ function createConfigFromValue(key: string, value: NonNullable<SettingValue>): C
         f: { [key]: { t: settingType, v: settingValue } as ConfigJson.SettingUnion }
     };
 
-    return new Config(configJson);
+    return prepareConfig(configJson);
 }
 
 function isValidSettingValue(settingValue: NonNullable<SettingValue>, defaultValue: SettingValue) {
