@@ -1,4 +1,4 @@
-import { ClientCacheState, Config, ConfigJson, EvaluationDetails, HookEvents, IConfigCatClient, IConfigCatClientSnapshot, Internals, prepareConfig, RefreshErrorCode, RefreshResult, SettingKeyValue, SettingTypeOf, SettingValue, User } from "@configcat/sdk";
+import { ClientCacheState, Config, ConfigJson, EvaluationDetails, HookEvents, IConfigCatClient, IConfigCatClientSnapshot, Internals, IUser, prepareConfig, RefreshErrorCode, RefreshResult, SettingKeyValue, SettingTypeOf, SettingValue } from "@configcat/sdk";
 import { isAllowedValue } from "@configcat/sdk/lib/esm/ProjectConfig.js";
 
 export class ConfigCatClientMockBase implements IConfigCatClient {
@@ -6,19 +6,19 @@ export class ConfigCatClientMockBase implements IConfigCatClient {
     public isOffline = false) {
   }
 
-  getValueAsync<T extends SettingValue>(key: string, defaultValue: T, user?: User): Promise<SettingTypeOf<T>> {
+  getValueAsync<T extends SettingValue>(key: string, defaultValue: T, user?: IUser): Promise<SettingTypeOf<T>> {
     throw new Error("Method not implemented.");
   }
-  getValueDetailsAsync<T extends SettingValue>(key: string, defaultValue: T, user?: User): Promise<EvaluationDetails<SettingTypeOf<T>>> {
+  getValueDetailsAsync<T extends SettingValue>(key: string, defaultValue: T, user?: IUser): Promise<EvaluationDetails<SettingTypeOf<T>>> {
     throw new Error("Method not implemented.");
   }
   getAllKeysAsync(): Promise<string[]> {
     throw new Error("Method not implemented.");
   }
-  getAllValuesAsync(user?: User): Promise<SettingKeyValue[]> {
+  getAllValuesAsync(user?: IUser): Promise<SettingKeyValue[]> {
     throw new Error("Method not implemented.");
   }
-  getAllValueDetailsAsync(user?: User): Promise<EvaluationDetails[]> {
+  getAllValueDetailsAsync(user?: IUser): Promise<EvaluationDetails[]> {
     throw new Error("Method not implemented.");
   }
   getKeyAndValueAsync(variationId: string): Promise<SettingKeyValue | null> {
@@ -33,7 +33,7 @@ export class ConfigCatClientMockBase implements IConfigCatClient {
   snapshot(): IConfigCatClientSnapshot {
     throw new Error("Method not implemented.");
   }
-  setDefaultUser(defaultUser: User): void {
+  setDefaultUser(defaultUser: IUser): void {
     throw new Error("Method not implemented.");
   }
   clearDefaultUser(): void {
@@ -86,10 +86,10 @@ export class ConfigCatClientSnapshotMockBase implements IConfigCatClientSnapshot
   getAllKeys(): readonly string[] {
     throw new Error("Method not implemented.");
   }
-  getValue<T extends SettingValue>(key: string, defaultValue: T, user?: User): SettingTypeOf<T> {
+  getValue<T extends SettingValue>(key: string, defaultValue: T, user?: IUser): SettingTypeOf<T> {
     throw new Error("Method not implemented.");
   }
-  getValueDetails<T extends SettingValue>(key: string, defaultValue: T, user?: User): EvaluationDetails<SettingTypeOf<T>> {
+  getValueDetails<T extends SettingValue>(key: string, defaultValue: T, user?: IUser): EvaluationDetails<SettingTypeOf<T>> {
     throw new Error("Method not implemented.");
   }
   getKeyAndValue(variationId: string): SettingKeyValue | null {
@@ -137,7 +137,7 @@ export class SimpleValueConfigCatClientMock extends ConfigCatClientMockBase {
     (this.eventEmitter as Internals.IEventEmitter<HookEvents>).emit("configChanged", this.currentConfig);
   }
 
-  override async getValueAsync<T extends SettingValue>(key: string, defaultValue: T, user?: User): Promise<SettingTypeOf<T>> {
+  override async getValueAsync<T extends SettingValue>(key: string, defaultValue: T, user?: IUser): Promise<SettingTypeOf<T>> {
     await this.readyPromise;
 
     if (key === this.key) {
@@ -151,7 +151,7 @@ export class SimpleValueConfigCatClientMock extends ConfigCatClientMockBase {
     const client = this;
 
     return new (class extends ConfigCatClientSnapshotMockBase {
-      override getValue<T extends SettingValue>(key: string, defaultValue: T, user?: User): SettingTypeOf<T> {
+      override getValue<T extends SettingValue>(key: string, defaultValue: T, user?: IUser): SettingTypeOf<T> {
         if (key === client.key) {
           return (isValidSettingValue(client.currentValue, defaultValue) ? client.currentValue : defaultValue) as SettingTypeOf<T>;
         }
@@ -159,7 +159,7 @@ export class SimpleValueConfigCatClientMock extends ConfigCatClientMockBase {
         return super.getValue(key, defaultValue, user);
       }
 
-      override getValueDetails<T extends SettingValue>(key: string, defaultValue: T, user?: User) {
+      override getValueDetails<T extends SettingValue>(key: string, defaultValue: T, user?: IUser) {
         if (key === client.key) {
           return isValidSettingValue(client.currentValue, defaultValue)
             ? { key, value: client.currentValue, isDefaultValue: false, user } as EvaluationDetails<SettingTypeOf<T>>
