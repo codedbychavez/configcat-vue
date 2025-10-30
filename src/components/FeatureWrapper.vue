@@ -11,7 +11,7 @@ import { ref, onBeforeMount, onUnmounted, inject, type Ref } from "vue";
 import {
   ClientCacheState,
   type IConfigCatClient,
-  type User,
+  type IUser,
 } from "@configcat/sdk";
 
 const emits = defineEmits<{
@@ -20,7 +20,7 @@ const emits = defineEmits<{
 
 const props = defineProps<{
   featureKey: string;
-  userObject?: User;
+  userObject?: IUser;
 }>();
 
 const isFeatureFlagEnabled: Ref<null | boolean> = ref(null);
