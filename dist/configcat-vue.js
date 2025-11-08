@@ -26,15 +26,15 @@ class He {
 function bt(n, e) {
   let t;
   return new Promise((i) => {
-    const s = e == null ? void 0 : e.registerCallback(() => {
+    const s = e?.registerCallback(() => {
       clearTimeout(t), i(!1);
     });
     t = setTimeout(() => {
-      s == null || s(), i(!0);
+      s?.(), i(!0);
     }, n);
   });
 }
-const wt = typeof performance < "u" && P(performance == null ? void 0 : performance.now) ? () => performance.now() : () => (/* @__PURE__ */ new Date()).getTime();
+const wt = typeof performance < "u" && P(performance?.now) ? () => performance.now() : () => (/* @__PURE__ */ new Date()).getTime();
 function Yt(n) {
   return new xn(n);
 }
@@ -119,7 +119,7 @@ function P(n) {
   return typeof n == "function";
 }
 function Zt(n) {
-  return P(n == null ? void 0 : n.then);
+  return P(n?.then);
 }
 function ct(n, e, t) {
   return ot(n) || ve(n, e, "boolean", t), n;
@@ -574,7 +574,7 @@ function yt(n, e) {
   if (t != null) {
     if (i == null)
       return !1;
-  } else if (i != null && i.length)
+  } else if (i?.length)
     return !0;
   e || T("Targeting rule THEN part is missing or invalid.");
 }
@@ -934,7 +934,7 @@ class mt {
   }
   prepareClientForEvents() {
     var e;
-    const t = (e = this.options.hooks.unwrap()) === null || e === void 0 ? void 0 : e.configCatClient, i = t == null ? void 0 : t.initConfigService;
+    const t = (e = this.options.hooks.unwrap()) === null || e === void 0 ? void 0 : e.configCatClient, i = t?.initConfigService;
     P(i) && i.call(t, this);
   }
   dispose() {
@@ -2050,7 +2050,7 @@ class Mi {
       const a = this.evaluateSetting(t);
       return a.returnValue = s = U(a.selectedValue.v, r), a;
     } catch (r) {
-      throw i == null || i.resetIndent().increaseIndent(), s = e, r;
+      throw i?.resetIndent().increaseIndent(), s = e, r;
     } finally {
       i && (i.newLine(`Returning '${s}'.`).decreaseIndent(), this.logger.settingEvaluated(i.toString()));
     }
@@ -2058,44 +2058,44 @@ class Mi {
   evaluateSetting(e) {
     let t;
     const i = e.setting.r;
-    if (i != null && i.length && (t = this.evaluateTargetingRules(i, e)))
+    if (i?.length && (t = this.evaluateTargetingRules(i, e)))
       return t;
     const s = e.setting.p;
-    return s != null && s.length && (t = this.evaluatePercentageOptions(s, void 0, e)) ? t : Ve(e.setting);
+    return s?.length && (t = this.evaluatePercentageOptions(s, void 0, e)) ? t : Ve(e.setting);
   }
   evaluateTargetingRules(e, t) {
     const i = t.logBuilder;
-    i == null || i.newLine("Evaluating targeting rules and applying the first match if any:");
+    i?.newLine("Evaluating targeting rules and applying the first match if any:");
     for (let s = 0; s < e.length; s++) {
       const r = e[s], o = r.c, a = this.evaluateConditions(o, void 0, r, t.key, t);
       if (a !== !0) {
-        S(a) && (i == null || i.increaseIndent().newLine(Vt).decreaseIndent());
+        S(a) && i?.increaseIndent().newLine(Vt).decreaseIndent();
         continue;
       }
       if (!yt(r))
         return Ve(r.s, r);
       const l = r.p;
-      i == null || i.increaseIndent();
+      i?.increaseIndent();
       const c = this.evaluatePercentageOptions(l, r, t);
       if (c)
-        return i == null || i.decreaseIndent(), c;
-      i == null || i.newLine(Vt).decreaseIndent();
+        return i?.decreaseIndent(), c;
+      i?.newLine(Vt).decreaseIndent();
     }
   }
   evaluatePercentageOptions(e, t, i) {
     const s = i.logBuilder;
     if (!i.user) {
-      s == null || s.newLine("Skipping % options because the User Object is missing."), i.isMissingUserObjectLogged || (this.logger.userObjectIsMissing(i.key), i.isMissingUserObjectLogged = !0);
+      s?.newLine("Skipping % options because the User Object is missing."), i.isMissingUserObjectLogged || (this.logger.userObjectIsMissing(i.key), i.isMissingUserObjectLogged = !0);
       return;
     }
     let r = i.setting.a, o;
     if (r == null ? (r = "Identifier", o = Cn(i.user)) : o = jt(i.user, r), o == null) {
-      s == null || s.newLine(`Skipping % options because the User.${r} attribute is missing.`), i.isMissingUserObjectAttributeLogged || (this.logger.userObjectAttributeIsMissingPercentage(i.key, r), i.isMissingUserObjectAttributeLogged = !0);
+      s?.newLine(`Skipping % options because the User.${r} attribute is missing.`), i.isMissingUserObjectAttributeLogged || (this.logger.userObjectAttributeIsMissingPercentage(i.key, r), i.isMissingUserObjectAttributeLogged = !0);
       return;
     }
-    s == null || s.newLine(`Evaluating % options based on the User.${r} attribute:`);
+    s?.newLine(`Evaluating % options based on the User.${r} attribute:`);
     const a = pn(i.key + bn(o)), l = parseInt(a.substring(0, 7), 16) % 100;
-    s == null || s.newLine(`- Computing hash in the [0..99] range from User.${r} => ${l} (this value is sticky and consistent across all SDKs)`);
+    s?.newLine(`- Computing hash in the [0..99] range from User.${r} => ${l} (this value is sticky and consistent across all SDKs)`);
     let c = 0;
     for (let f = 0; f < e.length; f++) {
       const u = e[f], h = u.p;
@@ -2114,9 +2114,9 @@ class Mi {
     let a = !0;
     const l = r.logBuilder;
     let c = !1;
-    l == null || l.newLine("- ");
+    l?.newLine("- ");
     const f = !t;
-    for (let u = 0, h = (o = e == null ? void 0 : e.length) !== null && o !== void 0 ? o : 0; u < h; u++) {
+    for (let u = 0, h = (o = e?.length) !== null && o !== void 0 ? o : 0; u < h; u++) {
       let g;
       if (f) {
         const E = e[u];
@@ -2140,11 +2140,11 @@ class Mi {
       if (l && ((!i || h > 1) && l.appendConditionConsequence(d), l.decreaseIndent()), !d)
         break;
     }
-    return i && (l == null || l.appendTargetingRuleConsequence(i, r.settingType, a, c)), a;
+    return i && l?.appendTargetingRuleConsequence(i, r.settingType, a, c), a;
   }
   evaluateUserCondition(e, t, i) {
     const s = i.logBuilder;
-    if (s == null || s.appendUserCondition(e), !i.user)
+    if (s?.appendUserCondition(e), !i.user)
       return i.isMissingUserObjectLogged || (this.logger.userObjectIsMissing(i.key), i.isMissingUserObjectLogged = !0), je;
     const r = e.a, o = jt(i.user, r);
     if (o == null || o === "") {
@@ -2316,7 +2316,7 @@ class Mi {
   }
   evaluatePrerequisiteFlagCondition(e, t) {
     const i = t.logBuilder;
-    i == null || i.appendPrerequisiteFlagCondition(e, t.settings);
+    i?.appendPrerequisiteFlagCondition(e, t.settings);
     const s = e.f, r = L(t.settings, s) ? t.settings[s] : T("Prerequisite flag is missing."), o = vt(r);
     let a, l;
     if (o !== -1)
@@ -2333,7 +2333,7 @@ class Mi {
       T(`Circular dependency detected between the following depending flags: ${d}.`);
     }
     const f = ye.forPrerequisiteFlag(s, r, t);
-    i == null || i.newLine("(").increaseIndent().newLine(`Evaluating prerequisite flag '${s}':`);
+    i?.newLine("(").increaseIndent().newLine(`Evaluating prerequisite flag '${s}':`);
     const u = this.evaluateSetting(f);
     c.pop();
     const h = U(u.selectedValue.v, o);
@@ -2348,17 +2348,17 @@ class Mi {
       default:
         T("Comparison operator is invalid.");
     }
-    return i == null || i.newLine(`Prerequisite flag evaluation result: '${ce(h)}'.`).newLine("Condition (").appendPrerequisiteFlagCondition(e, t.settings).append(") evaluates to ").appendConditionResult(g).append(".").decreaseIndent().newLine(")"), g;
+    return i?.newLine(`Prerequisite flag evaluation result: '${ce(h)}'.`).newLine("Condition (").appendPrerequisiteFlagCondition(e, t.settings).append(") evaluates to ").appendConditionResult(g).append(".").decreaseIndent().newLine(")"), g;
   }
   evaluateSegmentCondition(e, t) {
     const i = t.setting._configSegments, s = t.logBuilder;
-    if (s == null || s.appendSegmentCondition(e, i), !t.user)
+    if (s?.appendSegmentCondition(e, i), !t.user)
       return t.isMissingUserObjectLogged || (this.logger.userObjectIsMissing(t.key), t.isMissingUserObjectLogged = !0), je;
-    const r = e == null ? void 0 : e.s;
+    const r = e?.s;
     (!i || !lt(r, 0, i.length - 1)) && T("Segment reference is invalid.");
-    const o = i[r], a = o == null ? void 0 : o.n;
-    a.length || T("Segment name is missing."), s == null || s.newLine("(").increaseIndent().newLine(`Evaluating segment '${a}':`);
-    const l = o == null ? void 0 : o.r, c = this.evaluateConditions(l, "u", void 0, a, t);
+    const o = i[r], a = o?.n;
+    a.length || T("Segment name is missing."), s?.newLine("(").increaseIndent().newLine(`Evaluating segment '${a}':`);
+    const l = o?.r, c = this.evaluateConditions(l, "u", void 0, a, t);
     let f = c;
     if (!S(f))
       switch (e.c) {
@@ -2507,7 +2507,7 @@ function Rn(n, e, t, i) {
     if (e === r.i)
       return { settingKey: s, settingValue: U(r.v, o) };
     const a = r.r;
-    if (a != null && a.length)
+    if (a?.length)
       for (let c = 0; c < a.length; c++) {
         const f = a[c];
         if (yt(f)) {
@@ -2524,7 +2524,7 @@ function Rn(n, e, t, i) {
         }
       }
     const l = r.p;
-    if (l != null && l.length)
+    if (l?.length)
       for (let c = 0; c < l.length; c++) {
         const f = l[c];
         if (e === f.i)
@@ -2599,7 +2599,7 @@ class B {
     (t = e.logger) === null || t === void 0 || t.debug("finalize() called."), e.cacheToken && oe.remove(e.sdkKey, e.cacheToken), B.close(e.configService, e.logger);
   }
   static close(e, t, i) {
-    t == null || t.debug("close() called."), i == null || i.tryDisconnect(), e == null || e.dispose();
+    t?.debug("close() called."), i?.tryDisconnect(), e?.dispose();
   }
   dispose() {
     const e = this.options;
@@ -2662,7 +2662,7 @@ class B {
     } catch (o) {
       return this.options.logger.settingEvaluationError("getAllValuesAsync", t, o), [];
     }
-    r != null && r.length && this.options.logger.settingEvaluationError("getAllValuesAsync", "evaluation result", typeof AggregateError == "function" ? AggregateError(r) : r.pop());
+    r?.length && this.options.logger.settingEvaluationError("getAllValuesAsync", "evaluation result", typeof AggregateError == "function" ? AggregateError(r) : r.pop());
     for (const o of s)
       this.hooks.emit("flagEvaluated", o);
     return i;
@@ -2678,7 +2678,7 @@ class B {
     } catch (r) {
       return this.options.logger.settingEvaluationError("getAllValueDetailsAsync", t, r), [];
     }
-    s != null && s.length && this.options.logger.settingEvaluationError("getAllValueDetailsAsync", "evaluation result", typeof AggregateError == "function" ? AggregateError(s) : s.pop());
+    s?.length && this.options.logger.settingEvaluationError("getAllValueDetailsAsync", "evaluation result", typeof AggregateError == "function" ? AggregateError(s) : s.pop());
     for (const r of i)
       this.hooks.emit("flagEvaluated", r);
     return i;
@@ -3051,7 +3051,7 @@ class Ji {
     } catch (u) {
       throw u instanceof DOMException && u.name === "AbortError" ? !((s = c.signal) === null || s === void 0) && s.aborted ? new _("timeout", l) : new _("abort") : new _("failure", u);
     } finally {
-      f == null || f();
+      f?.();
     }
   }
   setRequestHeaders(e, t) {
@@ -3079,7 +3079,7 @@ class Ln extends Ji {
     };
   }
 }
-const Gi = "2.6.1", is = {
+const Gi = "2.6.3", is = {
   // Vue's `App.prototype.use` does not play nicely with generic `install` functions, so we resort to using a discriminated union.
   install: (n, e) => {
     const { sdkKey: t, pollingMode: i, clientOptions: s } = e, r = {
