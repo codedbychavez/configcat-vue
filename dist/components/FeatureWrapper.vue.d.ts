@@ -1,7 +1,7 @@
-import { User } from '@configcat/sdk';
+import { IUser } from '@configcat/sdk';
 type __VLS_Props = {
     featureKey: string;
-    userObject?: User;
+    userObject?: IUser;
 };
 declare function __VLS_template(): {
     attrs: Partial<{}>;
