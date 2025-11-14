@@ -46,13 +46,11 @@ jobs:
         with:
           name: dist
           path: dist/
-          # retention-days: 5   # optional
 
   publish:
     needs: [build_and_test]
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
-    # If publishing to GitHub Packages you may need: permissions: packages: write
     permissions:
       contents: read
       id-token: write
