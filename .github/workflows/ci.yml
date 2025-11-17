@@ -66,5 +66,15 @@ jobs:
           name: dist
           path: dist/
 
+      - name: Pack
+        run: npm pack
+        
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-tarball
+          path: '*.tgz'
+          retention-days: 7
+
       - name: Publish (trusted publishing)
-        run: npm publish
+        run: npm publish --dry-run
