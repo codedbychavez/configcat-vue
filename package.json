@@ -62,5 +62,6 @@
   },
   "dependencies": {
     "@configcat/sdk": "^1.0.2"
-  }
+  },
+  "repository": "github:codedbychavez/configcat-vue"
 }
